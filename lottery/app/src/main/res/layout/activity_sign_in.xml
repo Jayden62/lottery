@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:padding="20dp"
+                                             tools:context=".screens.signin.SignInActivity">
+
+    <ImageView
+            android:id="@+id/mImageViewLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/logo_dental"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+            android:id="@+id/mEditTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:background="@drawable/bg_rectangle_border_edit_text"
+            android:drawableLeft="@drawable/ic_local_phone_black_24dp"
+            android:drawablePadding="@dimen/normalPadding"
+            android:hint="Phone number"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:padding="@dimen/normalPadding"
+            android:textSize="@dimen/normalSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mImageViewLogo"/>
+
+    <EditText
+            android:id="@+id/mEditTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:background="@drawable/bg_rectangle_border_edit_text"
+            android:drawableLeft="@drawable/ic_visibility_black_24dp"
+            android:drawablePadding="@dimen/normalPadding"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="@dimen/normalPadding"
+            android:textSize="@dimen/normalSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextPhone"/>
+
+    <Button
+            android:id="@+id/mButtonSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:enabled="false"
+            android:text="Sign In"
+            android:background="@drawable/bg_base_button_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextPassword"/>
+
+    <TextView
+            android:id="@+id/mTextViewForgetPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:text="Forgot your password ?"
+            android:textColor="@drawable/bg_forget_password_selector"
+            android:textSize="@dimen/mediumSize"
+            android:contextClickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mButtonSignIn"/>
+
+    <TextView
+            android:id="@+id/mTextViewRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_normalMargin"
+            android:clickable="true"
+            android:drawableRight="@drawable/bg_arrow_down_selector"
+            android:drawablePadding="@dimen/smallPadding"
+            android:text="You have not account."
+            android:textColor="@drawable/bg_register_selector"
+            android:textSize="@dimen/mediumSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewForgetPwd"/>
+
+</android.support.constraint.ConstraintLayout>
