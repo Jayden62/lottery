@@ -44,7 +44,6 @@ class BaseAdapter<T> : RecyclerView.Adapter<BaseHolder>() {
         else -> mItems[position - mHeaders.size].onInitLayout()
     }
 
-
     /**
      * Get item at position.
      */

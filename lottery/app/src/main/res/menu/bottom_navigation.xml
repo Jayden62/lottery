@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/mServiceMenu"
+            android:enabled="true"
+            android:checked="true"
+            android:icon="@drawable/bg_child_selector"
+            android:title="Services"
+            app:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/mNewsMenu"
+            android:enabled="true"
+            android:checkable="true"
+            android:icon="@drawable/bg_news_selector"
+            android:title="Daily News"
+            app:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/mProfileMenu"
+            android:enabled="true"
+            android:checkable="true"
+            android:icon="@drawable/bg_person_selector"
+            android:title="Profile"
+            app:showAsAction="ifRoom"/>
+</menu>

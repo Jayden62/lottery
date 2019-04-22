@@ -57,6 +57,7 @@
             android:layout_marginTop="@dimen/normalMargin"
             android:enabled="false"
             android:text="Sign In"
+            android:textColor="@android:color/white"
             android:background="@drawable/bg_base_button_selector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -51,9 +51,16 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.mButtonSignIn -> {
-                if (!validate()) {
+                if (validate()) {
                     ///Query user login
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    when (DBHelper().userLogin(mEditTextPhone.text.toString(), mEditTextPassword.text.toString())) {
+                        true -> {
+                            startActivity(Intent(this, HomeActivity::class.java))
+                        }
+                        false -> {
+                            Dialog.showMessageDialog("validate information.", this)
+                        }
+                    }
                 }
             }
             R.id.mTextViewForgetPwd ->
@@ -86,7 +93,16 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         mButtonSend.isEnabled = false
 
         mButtonClose.setOnClickListener { alertDialog.dismiss() }
-        mButtonSend.setOnClickListener { Log.d(TAG, "send.") }
+        mButtonSend.setOnClickListener {
+            val phoneNumber = mEditTextPhone.text.toString()
+            val passWord = DBHelper().forgetPassword(phoneNumber)
+            if (passWord.isNotEmpty()) {
+                Dialog.showMessageDialog("Your pass word is : $passWord", this)
+            } else {
+                Dialog.showMessageDialog("Not found pass word this phone number", this)
+            }
+            alertDialog.dismiss()
+        }
 
         mEditTextPhone.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

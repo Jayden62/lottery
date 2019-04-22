@@ -16,8 +16,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
 
     private var gender: String? = null
 
-    private var conn: Connection? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,20 +73,16 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
         when (v?.id) {
             R.id.mButtonRegister -> {
                 if (validate()) {
-                    val isChecked = DBHelper().checkUserLogin(
+                    when (DBHelper().registerAccount(
                         mEditTextName.text.toString(),
                         mEditTextPhone.text.toString(),
                         mEditTextPassword.text.toString(),
                         gender!!,
                         mEditTextAddress.text.toString(),
                         "accessToken", this
-                    )
-                    when (isChecked) {
-                        true -> {
-                            Dialog.showMessageDialog("Succeed.", this)
-                        }
+                    )) {
                         false -> {
-                            return
+                            Dialog.showMessageDialog("Can not register account !", this)
                         }
                     }
                 }
