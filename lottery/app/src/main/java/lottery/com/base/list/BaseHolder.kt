@@ -1,4 +1,4 @@
-package com.ami.vnua.base.list
+package lottery.com.base.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

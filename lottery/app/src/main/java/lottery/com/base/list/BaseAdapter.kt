@@ -1,15 +1,9 @@
-package com.ami.vnua.base.list
-
+package lottery.com.base.list
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import java.util.*
 
-/**
- * Created by VANNAM on 2017-11-20.
- */
 class BaseAdapter<T> : RecyclerView.Adapter<BaseHolder>() {
-
 
     /**
      * Header list.

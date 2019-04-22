@@ -1,4 +1,4 @@
-package com.ami.vnua.base.list
+package lottery.com.base.list
 
 import android.content.Context
 import android.view.View
@@ -12,9 +12,9 @@ abstract class BaseItem<T>(var mContext: Context) {
      */
     protected var mType = 0
 
-    var mData:T? = null
+    var mData: T? = null
 
-    constructor(mContext: Context, mData:T?):this(mContext){
+    constructor(mContext: Context, mData: T?) : this(mContext) {
         this.mData = mData
     }
 
@@ -27,7 +27,6 @@ abstract class BaseItem<T>(var mContext: Context) {
      * Bind view
      */
     abstract fun onBindView(view: View?)
-
 
 
 }

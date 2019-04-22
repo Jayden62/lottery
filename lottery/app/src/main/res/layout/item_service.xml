@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:contentPadding="@dimen/normalPadding"
+        app:cardElevation="8dp">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:padding="@dimen/normalPadding"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/mImageView"
+                android:background="@drawable/photo_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/mTextViewName"
+                android:textSize="@dimen/normalSize"
+                android:maxLines="1"
+                android:text="Clear tooth"
+                android:layout_marginStart="@dimen/normalMargin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/mTextViewDescription"
+                android:textSize="@dimen/normalSize"
+                android:maxLines="3"
+                android:text="Very expensive"
+                android:layout_marginTop="@dimen/smallMargin"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+                android:layout_marginStart="@dimen/normalMargin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
