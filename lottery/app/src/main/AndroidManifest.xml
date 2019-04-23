@@ -13,11 +13,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.home.HomeActivity">
+        <activity android:name=".screens.fragments.subservice.SubServiceActivity">
+        </activity>
+        <activity android:name=".screens.signin.SignInActivity">
         </activity>
         <activity android:name=".screens.signup.SignUpActivity">
         </activity>
-        <activity android:name=".screens.signin.SignInActivity">
+        <activity android:name=".screens.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

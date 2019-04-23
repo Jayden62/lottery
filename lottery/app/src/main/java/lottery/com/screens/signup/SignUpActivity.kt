@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import lottery.com.R
 import lottery.com.database.DBHelper
 import lottery.com.utils.Dialog
-import java.sql.Connection
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, RadioGroup.OnCheckedChangeListener {
 
@@ -73,7 +72,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
         when (v?.id) {
             R.id.mButtonRegister -> {
                 if (validate()) {
-                    when (DBHelper().registerAccount(
+                    when (DBHelper().saveAccount(
                         mEditTextName.text.toString(),
                         mEditTextPhone.text.toString(),
                         mEditTextPassword.text.toString(),

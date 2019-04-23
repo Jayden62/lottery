@@ -40,7 +40,7 @@ class DBHelper {
         }
     }
 
-    fun registerAccount(
+    fun saveAccount(
         name: String,
         phoneNumber: String,
         passWord: String,
