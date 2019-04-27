@@ -8,19 +8,24 @@ import kotlinx.android.synthetic.main.activity_home.*
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.view.MenuItem
+import lottery.com.model.User
 import lottery.com.screens.fragments.news.FragmentNews
 import lottery.com.screens.fragments.profile.FragmentProfile
 import lottery.com.screens.fragments.service.FragmentService
+import lottery.com.utils.Constants
 
 class HomeActivity : AppCompatActivity() {
 
     private var toolbar: ActionBar? = null
     private var mFragment: Fragment? = null
 
+    private var data: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         toolbar = supportActionBar
+        data = intent.getParcelableExtra(Constants.Data.DATA)
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         toolbar?.title = "Services"
         loadFragments(FragmentService())
@@ -45,6 +50,9 @@ class HomeActivity : AppCompatActivity() {
                 R.id.mProfileMenu -> {
                     toolbar?.title = "Profile"
                     mFragment = FragmentProfile()
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.Data.DATA, data)
+                    (mFragment as FragmentProfile).arguments = bundle
                     loadFragments(mFragment as FragmentProfile)
                     return true
                 }

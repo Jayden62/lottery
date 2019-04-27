@@ -40,6 +40,15 @@ class FragmentService : Fragment(), ServiceItem.Callback {
                 this
             )
         )
+
+        mAdapter.addItem(
+            ServiceItem(
+                context!!,
+                "Tẩy trắng răng",
+                "Cô dâu xinh đẹp trong ngày vui của Hùng Dũng là Triệu Mộc Trinh, 22 tuổi, quê ở huyện Hàm Yên (tỉnh Tuyên Quang)",
+                this
+            )
+        )
     }
 
     override fun onTapItem() {

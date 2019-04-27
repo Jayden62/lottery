@@ -1,5 +1,6 @@
 package lottery.com.screens.signup
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -9,11 +10,15 @@ import android.widget.RadioGroup
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import lottery.com.R
 import lottery.com.database.DBHelper
+import lottery.com.model.User
+import lottery.com.screens.signin.SignInActivity
+import lottery.com.utils.Constants
 import lottery.com.utils.Dialog
+import java.util.*
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, RadioGroup.OnCheckedChangeListener {
 
-    private var gender: String? = null
+    private var sex: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +28,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
         mEditTextName.addTextChangedListener(this)
         mRadioGroup.setOnCheckedChangeListener(this)
 
-        gender = mRadioMale.text.toString()
+        sex = mRadioMale.text.toString()
 
 
     }
@@ -31,10 +36,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
             R.id.mRadioMale -> {
-                gender = mRadioMale.text.toString()
+                sex = mRadioMale.text.toString()
             }
             R.id.mRadioFemale -> {
-                gender = mRadioFemale.text.toString()
+                sex = mRadioFemale.text.toString()
             }
         }
     }
@@ -71,15 +76,24 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.mButtonRegister -> {
+
+                val data = User(
+                    mEditTextName.text.toString(),
+                    mEditTextPhone.text.toString(),
+                    mEditTextPassword.text.toString(),
+                    sex!!,
+                    mEditTextAddress.text.toString(),
+                    UUID.randomUUID().toString()
+                )
+
                 if (validate()) {
-                    when (DBHelper().saveAccount(
-                        mEditTextName.text.toString(),
-                        mEditTextPhone.text.toString(),
-                        mEditTextPassword.text.toString(),
-                        gender!!,
-                        mEditTextAddress.text.toString(),
-                        "accessToken", this
-                    )) {
+                    when (DBHelper().registerAccount(data)) {
+                        true -> {
+                            clearData()
+                            val intent = Intent(this, SignInActivity::class.java)
+                            intent.putExtra(Constants.Data.DATA, data)
+                            startActivity(intent)
+                        }
                         false -> {
                             Dialog.showMessageDialog("Can not register account !", this)
                         }
@@ -89,6 +103,13 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
             }
         }
 
+    }
+
+    private fun clearData() {
+        mEditTextName.setText("")
+        mEditTextPhone.setText("")
+        mEditTextPassword.setText("")
+        mEditTextAddress.setText("")
     }
 
 

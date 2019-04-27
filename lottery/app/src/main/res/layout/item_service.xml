@@ -13,7 +13,9 @@
         android:background="@drawable/bg_item_selector"
         android:layout_height="wrap_content"
         android:padding="@dimen/normalPadding"
-        android:focusable="true">
+        android:focusable="true"
+
+>
 
 
     <ImageView

@@ -25,5 +25,6 @@ class SubServiceActivity : AppCompatActivity() {
         mRecyclerView?.adapter = mAdapter
 
         mAdapter.addItem(SubServiceItem(this))
+        mAdapter.addItem(SubServiceItem(this))
     }
 }

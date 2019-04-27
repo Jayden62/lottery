@@ -13,8 +13,10 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import lottery.com.R
 import lottery.com.database.DBHelper
+import lottery.com.model.User
 import lottery.com.screens.home.HomeActivity
 import lottery.com.screens.signup.SignUpActivity
+import lottery.com.utils.Constants
 import lottery.com.utils.Dialog
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
@@ -22,10 +24,24 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private val TAG = "SignInActivity"
 
+    private var data: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         captureOnClick()
+        getData()
+
+    }
+
+    private fun getData() {
+
+        data = intent.getParcelableExtra(Constants.Data.DATA)
+
+        if (data != null) {
+            mEditTextPhone.setText(data?.phoneNumber)
+            mEditTextPassword.setText(data?.passWord)
+        }
     }
 
     private fun captureOnClick() {
@@ -52,10 +68,22 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         when (v.id) {
             R.id.mButtonSignIn -> {
                 if (validate()) {
-                    ///Query user login
                     when (DBHelper().userLogin(mEditTextPhone.text.toString(), mEditTextPassword.text.toString())) {
                         true -> {
-                            startActivity(Intent(this, HomeActivity::class.java))
+
+                            if (data != null) {
+                                val intent = Intent(this, HomeActivity::class.java)
+                                intent.putExtra(Constants.Data.DATA, data)
+                                startActivity(intent)
+                            } else {
+                                val result = DBHelper().getUserByPhone(mEditTextPhone.text.toString())
+                                if (result != null) {
+                                    val intent = Intent(this, HomeActivity::class.java)
+                                    intent.putExtra(Constants.Data.DATA, result)
+                                    startActivity(intent)
+                                }
+                            }
+
                         }
                         false -> {
                             Dialog.showMessageDialog("validate information.", this)
