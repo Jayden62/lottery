@@ -1,4 +1,4 @@
-package lottery.com.utils
+package lottery.com.helper
 
 import android.content.Context
 import android.preference.PreferenceManager

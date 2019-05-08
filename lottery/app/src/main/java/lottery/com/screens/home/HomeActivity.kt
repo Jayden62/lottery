@@ -8,11 +8,12 @@ import kotlinx.android.synthetic.main.activity_home.*
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.view.MenuItem
+import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.fragments.news.FragmentNews
 import lottery.com.screens.fragments.profile.FragmentProfile
-import lottery.com.screens.fragments.service.FragmentService
-import lottery.com.utils.Constants
+import lottery.com.screens.fragments.typeservice.FragmentTypeService
+import lottery.com.helper.Constants
 
 class HomeActivity : AppCompatActivity() {
 
@@ -28,8 +29,9 @@ class HomeActivity : AppCompatActivity() {
         data = intent.getParcelableExtra(Constants.Data.DATA)
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         toolbar?.title = "Services"
-        loadFragments(FragmentService())
+        loadFragments(FragmentTypeService())
     }
+
 
     private val mOnNavigationItemSelectedListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -37,8 +39,8 @@ class HomeActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.mServiceMenu -> {
                     toolbar?.title = "Services"
-                    mFragment = FragmentService()
-                    loadFragments(mFragment as FragmentService)
+                    mFragment = FragmentTypeService()
+                    loadFragments(mFragment as FragmentTypeService)
                     return true
                 }
                 R.id.mNewsMenu -> {
@@ -61,6 +63,7 @@ class HomeActivity : AppCompatActivity() {
             return false
         }
     }
+
 
     private fun loadFragments(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

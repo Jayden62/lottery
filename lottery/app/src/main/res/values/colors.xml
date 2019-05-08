@@ -10,4 +10,8 @@
     <color name="grayColor">#bbc2ca</color>
     <color name="redColor">#e5063e</color>
     <color name="yellowColor">#a8a405</color>
+    <color name="newsColor">#f92f2f</color>
+    <color name="greenColor">#cbeda1</color>
+    <color name="colorSelectedItem">#f2f0ff</color>
+
 </resources>

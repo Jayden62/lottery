@@ -7,50 +7,43 @@
         android:layout_width="match_parent"
         android:clickable="true"
         android:layout_marginTop="@dimen/normalMargin"
-        android:elevation="4dp"
         android:layout_marginStart="@dimen/normalMargin"
         android:layout_marginEnd="@dimen/normalMargin"
+        android:elevation="4dp"
         android:background="@drawable/bg_item_selector"
         android:layout_height="wrap_content"
-        android:padding="@dimen/normalPadding"
-        android:focusable="true"
-
->
-
+        android:padding="@dimen/normalPadding">
 
     <ImageView
             android:id="@+id/mImageView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/photo_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="80dp"
+            android:scaleType="fitXY"
+            android:layout_height="80dp"/>
 
     <TextView
             android:id="@+id/mTextViewName"
             android:textSize="@dimen/normalSize"
-            android:maxLines="1"
             android:layout_marginEnd="@dimen/smallMargin"
             android:singleLine="true"
+            android:inputType="textMultiLine"
             android:layout_marginStart="@dimen/normalMargin"
             app:layout_constraintStart_toEndOf="@+id/mImageView"
             android:layout_width="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"/>
 
-    <TextView
-            android:id="@+id/mTextViewDescription"
-            android:textSize="@dimen/normalSize"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginTop="@dimen/smallMargin"
-            app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
-            android:layout_marginStart="@dimen/normalMargin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mImageView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+    <!--<TextView-->
+    <!--android:id="@+id/mTextViewDescription"-->
+    <!--android:textSize="@dimen/normalSize"-->
+    <!--android:maxLines="2"-->
+    <!--android:ellipsize="end"-->
+    <!--android:layout_marginTop="@dimen/smallMargin"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/mTextViewName"-->
+    <!--android:layout_marginStart="@dimen/normalMargin"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/mImageView"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"/>-->
 </android.support.constraint.ConstraintLayout>
 
 

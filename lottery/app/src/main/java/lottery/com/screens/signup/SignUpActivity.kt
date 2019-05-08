@@ -12,8 +12,8 @@ import lottery.com.R
 import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.signin.SignInActivity
-import lottery.com.utils.Constants
-import lottery.com.utils.Dialog
+import lottery.com.helper.Constants
+import lottery.com.helper.Dialog
 import java.util.*
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, RadioGroup.OnCheckedChangeListener {
@@ -46,28 +46,28 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
 
     private fun validate(): Boolean {
         if (mEditTextName.text.isEmpty() || mEditTextName.text == null) {
-            Dialog.showMessageDialog(" Please, input name.", this)
+            Dialog.MessageDialog.showMessageDialog(" Please, input name.", this)
             return false
         }
         if (mEditTextPhone.text.isEmpty() || mEditTextPhone.text == null) {
-            Dialog.showMessageDialog(" Please, input phone number.", this)
+            Dialog.MessageDialog.showMessageDialog(" Please, input phone number.", this)
             return false
         }
 
         if (mEditTextPhone.text.length > 10 || mEditTextPhone.text.length < 10) {
-            Dialog.showMessageDialog(" phone number is enough 10 characters.", this)
+            Dialog.MessageDialog.showMessageDialog(" phone number is enough 10 characters.", this)
             return false
         }
         if (mEditTextPassword.text.isEmpty() || mEditTextPassword.text == null) {
-            Dialog.showMessageDialog(" Please, input password.", this)
+            Dialog.MessageDialog.showMessageDialog(" Please, input password.", this)
             return false
         }
         if (mEditTextPassword.text.length < 6) {
-            Dialog.showMessageDialog("pass word at least 6 characters.", this)
+            Dialog.MessageDialog.showMessageDialog("pass word at least 6 characters.", this)
             return false
         }
         if (mEditTextAddress.text.isEmpty() || mEditTextAddress.text == null) {
-            Dialog.showMessageDialog(" Please, input address.", this)
+            Dialog.MessageDialog.showMessageDialog(" Please, input address.", this)
             return false
         }
         return true
@@ -87,6 +87,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                 )
 
                 if (validate()) {
+
+
                     when (DBHelper().registerAccount(data)) {
                         true -> {
                             clearData()
@@ -95,9 +97,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                             startActivity(intent)
                         }
                         false -> {
-                            Dialog.showMessageDialog("Can not register account !", this)
+                            Dialog.MessageDialog.showMessageDialog("Phone number is existed !", this)
                         }
                     }
+
                 }
 
             }

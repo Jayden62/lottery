@@ -1,6 +1,7 @@
-package lottery.com.screens.fragments.service
+package lottery.com.screens.fragments.typeservice
 
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,14 +10,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_service.*
+import kotlinx.android.synthetic.main.fragment_service.view.*
 
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
-import lottery.com.screens.fragments.subservice.SubServiceActivity
+import lottery.com.database.DBHelper
+import lottery.com.screens.fragments.service.ServiceActivity
+import lottery.com.screens.home.HomeActivity
 
-class FragmentService : Fragment(), ServiceItem.Callback {
+class FragmentTypeService : Fragment(), TypeServiceItem.Callback {
 
     private var mAdapter: BaseAdapter<Any> = BaseAdapter()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -28,30 +33,19 @@ class FragmentService : Fragment(), ServiceItem.Callback {
         onInit()
     }
 
+
     private fun onInit() {
         mAdapter = BaseAdapter()
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
         mRecyclerView?.adapter = mAdapter
-        mAdapter.addItem(
-            ServiceItem(
-                context!!,
-                "Tẩy trắng răng",
-                "Cô dâu xinh đẹp trong ngày vui của Hùng Dũng là Triệu Mộc Trinh, 22 tuổi, quê ở huyện Hàm Yên (tỉnh Tuyên Quang)",
-                this
-            )
-        )
-
-        mAdapter.addItem(
-            ServiceItem(
-                context!!,
-                "Tẩy trắng răng",
-                "Cô dâu xinh đẹp trong ngày vui của Hùng Dũng là Triệu Mộc Trinh, 22 tuổi, quê ở huyện Hàm Yên (tỉnh Tuyên Quang)",
-                this
-            )
-        )
+        val data = DBHelper().getTypeService() ?: return
+        for (it in data) {
+            mAdapter.addItem(TypeServiceItem(activity!!, it, this))
+        }
     }
 
+
     override fun onTapItem() {
-        startActivity(Intent(context, SubServiceActivity::class.java))
+        startActivity(Intent(context, ServiceActivity::class.java))
     }
 }

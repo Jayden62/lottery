@@ -5,12 +5,23 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:padding="@dimen/normalPadding"
-                                             tools:context=".screens.fragments.service.FragmentService">
+                                             tools:context=".screens.fragments.typeservice.FragmentTypeService">
+
+    <ImageView
+            android:id="@+id/mImageViewBack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/bg_arrow_back_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/mRecyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/mImageViewBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/smallMargin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

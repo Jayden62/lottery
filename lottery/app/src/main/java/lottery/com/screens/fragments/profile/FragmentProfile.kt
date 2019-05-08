@@ -1,6 +1,5 @@
 package lottery.com.screens.fragments.profile
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,18 +13,16 @@ import android.widget.EditText
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
-
 import lottery.com.R
 import lottery.com.database.DBHelper
 import lottery.com.model.User
-import lottery.com.utils.Constants
+import lottery.com.helper.Constants
+import lottery.com.helper.Dialog
 
 
 class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
 
-
     var data: User? = null
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -33,16 +30,17 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view?.mImageViewName.setOnClickListener(this)
-        view?.mButtonSave.setOnClickListener(this)
-        view?.mTextViewChangePassword?.setOnClickListener(this)
+        view.mImageViewName.setOnClickListener(this)
+        view.mImageViewAddress.setOnClickListener(this)
+        view.mButtonSave.setOnClickListener(this)
+        view.mTextViewChangePassword?.setOnClickListener(this)
         data = arguments?.getParcelable(Constants.Data.DATA) as? User
 
         if (data != null) {
-            view?.mEditTextName.setText(data?.name)
-            view?.mEditTextPhone.setText(data?.phoneNumber)
-            view?.mEditTextSex.setText(data?.sex)
-            view?.mEditTextAddress.setText(data?.address)
+            view.mEditTextName.setText(data?.name)
+            view.mEditTextPhone.setText(data?.phoneNumber)
+            view.mEditTextSex.setText(data?.sex)
+            view.mEditTextAddress.setText(data?.address)
         }
     }
 
@@ -61,11 +59,37 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
         when (v?.id) {
             R.id.mImageViewName -> {
                 mEditTextName.isEnabled = true
+                mButtonSave.isEnabled = true
+            }
+
+            R.id.mImageViewAddress -> {
                 mEditTextAddress.isEnabled = true
                 mButtonSave.isEnabled = true
             }
+
+            R.id.mButtonSave -> {
+                updateData()
+            }
             R.id.mTextViewChangePassword -> {
                 openDialogChangePassword()
+            }
+        }
+    }
+
+    private fun updateData() {
+        when (DBHelper().updateProfile(
+            data?.phoneNumber.toString(),
+            mEditTextName.text.toString(),
+            mEditTextAddress.text.toString()
+        )) {
+            true -> {
+                Dialog.MessageDialog.showMessageDialog("update successfully .", this!!.activity!!)
+                mEditTextName.isEnabled = false
+                mEditTextAddress.isEnabled = false
+                mButtonSave.isEnabled = false
+            }
+            false -> {
+                Dialog.MessageDialog.showMessageDialog("update failed .", this!!.activity!!)
             }
         }
     }
@@ -83,13 +107,6 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
         val mTextViewMessage = view.findViewById(R.id.mTextViewMessage) as TextView
 
         val alertDialog = dialog.create()
-        mButtonSend.isEnabled = false
-
-        mButtonClose.setOnClickListener { alertDialog.dismiss() }
-        mButtonSend.setOnClickListener {
-
-            alertDialog.dismiss()
-        }
 
         mEditTextOldPasword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -98,19 +115,33 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 mButtonSend.isEnabled = s.toString() != "" || s.toString().isNotEmpty()
-                when (DBHelper().checkOldPassword(s.toString())) {
-                    false -> {
-                        mTextViewMessage.text = "Password not match !"
-                        mTextViewMessage.setTextColor(resources.getColor(R.color.redColor))
-                    }
-                }
             }
 
             override fun afterTextChanged(s: Editable) {
 
             }
+        })
+
+        mButtonClose.setOnClickListener { alertDialog.dismiss() }
+        mButtonSend.setOnClickListener {
+            val password = mEditTextOldPasword.text.toString()
+            val newPassword = mEditTextNewPasword.text.toString()
+            val confirmPassword = mEditTextConfirmPasword.text.toString()
+
+            if (newPassword == confirmPassword) {
+                when (DBHelper().updatePassword(data?.phoneNumber.toString(), password, newPassword)) {
+                    true -> {
+                        Dialog.MessageDialog.showMessageDialog("your password is updated.", this.activity!!)
+                    }
+                    false -> {
+                        Dialog.MessageDialog.showMessageDialog("old password incorrect.", this.activity!!)
+                    }
+                }
+            } else {
+                Dialog.MessageDialog.showMessageDialog("new password not match.", this.activity!!)
+            }
+            alertDialog.dismiss()
         }
-        )
         dialog.setCancelable(true)
         alertDialog.show()
     }

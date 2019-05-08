@@ -1,13 +1,14 @@
-package lottery.com.screens.fragments.subservice
+package lottery.com.screens.fragments.service
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_sub_service.*
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
 
-class SubServiceActivity : AppCompatActivity() {
+class ServiceActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mAdapter: BaseAdapter<Any> = BaseAdapter()
 
@@ -15,7 +16,7 @@ class SubServiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_service)
-
+        mImageViewBack.setOnClickListener(this)
         onInit()
     }
 
@@ -24,7 +25,10 @@ class SubServiceActivity : AppCompatActivity() {
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.adapter = mAdapter
 
-        mAdapter.addItem(SubServiceItem(this))
-        mAdapter.addItem(SubServiceItem(this))
+        mAdapter.addItem(ServiceItem(this))
+    }
+
+    override fun onClick(v: View?) {
+        finish()
     }
 }

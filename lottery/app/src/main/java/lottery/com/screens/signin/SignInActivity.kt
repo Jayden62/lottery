@@ -1,12 +1,12 @@
 package lottery.com.screens.signin
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -16,8 +16,8 @@ import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.home.HomeActivity
 import lottery.com.screens.signup.SignUpActivity
-import lottery.com.utils.Constants
-import lottery.com.utils.Dialog
+import lottery.com.helper.Constants
+import lottery.com.helper.Dialog
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
@@ -26,13 +26,18 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private var data: User? = null
 
+    private var mProgressDialog: ProgressDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        mProgressDialog = ProgressDialog(this)
+        mProgressDialog?.setMessage("Loading data ...")
+        mProgressDialog?.setCancelable(false)
         captureOnClick()
         getData()
 
     }
+
 
     private fun getData() {
 
@@ -53,11 +58,11 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private fun validate(): Boolean {
         if (mEditTextPhone.text.isEmpty() || mEditTextPhone.text == null) {
-            Dialog.showMessageDialog(" Please, input phone number.", this)
+            Dialog.MessageDialog.showMessageDialog(" Please, input phone number.", this)
             return false
         }
         if (mEditTextPassword.text.isEmpty() || mEditTextPassword.text == null) {
-            Dialog.showMessageDialog(" Please, input password.", this)
+            Dialog.MessageDialog.showMessageDialog(" Please, input password.", this)
             return false
         }
 
@@ -67,28 +72,30 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.mButtonSignIn -> {
+                mProgressDialog?.show()
                 if (validate()) {
                     when (DBHelper().userLogin(mEditTextPhone.text.toString(), mEditTextPassword.text.toString())) {
                         true -> {
-
                             if (data != null) {
                                 val intent = Intent(this, HomeActivity::class.java)
                                 intent.putExtra(Constants.Data.DATA, data)
                                 startActivity(intent)
+                                finish()
                             } else {
                                 val result = DBHelper().getUserByPhone(mEditTextPhone.text.toString())
                                 if (result != null) {
                                     val intent = Intent(this, HomeActivity::class.java)
                                     intent.putExtra(Constants.Data.DATA, result)
                                     startActivity(intent)
+                                    finish()
                                 }
                             }
-
                         }
                         false -> {
-                            Dialog.showMessageDialog("validate information.", this)
+                            Dialog.MessageDialog.showMessageDialog("Wrong user name or password !", this)
                         }
                     }
+                    mProgressDialog?.dismiss()
                 }
             }
             R.id.mTextViewForgetPwd ->
@@ -125,9 +132,9 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             val phoneNumber = mEditTextPhone.text.toString()
             val passWord = DBHelper().forgetPassword(phoneNumber)
             if (passWord.isNotEmpty()) {
-                Dialog.showMessageDialog("Your pass word is : $passWord", this)
+                Dialog.MessageDialog.showMessageDialog("Your pass word is : $passWord", this)
             } else {
-                Dialog.showMessageDialog("Not found pass word this phone number", this)
+                Dialog.MessageDialog.showMessageDialog("Not found pass word with this phone number", this)
             }
             alertDialog.dismiss()
         }
