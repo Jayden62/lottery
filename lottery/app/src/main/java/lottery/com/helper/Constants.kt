@@ -2,7 +2,7 @@ package lottery.com.helper
 
 object Constants {
     object Config {
-        private const val serverName = "172.16.185.125"
+        private const val serverName = "192.168.1.8"
         private const val portNumber = "1521"
         private const val db = "db12c"
         const val driverName = "oracle.jdbc.driver.OracleDriver"
@@ -13,5 +13,9 @@ object Constants {
 
     object Data {
         const val DATA = "DATA"
+    }
+
+    object Date {
+        const val FORMAT_DD_MM_YYYY_HYPEN = "dd-MM-yyyy"
     }
 }

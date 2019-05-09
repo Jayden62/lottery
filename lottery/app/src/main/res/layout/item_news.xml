@@ -1,47 +1,31 @@
-<android.support.v7.widget.CardView
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_marginTop="@dimen/normalMargin"
+        android:id="@+id/mConstrainLayout"
+        android:background="@drawable/bg_item_selector"
+        android:clickable="true"
         android:layout_width="match_parent"
+        android:elevation="4dp"
         android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
+    <ImageView
+            android:id="@+id/mImageViewNews"
+            android:src="@drawable/photo_news"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:scaleType="centerInside"
+            android:layout_height="150dp"/>
 
+    <TextView
+            android:id="@+id/mTextViewTitle"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:layout_marginStart="@dimen/normalMargin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mImageViewNews"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/normalMargin"
+    />
 
-        <ImageView
-                android:id="@+id/mImageViewNews"
-                android:src="@drawable/photo_news"
-                android:layout_width="match_parent"
-                android:scaleType="fitCenter"
-                android:layout_height="150dp"/>
-
-        <TextView
-                android:id="@+id/mTextViewTitle"
-                android:text="announcement official from Lan Anh Dental"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:layout_marginStart="@dimen/normalMargin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mImageViewNews"
-                android:layout_width="0dp"
-                android:textSize="16sp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/mTextViewHighlight"
-                android:layout_marginEnd="@dimen/normalMargin"/>
-
-        <TextView android:id="@+id/mTextViewHighlight"
-                  android:text="newest"
-                  android:textColor="@android:color/white"
-                  android:background="@drawable/bg_highlight_news"
-                  android:layout_marginEnd="@dimen/normalMargin"
-                  android:layout_marginTop="@dimen/normalMargin"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintTop_toBottomOf="@+id/mImageViewNews"
-                  android:layout_width="80dp"
-                  android:gravity="center"
-                  android:layout_height="wrap_content"/>
-    </android.support.constraint.ConstraintLayout>
-
-</android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

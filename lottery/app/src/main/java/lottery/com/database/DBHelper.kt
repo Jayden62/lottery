@@ -6,6 +6,9 @@ import android.util.Log
 import lottery.com.model.User
 import lottery.com.helper.Constants
 import lottery.com.helper.DataHelper
+import lottery.com.helper.DateHelper
+import lottery.com.model.News
+import lottery.com.model.Service
 import lottery.com.model.TypeService
 import java.lang.Exception
 import java.sql.*
@@ -178,7 +181,7 @@ class DBHelper {
         return false
     }
 
-    fun getTypeService(): MutableList<TypeService>? {
+    fun getTypeServices(): MutableList<TypeService>? {
         try {
             val types: MutableList<TypeService> = mutableListOf()
             initPermission()
@@ -200,4 +203,84 @@ class DBHelper {
         }
         return null
     }
+
+    fun getServices(): MutableList<Service>? {
+        try {
+            val services: MutableList<Service> = mutableListOf()
+            initPermission()
+            this.conn = createConnection()
+            Log.d(TAG, "Connected")
+            val query = "select * from service"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val id = rs.getInt("service_id")
+                val name = rs.getString("service_name")
+                val price = rs.getInt("price")
+                val time = rs.getInt("time_todo")
+                val detail = rs.getString("detail_service")
+                val typeId = rs.getInt("type_service_id")
+                val item = Service(id, name, price, time, detail, typeId)
+                services.add(item)
+            }
+            return services
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
+
+    fun getServicePromotion(): Int {
+        var id: Int = 0
+        try {
+            initPermission()
+            this.conn = createConnection()
+            val query = "select service_id  from service where service_id = (select service_id from news )"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                id = rs.getInt("service_id")
+            }
+            return id
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return -1
+    }
+
+    fun getNews(): MutableList<News>? {
+        try {
+            val newsList: MutableList<News> = mutableListOf()
+            initPermission()
+            this.conn = createConnection()
+            Log.d(TAG, "Connected")
+            val query = "select * from news"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val id = rs.getInt("news_id")
+                val name = rs.getString("news_name")
+                val image = rs.getString("news_img")
+                val detail = rs.getString("details_news")
+                val startDate = rs.getDate("start_day")
+                val endDate = rs.getDate("end_day")
+                val serviceId = rs.getInt("service_id")
+                val item = News(
+                    id,
+                    name,
+                    image,
+                    detail,
+                    DateHelper.parseDate(startDate, Constants.Date.FORMAT_DD_MM_YYYY_HYPEN),
+                    DateHelper.parseDate(endDate, Constants.Date.FORMAT_DD_MM_YYYY_HYPEN),
+                    serviceId
+                )
+                newsList.add(item)
+            }
+            return newsList
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
+
 }

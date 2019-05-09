@@ -15,7 +15,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.fragments.service.ServiceActivity">
+        <activity android:name=".screens.newsdetail.NewsDetailActivity">
+        </activity>
+        <activity android:name=".screens.service.ServiceActivity">
         </activity>
         <activity android:name=".screens.signup.SignUpActivity">
         </activity>

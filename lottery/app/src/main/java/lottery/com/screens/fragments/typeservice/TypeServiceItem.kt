@@ -11,11 +11,11 @@ import lottery.com.helper.DataHelper
 import lottery.com.helper.DateHelper
 import lottery.com.model.TypeService
 
-class TypeServiceItem(var context: Context, var typeService: TypeService?, var callback: Callback) :
+class TypeServiceItem(var context: Context, var data: TypeService?, var callback: Callback) :
     BaseItem<Any>(context), View.OnClickListener {
 
     interface Callback {
-        fun onTapItem()
+        fun onTapItem(data: TypeService?)
     }
 
     override fun onInitLayout(): Int = R.layout.item_service
@@ -23,17 +23,17 @@ class TypeServiceItem(var context: Context, var typeService: TypeService?, var c
     override fun onBindView(view: View?) {
         view?.mConstrainLayout?.setOnClickListener(this)
 
-        view?.mTextViewName?.text = DataHelper.initText(typeService?.name.toString())
+        view?.mTextViewName?.text = DataHelper.initText(data?.name.toString())
         view?.mImageView?.let {
             Glide.with(mContext)
-                .load(typeService?.image)
+                .load(data?.image)
                 .apply(RequestOptions.circleCropTransform())
                 .into(it)
         }
     }
 
     override fun onClick(v: View?) {
-        callback.onTapItem()
+        callback.onTapItem(data)
     }
 
 }

@@ -6,16 +6,13 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         app:cardCornerRadius="4dp"
-        android:layout_marginStart="@dimen/normalMargin"
-        android:layout_marginEnd="@dimen/normalMargin"
         app:cardUseCompatPadding="true"
         app:cardElevation="4dp"
+        android:layout_marginTop="@dimen/normalMargin"
         app:contentPadding="@dimen/normalPadding"
         android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/mConstrainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -39,11 +36,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+        <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/redColor"
+                android:layout_marginTop="@dimen/smallMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+                android:id="@+id/mTextViewPromotion"
+                android:layout_height="wrap_content"/>
+
+
         <View
                 android:id="@+id/mViewLine"
                 android:visibility="invisible"
                 android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewPromotion"
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
@@ -75,7 +84,6 @@
                 android:singleLine="true"
                 android:text="Thời gian kết thúc : "
                 android:visibility="gone"
-
                 android:layout_marginTop="@dimen/normalMargin"
                 app:layout_constraintTop_toBottomOf="@+id/mTextViewPrice"
                 android:layout_width="wrap_content"
@@ -108,13 +116,13 @@
 
         <TextView
                 android:id="@+id/mTextViewDes"
-                android:singleLine="true"
                 android:visibility="gone"
-
                 android:layout_marginStart="@dimen/normalMargin"
                 android:layout_marginTop="@dimen/normalMargin"
                 app:layout_constraintTop_toBottomOf="@+id/mTextViewTime"
                 android:layout_width="0dp"
+                android:maxLines="3"
+                android:ellipsize="end"
                 app:layout_constraintStart_toEndOf="@+id/mTextViewDesLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content"/>

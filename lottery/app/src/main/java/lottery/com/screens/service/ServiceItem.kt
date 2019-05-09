@@ -1,4 +1,4 @@
-package lottery.com.screens.fragments.service
+package lottery.com.screens.service
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
@@ -11,15 +11,19 @@ import kotlinx.android.synthetic.main.item_sub_service.view.*
 import android.widget.TextView
 import android.view.animation.RotateAnimation
 import android.widget.Button
+import lottery.com.database.DBHelper
+import lottery.com.helper.Dialog
+import lottery.com.model.Service
 
 
-class ServiceItem(context: Context) : BaseItem<Any>(context), View.OnClickListener {
+class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context), View.OnClickListener {
 
     private var isRotated = false
 
     private var mImageView: ImageView? = null
     private var mConstrainLayout: ConstraintLayout? = null
     private var mTextViewName: TextView? = null
+    private var mTextViewPromotion: TextView? = null
     private var mTextViewPriceLabel: TextView? = null
     private var mTextViewPrice: TextView? = null
     private var mTextViewTimeLabel: TextView? = null
@@ -38,6 +42,7 @@ class ServiceItem(context: Context) : BaseItem<Any>(context), View.OnClickListen
         mConstrainLayout = view?.mConstrainLayout
         mImageView = view?.mImageView
         mTextViewName = view?.mTextViewName
+        mTextViewPromotion = view?.mTextViewPromotion
         mTextViewPrice = view?.mTextViewPrice
         mTextViewPriceLabel = view?.mTextViewPriceLabel
         mTextViewTime = view?.mTextViewTime
@@ -59,7 +64,17 @@ class ServiceItem(context: Context) : BaseItem<Any>(context), View.OnClickListen
 
         mButtonBook?.setOnClickListener(this)
 
-        mTextViewName?.text = "Cạo nhanh thần tốc"
+        mTextViewName?.text = value?.name
+        mTextViewPrice?.text = value?.price?.toString() + " VND "
+        mTextViewTime?.text = value?.timeTodo.toString() + " phút "
+        mTextViewDes?.text = value?.detail
+
+        if (value?.id == DBHelper().getServicePromotion()) {
+            mTextViewPromotion?.visibility = View.VISIBLE
+            mTextViewPromotion?.text = "Đang khuyến mãi"
+        } else {
+            mTextViewPromotion?.visibility = View.GONE
+        }
 
         isRotated = true
     }
@@ -85,7 +100,6 @@ class ServiceItem(context: Context) : BaseItem<Any>(context), View.OnClickListen
             R.id.mTextViewPriceLabel,
             R.id.mTextViewTime,
             R.id.mTextViewTimeLabel,
-            R.id.mTextViewDes,
             R.id.mTextViewDesLabel -> {
                 isRotated = when (isRotated) {
                     true -> {
@@ -120,7 +134,10 @@ class ServiceItem(context: Context) : BaseItem<Any>(context), View.OnClickListen
             R.id.mButtonBook -> {
 
             }
+
+            R.id.mTextViewDes -> {
+                Dialog.MessageDialog.showMessageDialog(value?.detail!!, mContext)
+            }
         }
     }
-
 }
