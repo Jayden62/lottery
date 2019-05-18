@@ -3,6 +3,7 @@
     <dimen name="smallestMargin">5dp</dimen>
     <dimen name="smallMargin">10dp</dimen>
     <dimen name="normalMargin">20dp</dimen>
+    <dimen name="mediumMargin">25dp</dimen>
     <dimen name="largeMargin">30dp</dimen>
     <dimen name="double_normalMargin">40dp</dimen>
 

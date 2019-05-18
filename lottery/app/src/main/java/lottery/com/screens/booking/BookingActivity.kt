@@ -1,10 +1,12 @@
 package lottery.com.screens.booking
 
 
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_booking.*
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
@@ -14,35 +16,31 @@ import java.util.Calendar
 
 class BookingActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var mAdapterDay: BaseAdapter<Any>? = null
 
-    private var mAdapterDate: BaseAdapter<Any>? = null
+    private var mAdapter: BaseAdapter<Any>? = null
 
     private var day: String? = null
     private var date: String? = null
     private var month: String? = null
     private var year: String? = null
 
-    private var daysOfWeek: MutableList<String> = mutableListOf("T2", "T3", "T4", "T5", "T6", "T7")
-
-    var isBold = false
-
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking)
-//        mButtonDate.setOnClickListener(this)
-//        mButtonSubmit.setOnClickListener(this)
-//        initDaysOfWeek()
+
+        mButtonSubmit.setOnClickListener(this)
+
         day = getCurrentDay()
         date = getCurrentDate()
         month = getCurrentMoth()
         year = getCurrentYear()
+        mAdapter?.removeAll()
         initDatesOfMonth()
+        mTextViewDay.text = convertDay(day!!)
         mTextViewToday.text =
             "$date\tTháng $month, $year"
 
-
-//        mTextViewToday.text = convertDay(getCurrentDate())
     }
 
     private fun getCurrentMoth(): String {
@@ -72,22 +70,13 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun convertDay(day: String): String {
         return when (day) {
-            "Mon" -> "T2"
-            "Tue" -> "T3"
-            "Wed" -> "T4"
-            "Thu" -> "T5"
-            "Fri" -> "T6"
-            "Sat" -> "T7"
+            "Mon" -> "Thứ 2"
+            "Tue" -> "Thứ 3"
+            "Wed" -> "Thứ 4"
+            "Thu" -> "Thứ 5"
+            "Fri" -> "Thứ 6"
+            "Sat" -> "Thứ 7"
             else -> day
-        }
-    }
-
-    private fun initDaysOfWeek() {
-        mAdapterDay = BaseAdapter()
-        mRecyclerView?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        mRecyclerView?.adapter = mAdapterDay
-        for (it in daysOfWeek) {
-            mAdapterDay?.addHeader(DayItem(this, it))
         }
     }
 
@@ -95,38 +84,37 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("MM")
         val value = dateFormat.format(currentDate)
-        var compareDate: Int? = 0
-        mAdapterDate = BaseAdapter()
+        val currentVal = date?.toInt()
+        mAdapter = BaseAdapter()
         mRecyclerView?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        mRecyclerView?.adapter = mAdapterDate
-
+        mRecyclerView?.adapter = mAdapter
         when (value) {
             "01", "03", "05", "07", "08", "10", "12" -> {
-                for (it in 1 until 31) {
-                    if (date?.toInt() == it) {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), true))
+                for (it in currentVal!!..31) {
+                    if (it == date?.toInt()) {
+                        mAdapter?.addItem(DateItem(this, it.toString(), 1))
                     } else {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), false))
-
+                        mAdapter?.addItem(DateItem(this, it.toString(), 0))
                     }
+
                 }
             }
             "04", "06", "09", "11" -> {
-                for (it in 1 until 30) {
-                    if (date?.toInt() == it) {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), true))
+                for (it in currentVal!!..31) {
+                    if (it == date?.toInt()) {
+                        mAdapter?.addItem(DateItem(this, it.toString(), 1))
                     } else {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), false))
+                        mAdapter?.addItem(DateItem(this, it.toString(), 0))
 
                     }
                 }
             }
             "02" -> {
-                for (it in 1 until 28) {
-                    if (date?.toInt() == it) {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), true))
+                for (it in currentVal!!..31) {
+                    if (it == date?.toInt()) {
+                        mAdapter?.addItem(DateItem(this, it.toString(), 1))
                     } else {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), false))
+                        mAdapter?.addItem(DateItem(this, it.toString(), 0))
 
                     }
                 }
@@ -136,6 +124,17 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
+
+            R.id.mButtonSubmit -> {
+                if (mAdapter?.itemCount!! > 1) {
+                    Toast.makeText(
+                        this,
+                        "Quý khách không thể đặt nhiều hơn 1 ngày. Vui lòng chỉ chọn 1 ngày hẹn.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
 //            R.id.mButtonDate -> {
 //                var mCalendar = Calendar.getInstance()
 //                val year = mCalendar.get(Calendar.YEAR)
