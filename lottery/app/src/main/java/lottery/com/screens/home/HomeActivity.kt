@@ -38,19 +38,19 @@ class HomeActivity : AppCompatActivity() {
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.mServiceMenu -> {
-                    toolbar?.title = "Services"
+                    toolbar?.title = "Dịch vụ"
                     mFragment = FragmentTypeService()
                     loadFragments(mFragment as FragmentTypeService)
                     return true
                 }
                 R.id.mNewsMenu -> {
-                    toolbar?.title = "Daily News"
+                    toolbar?.title = "Tin mới"
                     mFragment = FragmentNews()
                     loadFragments(mFragment as FragmentNews)
                     return true
                 }
                 R.id.mProfileMenu -> {
-                    toolbar?.title = "Profile"
+                    toolbar?.title = "Hồ sơ"
                     mFragment = FragmentProfile()
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.Data.DATA, data)

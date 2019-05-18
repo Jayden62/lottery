@@ -15,22 +15,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    <ImageView
-            android:id="@+id/mImageVieCart"
-            android:src="@drawable/bg_cart_selector"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <!--<Button-->
+    <!--android:id="@+id/mButtonBook"-->
+    <!--android:text="Đặt hẹn"-->
+    <!--android:textAllCaps="false"-->
+    <!--android:enabled="false"-->
+    <!--android:layout_marginEnd="@dimen/normalMargin"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/mTextViewCount"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:background="@drawable/bg_base_button_selector"-->
+    <!--android:layout_width="80dp"-->
+    <!--android:layout_height="30dp"/>-->
 
     <!--<TextView-->
-    <!--android:text="1"-->
-    <!--app:layout_constraintBottom_toBottomOf="@+id/mImageVieCart"-->
-    <!--android:textColor="@color/redColor"-->
-    <!---->
-    <!--app:layout_constraintEnd_toEndOf="@+id/mImageVieCart"-->
+    <!--android:layout_marginTop="@dimen/smallestMargin"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--android:id="@+id/mTextViewCount"-->
+    <!--android:text="0"-->
+    <!--android:layout_marginEnd="@dimen/normalMargin"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"/>-->
+
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/mRecyclerView"
@@ -40,6 +46,23 @@
             android:layout_marginTop="@dimen/smallMargin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:backgroundTint="@android:color/transparent"
+            android:id="@+id/mFloatingButton"
+            app:backgroundTint="@android:color/transparent"
+            app:fabSize="auto"
+            app:elevation="0dp"
+            android:scaleType="centerInside"
+            app:rippleColor="@android:color/transparent"
+            android:elevation="0dp"
+            android:layout_marginEnd="@dimen/normalMargin"
+            android:layout_marginBottom="@dimen/double_normalMargin"
+            android:src="@drawable/bg_selected_services_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 
 </android.support.constraint.ConstraintLayout>

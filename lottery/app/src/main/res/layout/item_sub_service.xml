@@ -3,11 +3,12 @@
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
+        android:id="@+id/mCardView"
         android:layout_width="match_parent"
         app:cardCornerRadius="4dp"
         app:cardUseCompatPadding="true"
         app:cardElevation="4dp"
+        app:cardBackgroundColor="@android:color/white"
         android:layout_marginTop="@dimen/normalMargin"
         app:contentPadding="@dimen/normalPadding"
         android:layout_height="wrap_content">
@@ -29,12 +30,24 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@+id/mImageView"/>
 
+
         <ImageView
                 android:id="@+id/mImageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/ic_keyboard_arrow_up_black_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+        <CheckBox
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+                android:id="@+id/mCheckBox"
+                android:layout_marginTop="@dimen/smallMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Chọn dịch vụ này"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+        />
 
         <TextView
                 android:visibility="gone"
@@ -43,7 +56,7 @@
                 android:textColor="@color/redColor"
                 android:layout_marginTop="@dimen/smallMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+                app:layout_constraintTop_toBottomOf="@+id/mCheckBox"
                 android:id="@+id/mTextViewPromotion"
                 android:layout_height="wrap_content"/>
 
@@ -94,7 +107,6 @@
                 android:id="@+id/mTextViewTime"
                 android:singleLine="true"
                 android:visibility="gone"
-
                 android:layout_marginStart="@dimen/normalMargin"
                 android:layout_marginTop="@dimen/normalMargin"
                 app:layout_constraintTop_toBottomOf="@+id/mTextViewPrice"
@@ -127,18 +139,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content"/>
 
-        <Button
-                android:id="@+id/mButtonBook"
-                android:text="Book"
-                android:textColor="@android:color/white"
-                android:background="@drawable/bg_base_button_selector"
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewDes"
-                android:layout_width="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:layout_marginEnd="@dimen/normalMargin"
-                android:layout_height="30dp"/>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -15,7 +15,7 @@
             tools:context=".screens.signup.SignUpActivity">
 
         <TextView
-                android:text="Register Account"
+                android:text="Đăng kí tài khoản"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/normalMargin"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
                 android:background="@drawable/bg_rectangle_border_edit_text"
                 android:drawableLeft="@drawable/ic_person_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
-                android:hint="Full name"
+                android:hint="Họ và tên"
                 android:padding="@dimen/normalPadding"
                 android:textSize="@dimen/normalSize"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
                 android:background="@drawable/bg_rectangle_border_edit_text"
                 android:drawableLeft="@drawable/ic_local_phone_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
-                android:hint="Mobile phone"
+                android:hint="Số điện thoại"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:padding="@dimen/normalPadding"
@@ -67,7 +67,7 @@
                 android:background="@drawable/bg_rectangle_border_edit_text"
                 android:drawableLeft="@drawable/ic_visibility_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
-                android:hint="Password"
+                android:hint="Mật khẩu"
                 android:padding="@dimen/normalPadding"
                 android:textSize="@dimen/normalSize"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
                 android:background="@drawable/bg_rectangle_border_edit_text"
                 android:drawableLeft="@drawable/ic_home_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
-                android:hint="Address"
+                android:hint="Địa chỉ hiện tại"
                 android:padding="@dimen/normalPadding"
                 android:textSize="@dimen/normalSize"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
 
             <RadioButton
                     android:id="@+id/mRadioMale"
-                    android:text="Male"
+                    android:text="Nam"
                     android:checked="true"
                     android:textSize="@dimen/mediumSize"
                     android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
             <RadioButton
                     android:id="@+id/mRadioFemale"
                     android:layout_marginStart="@dimen/normalMargin"
-                    android:text="Female"
+                    android:text="Nữ"
                     android:textSize="@dimen/mediumSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -118,7 +118,7 @@
 
         <Button
                 android:id="@+id/mButtonRegister"
-                android:text="Register"
+                android:text="Đăng kí"
                 android:enabled="false"
                 android:textColor="@android:color/white"
                 android:background="@drawable/bg_base_button_selector"

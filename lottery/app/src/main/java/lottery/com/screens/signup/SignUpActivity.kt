@@ -46,28 +46,28 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
 
     private fun validate(): Boolean {
         if (mEditTextName.text.isEmpty() || mEditTextName.text == null) {
-            Dialog.MessageDialog.showMessageDialog(" Please, input name.", this)
+            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập họ và tên.", this)
             return false
         }
         if (mEditTextPhone.text.isEmpty() || mEditTextPhone.text == null) {
-            Dialog.MessageDialog.showMessageDialog(" Please, input phone number.", this)
+            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập số điện thoại.", this)
             return false
         }
 
         if (mEditTextPhone.text.length > 10 || mEditTextPhone.text.length < 10) {
-            Dialog.MessageDialog.showMessageDialog(" phone number is enough 10 characters.", this)
+            Dialog.MessageDialog.showMessageDialog("Số điện thoại không đủ 10 số.", this)
             return false
         }
         if (mEditTextPassword.text.isEmpty() || mEditTextPassword.text == null) {
-            Dialog.MessageDialog.showMessageDialog(" Please, input password.", this)
+            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập mật khẩu.", this)
             return false
         }
         if (mEditTextPassword.text.length < 6) {
-            Dialog.MessageDialog.showMessageDialog("pass word at least 6 characters.", this)
+            Dialog.MessageDialog.showMessageDialog("Mật khẩu ít nhất 6 kí tự.", this)
             return false
         }
         if (mEditTextAddress.text.isEmpty() || mEditTextAddress.text == null) {
-            Dialog.MessageDialog.showMessageDialog(" Please, input address.", this)
+            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập địa chỉ.", this)
             return false
         }
         return true
@@ -97,7 +97,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                             startActivity(intent)
                         }
                         false -> {
-                            Dialog.MessageDialog.showMessageDialog("Phone number is existed !", this)
+                            Dialog.MessageDialog.showMessageDialog("Số điện thoại đã tồn tại !", this)
                         }
                     }
 

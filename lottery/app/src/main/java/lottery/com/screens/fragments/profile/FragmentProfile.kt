@@ -131,14 +131,14 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
             if (newPassword == confirmPassword) {
                 when (DBHelper().updatePassword(data?.phoneNumber.toString(), password, newPassword)) {
                     true -> {
-                        Dialog.MessageDialog.showMessageDialog("your password is updated.", this.activity!!)
+                        Dialog.MessageDialog.showMessageDialog("Mật khẩu đã được cập nhật.", this.activity!!)
                     }
                     false -> {
-                        Dialog.MessageDialog.showMessageDialog("old password incorrect.", this.activity!!)
+                        Dialog.MessageDialog.showMessageDialog("Mật khẩu cũ không chính xác !", this.activity!!)
                     }
                 }
             } else {
-                Dialog.MessageDialog.showMessageDialog("new password not match.", this.activity!!)
+                Dialog.MessageDialog.showMessageDialog("Mật khẩu mới không trùng khớp.", this.activity!!)
             }
             alertDialog.dismiss()
         }

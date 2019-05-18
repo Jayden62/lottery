@@ -58,11 +58,11 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private fun validate(): Boolean {
         if (mEditTextPhone.text.isEmpty() || mEditTextPhone.text == null) {
-            Dialog.MessageDialog.showMessageDialog(" Please, input phone number.", this)
+            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập số điện .", this)
             return false
         }
         if (mEditTextPassword.text.isEmpty() || mEditTextPassword.text == null) {
-            Dialog.MessageDialog.showMessageDialog(" Please, input password.", this)
+            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập mật khẩu .", this)
             return false
         }
 
@@ -92,7 +92,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                             }
                         }
                         false -> {
-                            Dialog.MessageDialog.showMessageDialog("Wrong user name or password !", this)
+                            Dialog.MessageDialog.showMessageDialog("Sai tên đăng nhập hoặc mật khẩu !", this)
                         }
                     }
                     mProgressDialog?.dismiss()
@@ -102,7 +102,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                 /**
                  * Open dialog
                  */
-                createDialog()
+                getPasswordDialog()
             R.id.mTextViewRegister -> {
                 /**
                  * Move to SignUp screen
@@ -116,7 +116,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
          */
     }
 
-    private fun createDialog() {
+    private fun getPasswordDialog() {
         val dialog = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
         val view = inflater.inflate(R.layout.forgot_password_dialog, null)
@@ -132,9 +132,9 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             val phoneNumber = mEditTextPhone.text.toString()
             val passWord = DBHelper().forgetPassword(phoneNumber)
             if (passWord.isNotEmpty()) {
-                Dialog.MessageDialog.showMessageDialog("Your pass word is : $passWord", this)
+                Dialog.MessageDialog.showMessageDialog("Mật khẩu hiện tại là : $passWord.", this)
             } else {
-                Dialog.MessageDialog.showMessageDialog("Not found pass word with this phone number", this)
+                Dialog.MessageDialog.showMessageDialog("Không tìm thấy mật khẩu với sô điện thoại này !", this)
             }
             alertDialog.dismiss()
         }

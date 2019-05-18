@@ -1,22 +1,28 @@
 package lottery.com.screens.service
 
 import android.content.Context
+import android.os.Build
 import android.support.constraint.ConstraintLayout
+import android.support.v7.widget.CardView
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import lottery.com.R
 import lottery.com.base.list.BaseItem
 import kotlinx.android.synthetic.main.item_sub_service.view.*
-import android.widget.TextView
 import android.view.animation.RotateAnimation
-import android.widget.Button
+import android.widget.*
 import lottery.com.database.DBHelper
 import lottery.com.helper.Dialog
 import lottery.com.model.Service
 
 
-class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context), View.OnClickListener {
+class ServiceItem(var context: Context, var value: Service?, var callback: Callback) : BaseItem<Any>(context),
+    View.OnClickListener,
+    CompoundButton.OnCheckedChangeListener {
+
+    interface Callback {
+        fun onCheckItem(value: Service?)
+    }
 
     private var isRotated = false
 
@@ -30,8 +36,10 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
     private var mTextViewTime: TextView? = null
     private var mTextViewDesLabel: TextView? = null
     private var mTextViewDes: TextView? = null
-    private var mButtonBook: Button? = null
+    private var mCheckBox: CheckBox? = null
     private var mViewLine: View? = null
+
+    private var mCardView: CardView? = null
 
     val TAG = "ServiceItem"
 
@@ -49,8 +57,9 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
         mTextViewTimeLabel = view?.mTextViewTimeLabel
         mTextViewDes = view?.mTextViewDes
         mTextViewDesLabel = view?.mTextViewDesLabel
-        mButtonBook = view?.mButtonBook
+        mCheckBox = view?.mCheckBox
         mViewLine = view?.mViewLine
+        mCardView = view?.mCardView
 
         mConstrainLayout?.setOnClickListener(this)
         mImageView?.setOnClickListener(this)
@@ -62,7 +71,7 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
         mTextViewDes?.setOnClickListener(this)
         mTextViewDesLabel?.setOnClickListener(this)
 
-        mButtonBook?.setOnClickListener(this)
+        mCheckBox?.setOnCheckedChangeListener(this)
 
         mTextViewName?.text = value?.name
         mTextViewPrice?.text = value?.price?.toString() + " VND "
@@ -91,6 +100,17 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
         mImageView?.startAnimation(rotateAnim)
     }
 
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mCheckBox?.isChecked!!) {
+                callback.onCheckItem(value)
+                mCardView?.setBackgroundColor(mContext.getColor(R.color.grayColor))
+            } else {
+                mCardView?.setBackgroundColor(mContext.getColor(R.color.colorWhite))
+            }
+        }
+    }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.mConstrainLayout,
@@ -110,7 +130,6 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
                         mTextViewTimeLabel?.visibility = View.VISIBLE
                         mTextViewDes?.visibility = View.VISIBLE
                         mTextViewDesLabel?.visibility = View.VISIBLE
-                        mButtonBook?.visibility = View.VISIBLE
                         mViewLine?.visibility = View.VISIBLE
                         Log.d(TAG, isRotated.toString())
                         false
@@ -123,7 +142,6 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
                         mTextViewTimeLabel?.visibility = View.GONE
                         mTextViewDes?.visibility = View.GONE
                         mTextViewDesLabel?.visibility = View.GONE
-                        mButtonBook?.visibility = View.GONE
                         mViewLine?.visibility = View.INVISIBLE
                         Log.d(TAG, isRotated.toString())
                         true
@@ -131,9 +149,6 @@ class ServiceItem(context: Context, var value: Service?) : BaseItem<Any>(context
                 }
             }
 
-            R.id.mButtonBook -> {
-
-            }
 
             R.id.mTextViewDes -> {
                 Dialog.MessageDialog.showMessageDialog(value?.detail!!, mContext)
