@@ -1,74 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
-        tools:context=".screens.booking.BookingActivity">
-    <android.support.v7.widget.RecyclerView
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/mRecyclerView"
+        android:layout_width="match_parent">
+    <android.support.constraint.ConstraintLayout
+            xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            tools:context=".screens.booking.BookingActivity">
+        <android.support.v7.widget.RecyclerView
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/mRecyclerViewDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-    <TextView
-            android:layout_marginTop="@dimen/normalMargin"
-            android:id="@+id/mTextView"
-            android:text="Hôm nay"
-            android:layout_marginStart="@dimen/mediumMargin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mRecyclerView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <android.support.v7.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewDay"
+                android:id="@+id/mRecyclerViewDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-
-    <View
-            android:id="@+id/mViewLine"
-            android:layout_marginStart="@dimen/mediumMargin"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@android:color/black"
-            android:layout_marginTop="@dimen/smallMargin"
-            app:layout_constraintTop_toBottomOf="@id/mTextView"
-            android:layout_width="20dp"
-            android:layout_height="1dp"/>
-
-
-    <TextView
-            android:id="@+id/mTextViewToday"
-            android:textSize="16sp"
-            android:layout_marginTop="@dimen/smallMargin"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/mediumMargin"
-            android:textColor="@android:color/black"
-            app:layout_constraintTop_toBottomOf="@+id/mViewLine"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    <TextView android:layout_marginTop="@dimen/smallMargin"
-              app:layout_constraintEnd_toEndOf="parent"
-              android:id="@+id/mTextViewDay"
-              android:textSize="16sp"
-              android:layout_marginEnd="@dimen/normalMargin"
-              app:layout_constraintTop_toBottomOf="@+id/mViewLine"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
-
-    <Button
-            android:id="@+id/mButtonSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Xác nhận"
-            android:layout_marginBottom="@dimen/normalMargin"
-            android:layout_marginEnd="@dimen/normalMargin"
-            android:layout_marginStart="@dimen/normalMargin"
-            android:textColor="@android:color/white"
-            android:background="@drawable/bg_base_button_selector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-    />
+        <TextView
+                android:layout_marginTop="@dimen/normalMargin"
+                android:id="@+id/mTextView"
+                android:text="Hôm nay"
+                android:layout_marginStart="@dimen/normalMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
 
-</android.support.constraint.ConstraintLayout>
+        <View
+                android:id="@+id/mViewLine"
+                android:layout_marginStart="@dimen/normalMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@android:color/black"
+                android:layout_marginTop="@dimen/smallMargin"
+                app:layout_constraintTop_toBottomOf="@id/mTextView"
+                android:layout_width="20dp"
+                android:layout_height="1dp"/>
+
+
+        <TextView
+                android:id="@+id/mTextViewToday"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/mViewLine"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView android:layout_marginTop="@dimen/smallMargin"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/mTextViewDay"
+                  android:textSize="16sp"
+                  android:layout_marginEnd="@dimen/normalMargin"
+                  app:layout_constraintTop_toBottomOf="@+id/mViewLine"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/mTextViewFrame"
+                android:layout_marginTop="@dimen/normalMargin"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewToday"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#f20"
+                android:text="Khung Giờ Làm Việc"
+                android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewFrame"
+                android:id="@+id/mRecyclerViewFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <!--<Button-->
+        <!--android:id="@+id/mButtonSubmit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Xác nhận"-->
+        <!--android:layout_marginBottom="@dimen/normalMargin"-->
+        <!--android:layout_marginEnd="@dimen/normalMargin"-->
+        <!--android:layout_marginStart="@dimen/normalMargin"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:background="@drawable/bg_base_button_selector"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--/>-->
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
+

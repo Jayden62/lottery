@@ -2,7 +2,7 @@ package lottery.com.helper
 
 object Constants {
     object Config {
-        private const val serverName = "192.168.1.12"
+        private const val serverName = "192.168.1.20"
         private const val portNumber = "1521"
         private const val db = "db12c"
         const val driverName = "oracle.jdbc.driver.OracleDriver"

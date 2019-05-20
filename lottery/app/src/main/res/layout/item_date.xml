@@ -6,26 +6,18 @@
         android:layout_width="wrap_content"
         android:padding="@dimen/normalPadding"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/normalMargin"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content">
     <TextView
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/mTextViewDate"
-            android:textStyle="bold"
+            android:paddingBottom="@dimen/smallestPadding"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/smallestMargin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    <CheckBox
-            app:layout_constraintTop_toBottomOf="@+id/mTextViewDate"
-            android:id="@+id/mCheckBox"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/mTextViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            android:background="@drawable/bg_rouded_selected_date_item"
+            android:gravity="center"
     />
 
 </android.support.constraint.ConstraintLayout>

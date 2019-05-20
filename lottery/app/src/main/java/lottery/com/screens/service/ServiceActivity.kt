@@ -14,6 +14,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
+import kotlinx.android.synthetic.main.item_sub_service.*
 import lottery.com.model.Service
 import lottery.com.screens.booking.BookingActivity
 
@@ -24,6 +25,12 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
     private var mAdapterSelected: BaseAdapter<Any> = BaseAdapter()
 
     private var mSelectedData: MutableList<Service>? = mutableListOf()
+
+    private var carts: MutableList<Service>? = mutableListOf()
+
+    private var name: String? = null
+
+    private var data: MutableList<Service>? = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +48,7 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 
 
         val value = intent.getParcelableExtra(Constants.Data.DATA) as TypeService
-        val data = DBHelper().getServices()
+        data = DBHelper().getServices()
 
         if (data?.size == 0) {
             mAdapter.addItem(ServiceEmptyItem(this))
@@ -61,11 +68,24 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 //                startActivity(intent)
                 createServicesDialog(mSelectedData)
             }
+
+            R.id.mImageViewBack -> {
+                finish()
+            }
         }
     }
 
     override fun onCheckItem(value: Service?) {
+//        if (carts == null) {
+//            return
+//        }
+//        carts?.add(value!!)
+//
+//        for (it in carts!!) {
+//
+//        }
         mSelectedData?.add(value!!)
+
     }
 
     private fun createServicesDialog(data: MutableList<Service>?) {
@@ -81,10 +101,10 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
         val mButtonBook = view.findViewById(R.id.mButtonBook) as Button
         val mRecyclerViewSelectedService = view.findViewById(R.id.mRecyclerViewSelectedService) as RecyclerView
         mAdapterSelected = BaseAdapter()
-        mRecyclerViewSelectedService?.layoutManager = LinearLayoutManager(this)
-        mRecyclerViewSelectedService?.adapter = mAdapterSelected
+        mRecyclerViewSelectedService.layoutManager = LinearLayoutManager(this)
+        mRecyclerViewSelectedService.adapter = mAdapterSelected
 
-        for (it in data!!) {
+        for (it in data) {
             counter++
             mAdapterSelected.addItem(SelectedItem(this, it.name, counter))
         }

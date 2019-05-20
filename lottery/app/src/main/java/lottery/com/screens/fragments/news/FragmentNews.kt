@@ -32,15 +32,15 @@ class FragmentNews : Fragment(), NewsItem.Callback {
     }
 
     private fun onInit() {
-
+        mRecyclerView?.layoutManager = LinearLayoutManager(context)
+        mRecyclerView?.adapter = mAdapter
         val data = DBHelper().getNews()
         if (data?.size != 0) {
             for (item in data!!) {
                 mAdapter.addItem(NewsItem(activity!!, item, this))
             }
         }
-        mRecyclerView?.layoutManager = LinearLayoutManager(context)
-        mRecyclerView?.adapter = mAdapter
+
 
     }
 

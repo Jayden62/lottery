@@ -6,7 +6,7 @@
     <color name="colorGray">#a8b2c1</color>
 
     <color name="activeColor">#16a38b</color>
-    <color name="selectedDateColor">#28829b</color>
+    <color name="selectedDateColor">#0e7591</color>
 
     <color name="grayColor">#bbc2ca</color>
     <color name="redColor">#e5063e</color>
@@ -15,6 +15,6 @@
     <color name="greenColor">#cbeda1</color>
     <color name="colorSelectedItem">#f2f0ff</color>
     <color name="colorWhite">#ffffff</color>
-
+    <color name="colorBlack">#000000</color>
 
 </resources>

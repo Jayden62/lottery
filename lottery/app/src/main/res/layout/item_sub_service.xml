@@ -60,7 +60,6 @@
                 android:id="@+id/mTextViewPromotion"
                 android:layout_height="wrap_content"/>
 
-
         <View
                 android:id="@+id/mViewLine"
                 android:visibility="invisible"

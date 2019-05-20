@@ -11,15 +11,15 @@ import kotlinx.android.synthetic.main.item_date.view.*
 
 
 class DateItem(var context: Context, var date: String, var isBold: Int) :
-    BaseItem<Any>(context), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    BaseItem<Any>(context), View.OnClickListener {
 
     private var mTextViewDate: TextView? = null
 
     override fun onInitLayout(): Int = R.layout.item_date
 
     override fun onBindView(view: View?) {
+
         view?.mTextViewDate?.text = date
-        view?.mCheckBox?.setOnCheckedChangeListener(this)
         view?.mConstrainLayout?.setOnClickListener(this)
 
         mTextViewDate = view?.mTextViewDate
@@ -27,33 +27,21 @@ class DateItem(var context: Context, var date: String, var isBold: Int) :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when (isBold) {
                 1 -> {
-                    view?.mTextViewDate?.setTextColor(context.getColor(R.color.redColor))
-                    view?.mCheckBox?.isChecked = true
+                    mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_selected_date_item)
                 }
                 0 -> {
-                    view?.mTextViewDate?.setTextColor(context.getColor(R.color.grayColor))
-                    view?.mCheckBox?.isChecked = false
+                    mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_unselected_date_item)
                 }
             }
         }
 
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isChecked) {
-                mTextViewDate?.setTextColor(context.getColor(R.color.redColor))
-            } else {
-                mTextViewDate?.setTextColor(context.getColor(R.color.grayColor))
-            }
-        }
-
-    }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.mTextViewDate, R.id.mConstrainLayout -> {
-
+                mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_selected_date_item)
             }
         }
     }

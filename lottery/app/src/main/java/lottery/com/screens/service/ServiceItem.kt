@@ -1,5 +1,6 @@
 package lottery.com.screens.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.support.constraint.ConstraintLayout
@@ -16,7 +17,7 @@ import lottery.com.helper.Dialog
 import lottery.com.model.Service
 
 
-class ServiceItem(var context: Context, var value: Service?, var callback: Callback) : BaseItem<Any>(context),
+class ServiceItem(var context: Context, var value: Service?, private var callback: Callback) : BaseItem<Any>(context),
     View.OnClickListener,
     CompoundButton.OnCheckedChangeListener {
 
@@ -45,6 +46,7 @@ class ServiceItem(var context: Context, var value: Service?, var callback: Callb
 
     override fun onInitLayout(): Int = R.layout.item_sub_service
 
+    @SuppressLint("SetTextI18n")
     override fun onBindView(view: View?) {
 
         mConstrainLayout = view?.mConstrainLayout
@@ -78,6 +80,7 @@ class ServiceItem(var context: Context, var value: Service?, var callback: Callb
         mTextViewTime?.text = value?.timeTodo.toString() + " phút "
         mTextViewDes?.text = value?.detail
 
+
         if (value?.id == DBHelper().getServicePromotion()) {
             mTextViewPromotion?.visibility = View.VISIBLE
             mTextViewPromotion?.text = "Đang khuyến mãi"
@@ -103,8 +106,8 @@ class ServiceItem(var context: Context, var value: Service?, var callback: Callb
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (mCheckBox?.isChecked!!) {
-                callback.onCheckItem(value)
                 mCardView?.setBackgroundColor(mContext.getColor(R.color.grayColor))
+                callback.onCheckItem(value)
             } else {
                 mCardView?.setBackgroundColor(mContext.getColor(R.color.colorWhite))
             }
@@ -148,11 +151,10 @@ class ServiceItem(var context: Context, var value: Service?, var callback: Callb
                     }
                 }
             }
-
-
             R.id.mTextViewDes -> {
                 Dialog.MessageDialog.showMessageDialog(value?.detail!!, mContext)
             }
+
         }
     }
 }

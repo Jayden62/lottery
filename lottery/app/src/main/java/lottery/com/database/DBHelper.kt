@@ -3,13 +3,10 @@ package lottery.com.database
 import android.annotation.SuppressLint
 import android.os.StrictMode
 import android.util.Log
-import lottery.com.model.User
 import lottery.com.helper.Constants
 import lottery.com.helper.DataHelper
 import lottery.com.helper.DateHelper
-import lottery.com.model.News
-import lottery.com.model.Service
-import lottery.com.model.TypeService
+import lottery.com.model.*
 import java.lang.Exception
 import java.sql.*
 
@@ -92,10 +89,8 @@ class DBHelper {
 
                 data = User(name, phone, pwd, sex, address, token)
             }
-
-            return data
-
             conn?.close()
+            return data
         } catch (e: Exception) {
             Log.d(TAG, e.message)
         }
@@ -231,7 +226,7 @@ class DBHelper {
     }
 
     fun getServicePromotion(): Int {
-        var id: Int = 0
+        var id = 0
         try {
             initPermission()
             this.conn = createConnection()
@@ -283,4 +278,23 @@ class DBHelper {
         return null
     }
 
+    fun getTimeFrame(): TimeFrame? {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            Log.d(TAG, "Connected")
+            val query = "select * from timeframe"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val id = rs.getInt("timeframe_id")
+                val detail = rs.getString("details_timeframe")
+                return TimeFrame(id, detail)
+            }
+
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
 }
