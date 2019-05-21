@@ -27,7 +27,7 @@ class BaseAdapter<T> : RecyclerView.Adapter<BaseHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder =
-        BaseHolder(LayoutInflater.from(parent?.context).inflate(viewType, parent, false))
+        BaseHolder(LayoutInflater.from(parent.context).inflate(viewType, parent, false))
 
     /**
      * Return layout resource of item

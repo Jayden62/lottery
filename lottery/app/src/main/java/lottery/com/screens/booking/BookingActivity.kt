@@ -5,14 +5,12 @@ import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.activity_booking.*
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import android.util.Log
 import android.view.animation.TranslateAnimation
 
 class BookingActivity : AppCompatActivity(), View.OnClickListener {
@@ -41,22 +39,24 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
         month = getCurrentMoth()
         year = getCurrentYear()
         initData()
+        initAnimation()
+        mTextViewDay.text = convertLongDay(day!!)
+        mTextViewToday.text =
+            "$date\tTháng $month, $year"
+    }
+
+    private fun initAnimation() {
         val animation = TranslateAnimation(
             500f,
             0f,
             500f,
             0f
-        ) // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
+        )
         animation.duration = 1000 // animation duration
         animation.fillAfter = true
         mTextViewFrame.startAnimation(animation)
-
-        mTextViewDay.text = convertDay(day!!)
-        mTextViewToday.text =
-            "$date\tTháng $month, $year"
-
+        mTextViewStart.startAnimation(animation)
     }
-
 
     private fun getCurrentMoth(): String {
         val date = Calendar.getInstance().time
@@ -83,7 +83,7 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun convertDay(day: String): String {
+    private fun convertLongDay(day: String): String {
         return when (day) {
             "Mon" -> "Thứ 2"
             "Tue" -> "Thứ 3"
@@ -96,11 +96,36 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun convertShortDay(day: String): String {
+        return when (day) {
+            "Mon" -> "T2"
+            "Tue" -> "T3"
+            "Wed" -> "T4"
+            "Thu" -> "T5"
+            "Fri" -> "T6"
+            "Sat" -> "T7"
+            "Sun" -> "CN"
+            else -> day
+        }
+    }
+
+    private fun convertDayNumber(value: Int): String {
+        return when (value) {
+            2 -> "T2"
+            3 -> "T3"
+            4 -> "T4"
+            5 -> "T5"
+            6 -> "T6"
+            1 -> "T7"
+            0 -> "CN"
+            else -> value.toString()
+        }
+    }
+
     private fun initData() {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("MM")
         val value = dateFormat.format(currentDate)
-        val currentVal = date?.toInt()
         /**
          * Init adapter for days
          */
@@ -114,23 +139,33 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
         mRecyclerViewDate?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerViewDate?.adapter = mAdapterDate
 
+
         /**
          * Init adapter for times frame
          */
-        mAdapterFrame = BaseAdapter()
-        mRecyclerViewFrame?.layoutManager = LinearLayoutManager(this)
-        mRecyclerViewFrame?.adapter = mAdapterFrame
-        mAdapterFrame?.addItem(FrameItem(this, "Minh Zâm"))
-        mAdapterFrame?.addItem(FrameItem(this, "Minh Zâm"))
-        mAdapterFrame?.addItem(FrameItem(this, "Minh Zâm"))
+//        mAdapterFrame = BaseAdapter()
+//        mRecyclerViewFrame?.layoutManager = LinearLayoutManager(this)
+//        mRecyclerViewFrame?.adapter = mAdapterFrame
+//
+//        val data = DBHelper().getTimesFrame()
+//        data?.forEachIndexed { index, timeFrame ->
+//            mAdapterFrame?.addItem(FrameItem(this, timeFrame.detail))
+//        }
 
-        for (it in daysOfWeek) {
-            mAdapterDay?.addHeader(DayItem(this, it))
+        val currentVal = convertShortDay(day!!)
+        val lengthDays = daysOfWeek.size
+        val temp = currentVal.split("T")
+        val result = temp[1].toInt()
+
+        for (index in 0..lengthDays) {
+            val value = (index + result) % 7
+            val data = convertDayNumber(value)
+            mAdapterDay?.addItem(DayItem(this, data))
         }
 
         when (value) {
             "01", "03", "05", "07", "08", "10", "12" -> {
-                for (it in currentVal!!..31) {
+                for (it in date?.toInt()!!..31) {
                     if (it == date?.toInt()) {
                         mAdapterDate?.addItem(DateItem(this, it.toString(), 1))
                     } else {
@@ -140,7 +175,7 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             "04", "06", "09", "11" -> {
-                for (it in currentVal!!..31) {
+                for (it in date?.toInt()!!..30) {
                     if (it == date?.toInt()) {
                         mAdapterDate?.addItem(DateItem(this, it.toString(), 1))
                     } else {
@@ -150,7 +185,7 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             "02" -> {
-                for (it in currentVal!!..31) {
+                for (it in date?.toInt()!!..28) {
                     if (it == date?.toInt()) {
                         mAdapterDate?.addItem(DateItem(this, it.toString(), 1))
                     } else {
@@ -161,38 +196,6 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        mRecyclerViewDate.setOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                Log.d("TAG", "Start scrolling.")
-//                totalItemCount = gridLayoutManager.getItemCount()
-//                lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition()
-//                if (!loading && totalItemCount <= lastVisibleItem + visibleThreshold) {
-//                    // End has been reached
-//                    // Do something
-//                    if (onLoadMoreListener != null) {
-//                        onLoadMoreListener.onLoadMore(lastVisibleItem)
-//                    }
-//                    loading = true
-//                }
-                val a = mAdapterDate?.getItemSize()!! - 1
-                print(a)
-
-                val b = mAdapterDate?.itemCount!!
-                print(b)
-                val itemCounted = 7
-                if (itemCounted <= mAdapterDate?.itemCount!!) {
-                    print("load more")
-                } else {
-                    return
-                }
-//                if (!isLoading && itemCount <= mAdapterDate?.itemCount!!) {
-//                    isLoading = true
-//                } else {
-//                    return
-//                }
-            }
-        })
     }
 
     override fun onClick(view: View?) {

@@ -5,7 +5,7 @@
             android:right="5dp"
     />
     <stroke android:width="1dp"
-            android:color="@color/selectedDateColor"/>
+            android:color="@color/colorPrimary"/>
     <corners android:radius="4dp"/>
-    <size android:width="20dp" android:height="20dp"/>
+    <solid android:color="@android:color/transparent"/>
 </shape>

@@ -7,6 +7,8 @@
     <dimen name="largeMargin">30dp</dimen>
     <dimen name="double_normalMargin">40dp</dimen>
 
+    <dimen name="super_normalMargin">60dp</dimen>
+
     <dimen name="smallestPadding">5dp</dimen>
     <dimen name="smallPadding">10dp</dimen>
     <dimen name="normalPadding">20dp</dimen>

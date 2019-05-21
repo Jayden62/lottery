@@ -3,7 +3,6 @@ package lottery.com.screens.booking
 import android.content.Context
 import android.os.Build
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.TextView
 import lottery.com.R
 import lottery.com.base.list.BaseItem

@@ -278,20 +278,22 @@ class DBHelper {
         return null
     }
 
-    fun getTimeFrame(): TimeFrame? {
+    fun getTimesFrame(): MutableList<TimeFrame>? {
         try {
+            val frames: MutableList<TimeFrame> = mutableListOf()
             initPermission()
             this.conn = createConnection()
             Log.d(TAG, "Connected")
-            val query = "select * from timeframe"
+            val query = "select * from timeframe where timeframe_id between 14 and 17 "
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
                 val id = rs.getInt("timeframe_id")
                 val detail = rs.getString("details_timeframe")
-                return TimeFrame(id, detail)
+                val item = TimeFrame(id, detail)
+                frames.add(item)
             }
-
+            return frames
         } catch (e: Exception) {
             Log.d(TAG, e.message)
         }
