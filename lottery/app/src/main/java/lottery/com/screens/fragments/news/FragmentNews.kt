@@ -3,6 +3,7 @@ package lottery.com.screens.fragments.news
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,12 +14,12 @@ import kotlinx.android.synthetic.main.fragment_service.*
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
 import lottery.com.database.DBHelper
-import lottery.com.helper.Constants
+import lottery.com.utils.Constants
 import lottery.com.model.News
 import lottery.com.screens.newsdetail.NewsDetailActivity
+import lottery.com.utils.DialogUtils
 
 class FragmentNews : Fragment(), NewsItem.Callback {
-
 
     private var mAdapter: BaseAdapter<Any> = BaseAdapter()
 
@@ -32,6 +33,9 @@ class FragmentNews : Fragment(), NewsItem.Callback {
     }
 
     private fun onInit() {
+
+        val mProgressDialog = DialogUtils.showLoadingDialog(activity!!, activity!!.getString(R.string.loading_data))
+
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
         mRecyclerView?.adapter = mAdapter
         val data = DBHelper().getNews()
@@ -40,7 +44,7 @@ class FragmentNews : Fragment(), NewsItem.Callback {
                 mAdapter.addItem(NewsItem(activity!!, item, this))
             }
         }
-
+        Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
 
     }
 

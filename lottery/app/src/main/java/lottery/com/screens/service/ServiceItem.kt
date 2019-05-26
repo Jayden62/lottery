@@ -13,16 +13,22 @@ import kotlinx.android.synthetic.main.item_sub_service.view.*
 import android.view.animation.RotateAnimation
 import android.widget.*
 import lottery.com.database.DBHelper
-import lottery.com.helper.Dialog
+import lottery.com.utils.DialogUtils
 import lottery.com.model.Service
-
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.os.CountDownTimer
+import android.support.v4.content.ContextCompat
+import android.text.style.UnderlineSpan
+import android.text.SpannableString
 
 class ServiceItem(var context: Context, var value: Service?, private var callback: Callback) : BaseItem<Any>(context),
     View.OnClickListener,
     CompoundButton.OnCheckedChangeListener {
 
+
     interface Callback {
-        fun onCheckItem(value: Service?)
+        fun onServiceItemSelected(value: Service?)
     }
 
     private var isRotated = false
@@ -38,10 +44,14 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
     private var mTextViewDesLabel: TextView? = null
     private var mTextViewDes: TextView? = null
     private var mCheckBox: CheckBox? = null
-    private var mViewLine: View? = null
+
+
+    private var mImageViewCheck: ImageView? = null
 
     private var mCardView: CardView? = null
 
+    private var slideUp: Animation? = null
+    private var slideDown: Animation? = null
     val TAG = "ServiceItem"
 
     override fun onInitLayout(): Int = R.layout.item_sub_service
@@ -52,16 +62,18 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
         mConstrainLayout = view?.mConstrainLayout
         mImageView = view?.mImageView
         mTextViewName = view?.mTextViewName
-        mTextViewPromotion = view?.mTextViewPromotion
         mTextViewPrice = view?.mTextViewPrice
         mTextViewPriceLabel = view?.mTextViewPriceLabel
         mTextViewTime = view?.mTextViewTime
         mTextViewTimeLabel = view?.mTextViewTimeLabel
         mTextViewDes = view?.mTextViewDes
         mTextViewDesLabel = view?.mTextViewDesLabel
-        mCheckBox = view?.mCheckBox
-        mViewLine = view?.mViewLine
         mCardView = view?.mCardView
+        mImageViewCheck = view?.mImageViewCheck
+
+
+        slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+        slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down)
 
         mConstrainLayout?.setOnClickListener(this)
         mImageView?.setOnClickListener(this)
@@ -73,13 +85,15 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
         mTextViewDes?.setOnClickListener(this)
         mTextViewDesLabel?.setOnClickListener(this)
 
-        mCheckBox?.setOnCheckedChangeListener(this)
-
-        mTextViewName?.text = value?.name
+        val content = SpannableString(value?.name)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        mTextViewName?.text = content
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mTextViewName?.setTextColor(context.getColor(R.color.colorBlack))
+        }
         mTextViewPrice?.text = value?.price?.toString() + " VND "
         mTextViewTime?.text = value?.timeTodo.toString() + " phút "
         mTextViewDes?.text = value?.detail
-
 
         if (value?.id == DBHelper().getServicePromotion()) {
             mTextViewPromotion?.visibility = View.VISIBLE
@@ -101,29 +115,21 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
         rotateAnim.duration = 0
         rotateAnim.fillAfter = true
         mImageView?.startAnimation(rotateAnim)
+
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (mCheckBox?.isChecked!!) {
-                mCardView?.setBackgroundColor(mContext.getColor(R.color.grayColor))
-                callback.onCheckItem(value)
+
             } else {
-                mCardView?.setBackgroundColor(mContext.getColor(R.color.colorWhite))
             }
         }
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.mConstrainLayout,
-            R.id.mImageView,
-            R.id.mTextViewName,
-            R.id.mTextViewPrice,
-            R.id.mTextViewPriceLabel,
-            R.id.mTextViewTime,
-            R.id.mTextViewTimeLabel,
-            R.id.mTextViewDesLabel -> {
+            R.id.mImageView, R.id.mTextViewName -> {
                 isRotated = when (isRotated) {
                     true -> {
                         rotatingAnimation(180f)
@@ -133,7 +139,15 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
                         mTextViewTimeLabel?.visibility = View.VISIBLE
                         mTextViewDes?.visibility = View.VISIBLE
                         mTextViewDesLabel?.visibility = View.VISIBLE
-                        mViewLine?.visibility = View.VISIBLE
+                        mImageViewCheck?.visibility = View.VISIBLE
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            mTextViewName?.setTextColor(context.getColor(R.color.selectedDateColor))
+                            mCardView?.setCardBackgroundColor(context.getColor(R.color.activeCard))
+                        }
+
+                        mTextViewName?.isEnabled = false
+                        mImageView?.isEnabled = false
+                        callback.onServiceItemSelected(value)
                         Log.d(TAG, isRotated.toString())
                         false
                     }
@@ -145,14 +159,21 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
                         mTextViewTimeLabel?.visibility = View.GONE
                         mTextViewDes?.visibility = View.GONE
                         mTextViewDesLabel?.visibility = View.GONE
-                        mViewLine?.visibility = View.INVISIBLE
+                        mImageViewCheck?.visibility = View.GONE
+
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            mTextViewName?.setTextColor(context.getColor(R.color.colorBlack))
+                        }
                         Log.d(TAG, isRotated.toString())
                         true
                     }
                 }
             }
+
             R.id.mTextViewDes -> {
-                Dialog.MessageDialog.showMessageDialog(value?.detail!!, mContext)
+                DialogUtils.showMessageDialog(value?.detail!!, mContext)
             }
 
         }

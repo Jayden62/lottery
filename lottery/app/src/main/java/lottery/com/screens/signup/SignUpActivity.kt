@@ -3,6 +3,7 @@ package lottery.com.screens.signup
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -12,8 +13,8 @@ import lottery.com.R
 import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.signin.SignInActivity
-import lottery.com.helper.Constants
-import lottery.com.helper.Dialog
+import lottery.com.utils.Constants
+import lottery.com.utils.DialogUtils
 import java.util.*
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, RadioGroup.OnCheckedChangeListener {
@@ -46,28 +47,28 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
 
     private fun validate(): Boolean {
         if (mEditTextName.text.isEmpty() || mEditTextName.text == null) {
-            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập họ và tên.", this)
+            DialogUtils.showMessageDialog("Vui lòng nhập họ và tên.", this)
             return false
         }
         if (mEditTextPhone.text.isEmpty() || mEditTextPhone.text == null) {
-            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập số điện thoại.", this)
+            DialogUtils.showMessageDialog("Vui lòng nhập số điện thoại.", this)
             return false
         }
 
         if (mEditTextPhone.text.length > 10 || mEditTextPhone.text.length < 10) {
-            Dialog.MessageDialog.showMessageDialog("Số điện thoại không đủ 10 số.", this)
+            DialogUtils.showMessageDialog("Số điện thoại không đủ 10 số.", this)
             return false
         }
         if (mEditTextPassword.text.isEmpty() || mEditTextPassword.text == null) {
-            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập mật khẩu.", this)
+            DialogUtils.showMessageDialog("Vui lòng nhập mật khẩu.", this)
             return false
         }
         if (mEditTextPassword.text.length < 6) {
-            Dialog.MessageDialog.showMessageDialog("Mật khẩu ít nhất 6 kí tự.", this)
+            DialogUtils.showMessageDialog("Mật khẩu ít nhất 6 kí tự.", this)
             return false
         }
         if (mEditTextAddress.text.isEmpty() || mEditTextAddress.text == null) {
-            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập địa chỉ.", this)
+            DialogUtils.showMessageDialog("Vui lòng nhập địa chỉ.", this)
             return false
         }
         return true
@@ -76,6 +77,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.mButtonRegister -> {
+                val mProgressDialog = DialogUtils.showLoadingDialog(this, this.getString(R.string.handling_data))
 
                 val data = User(
                     mEditTextName.text.toString(),
@@ -92,12 +94,13 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                     when (DBHelper().registerAccount(data)) {
                         true -> {
                             clearData()
+                            Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
                             val intent = Intent(this, SignInActivity::class.java)
                             intent.putExtra(Constants.Data.DATA, data)
                             startActivity(intent)
                         }
                         false -> {
-                            Dialog.MessageDialog.showMessageDialog("Số điện thoại đã tồn tại !", this)
+                            DialogUtils.showMessageDialog("Số điện thoại đã tồn tại !", this)
                         }
                     }
 

@@ -1,7 +1,9 @@
 package lottery.com.screens.fragments.profile
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,8 +18,8 @@ import kotlinx.android.synthetic.main.fragment_profile.view.*
 import lottery.com.R
 import lottery.com.database.DBHelper
 import lottery.com.model.User
-import lottery.com.helper.Constants
-import lottery.com.helper.Dialog
+import lottery.com.utils.Constants
+import lottery.com.utils.DialogUtils
 
 
 class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
@@ -30,6 +32,7 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mProgressDialog = DialogUtils.showLoadingDialog(activity!!, activity!!.getString(R.string.loading_data))
         view.mImageViewName.setOnClickListener(this)
         view.mImageViewAddress.setOnClickListener(this)
         view.mButtonSave.setOnClickListener(this)
@@ -42,6 +45,9 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
             view.mEditTextSex.setText(data?.sex)
             view.mEditTextAddress.setText(data?.address)
         }
+
+        Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
+
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -83,13 +89,13 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
             mEditTextAddress.text.toString()
         )) {
             true -> {
-                Dialog.MessageDialog.showMessageDialog("update successfully .", this!!.activity!!)
+                DialogUtils.showMessageDialog("Cập nhật thành công.", this!!.activity!!)
                 mEditTextName.isEnabled = false
                 mEditTextAddress.isEnabled = false
                 mButtonSave.isEnabled = false
             }
             false -> {
-                Dialog.MessageDialog.showMessageDialog("update failed .", this!!.activity!!)
+                DialogUtils.showMessageDialog("Cập nhật thất bại, vui lòng thử lại.", this!!.activity!!)
             }
         }
     }
@@ -131,14 +137,14 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher {
             if (newPassword == confirmPassword) {
                 when (DBHelper().updatePassword(data?.phoneNumber.toString(), password, newPassword)) {
                     true -> {
-                        Dialog.MessageDialog.showMessageDialog("Mật khẩu đã được cập nhật.", this.activity!!)
+                        DialogUtils.showMessageDialog("Mật khẩu đã được cập nhật.", this.activity!!)
                     }
                     false -> {
-                        Dialog.MessageDialog.showMessageDialog("Mật khẩu cũ không chính xác !", this.activity!!)
+                        DialogUtils.showMessageDialog("Mật khẩu cũ không chính xác !", this.activity!!)
                     }
                 }
             } else {
-                Dialog.MessageDialog.showMessageDialog("Mật khẩu mới không trùng khớp.", this.activity!!)
+                DialogUtils.showMessageDialog("Mật khẩu mới không trùng khớp.", this.activity!!)
             }
             alertDialog.dismiss()
         }

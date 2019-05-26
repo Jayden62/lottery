@@ -3,6 +3,7 @@ package lottery.com.screens.fragments.typeservice
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,9 +14,10 @@ import kotlinx.android.synthetic.main.fragment_service.*
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
 import lottery.com.database.DBHelper
-import lottery.com.helper.Constants
+import lottery.com.utils.Constants
 import lottery.com.model.TypeService
 import lottery.com.screens.service.ServiceActivity
+import lottery.com.utils.DialogUtils
 
 class FragmentTypeService : Fragment(), TypeServiceItem.Callback {
 
@@ -32,6 +34,7 @@ class FragmentTypeService : Fragment(), TypeServiceItem.Callback {
     }
 
     private fun onInit() {
+        val mProgressDialog = DialogUtils.showLoadingDialog(activity!!, activity!!.getString(R.string.loading_data))
         mAdapter = BaseAdapter()
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
         mRecyclerView?.adapter = mAdapter
@@ -42,6 +45,9 @@ class FragmentTypeService : Fragment(), TypeServiceItem.Callback {
                 mAdapter.addItem(TypeServiceItem(activity!!, it, this))
             }
         }
+
+        Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
+
     }
 
     override fun onTapItem(data: TypeService?) {

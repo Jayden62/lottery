@@ -3,10 +3,12 @@ package lottery.com.database
 import android.annotation.SuppressLint
 import android.os.StrictMode
 import android.util.Log
-import lottery.com.helper.Constants
-import lottery.com.helper.DataHelper
-import lottery.com.helper.DateHelper
+import lottery.com.R
+import lottery.com.utils.Constants
+import lottery.com.utils.DataHelper
+import lottery.com.utils.DateHelper
 import lottery.com.model.*
+import lottery.com.utils.DialogUtils
 import java.lang.Exception
 import java.sql.*
 

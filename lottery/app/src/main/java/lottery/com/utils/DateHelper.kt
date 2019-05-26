@@ -1,4 +1,4 @@
-package lottery.com.helper
+package lottery.com.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

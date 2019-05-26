@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -16,8 +17,8 @@ import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.home.HomeActivity
 import lottery.com.screens.signup.SignUpActivity
-import lottery.com.helper.Constants
-import lottery.com.helper.Dialog
+import lottery.com.utils.Constants
+import lottery.com.utils.DialogUtils
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
@@ -26,13 +27,9 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private var data: User? = null
 
-    private var mProgressDialog: ProgressDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        mProgressDialog = ProgressDialog(this)
-        mProgressDialog?.setMessage("Loading data ...")
-        mProgressDialog?.setCancelable(false)
         captureOnClick()
         getData()
 
@@ -58,11 +55,11 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private fun validate(): Boolean {
         if (mEditTextPhone.text.isEmpty() || mEditTextPhone.text == null) {
-            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập số điện .", this)
+            DialogUtils.showMessageDialog("Vui lòng nhập số điện thoại.", this)
             return false
         }
         if (mEditTextPassword.text.isEmpty() || mEditTextPassword.text == null) {
-            Dialog.MessageDialog.showMessageDialog("Vui lòng nhập mật khẩu .", this)
+            DialogUtils.showMessageDialog("Vui lòng nhập mật khẩu .", this)
             return false
         }
 
@@ -72,7 +69,6 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.mButtonSignIn -> {
-                mProgressDialog?.show()
                 if (validate()) {
                     when (DBHelper().userLogin(mEditTextPhone.text.toString(), mEditTextPassword.text.toString())) {
                         true -> {
@@ -92,10 +88,9 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                             }
                         }
                         false -> {
-                            Dialog.MessageDialog.showMessageDialog("Sai tên đăng nhập hoặc mật khẩu !", this)
+                            DialogUtils.showMessageDialog("Sai tên đăng nhập hoặc mật khẩu !", this)
                         }
                     }
-                    mProgressDialog?.dismiss()
                 }
             }
             R.id.mTextViewForgetPwd ->
@@ -132,9 +127,9 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             val phoneNumber = mEditTextPhone.text.toString()
             val passWord = DBHelper().forgetPassword(phoneNumber)
             if (passWord.isNotEmpty()) {
-                Dialog.MessageDialog.showMessageDialog("Mật khẩu hiện tại là : $passWord.", this)
+                DialogUtils.showMessageDialog("Mật khẩu hiện tại là : $passWord.", this)
             } else {
-                Dialog.MessageDialog.showMessageDialog("Không tìm thấy mật khẩu với sô điện thoại này !", this)
+                DialogUtils.showMessageDialog("Không tìm thấy mật khẩu với sô điện thoại này !", this)
             }
             alertDialog.dismiss()
         }

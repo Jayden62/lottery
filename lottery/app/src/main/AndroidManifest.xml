@@ -15,7 +15,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.signin.SignInActivity">
+        <activity android:name=".screens.booking.BookingActivity">
         </activity>
         <activity android:name=".screens.newsdetail.NewsDetailActivity">
         </activity>
@@ -25,7 +25,7 @@
         </activity>
         <activity android:name=".screens.home.HomeActivity">
         </activity>
-        <activity android:name=".screens.booking.BookingActivity">
+        <activity android:name=".screens.signin.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

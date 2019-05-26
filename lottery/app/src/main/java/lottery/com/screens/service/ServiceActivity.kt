@@ -8,17 +8,19 @@ import kotlinx.android.synthetic.main.activity_sub_service.*
 import lottery.com.R
 import lottery.com.base.list.BaseAdapter
 import lottery.com.database.DBHelper
-import lottery.com.helper.Constants
+import lottery.com.utils.Constants
 import lottery.com.model.TypeService
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
-import kotlinx.android.synthetic.main.item_sub_service.*
+import lottery.com.local.LocalHelper
 import lottery.com.model.Service
 import lottery.com.screens.booking.BookingActivity
+import lottery.com.utils.DialogUtils
 
-class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.Callback {
+class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.Callback, SelectedItem.Callback {
 
     private var mAdapter: BaseAdapter<Any> = BaseAdapter()
 
@@ -26,26 +28,24 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 
     private var mSelectedData: MutableList<Service>? = mutableListOf()
 
-    private var carts: MutableList<Service>? = mutableListOf()
-
-    private var name: String? = null
-
     private var data: MutableList<Service>? = mutableListOf()
+
+    private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_service)
-        mImageViewBack.setOnClickListener(this)
         onInit()
     }
 
     private fun onInit() {
+        val mProgressDialog = DialogUtils.showLoadingDialog(this, this.getString(R.string.loading_data))
         mAdapter = BaseAdapter()
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.adapter = mAdapter
 
         mFloatingButton.setOnClickListener(this)
-
+        mImageViewBack.setOnClickListener(this)
 
         val value = intent.getParcelableExtra(Constants.Data.DATA) as TypeService
         data = DBHelper().getServices()
@@ -59,14 +59,17 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
                 }
             }
         }
+        Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.mFloatingButton -> {
-//                val intent = Intent(this, BookingActivity::class.java)
-//                startActivity(intent)
-                createServicesDialog(mSelectedData)
+//                val data = LocalHelper(this).getItems ?: return
+                if (mSelectedData != null) {
+                    createServicesDialog(mSelectedData)
+                    mSelectedData = mutableListOf()
+                }
             }
 
             R.id.mImageViewBack -> {
@@ -75,23 +78,12 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
         }
     }
 
-    override fun onCheckItem(value: Service?) {
-//        if (carts == null) {
-//            return
-//        }
-//        carts?.add(value!!)
-//
-//        for (it in carts!!) {
-//
-//        }
+    override fun onServiceItemSelected(value: Service?) {
         mSelectedData?.add(value!!)
-
     }
 
     private fun createServicesDialog(data: MutableList<Service>?) {
-        if (data == null) {
-            return
-        }
+
         var counter = 0
         val dialog = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
@@ -99,25 +91,48 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
         dialog.setView(view)
 
         val mButtonBook = view.findViewById(R.id.mButtonBook) as Button
+        val mButtonClose = view.findViewById(R.id.mButtonClose) as Button
         val mRecyclerViewSelectedService = view.findViewById(R.id.mRecyclerViewSelectedService) as RecyclerView
         mAdapterSelected = BaseAdapter()
         mRecyclerViewSelectedService.layoutManager = LinearLayoutManager(this)
         mRecyclerViewSelectedService.adapter = mAdapterSelected
 
-        for (it in data) {
-            counter++
-            mAdapterSelected.addItem(SelectedItem(this, it.name, counter))
+        if (data?.size == 0 || data == null) {
+            mAdapterSelected.addItem(SelectedIemEmpty(this))
+        } else {
+            for ((index, value) in data.withIndex()) {
+                counter++
+                mAdapterSelected.addItem(SelectedItem(this, value.name, counter, this, index))
+            }
         }
+
+//        for ((index, value) in local!!.withIndex()) {
+//            counter++
+//            mAdapterSelected.addItem(SelectedItem(this, value.name, counter, this, index))
+//        }
 
         mButtonBook.setOnClickListener {
             val intent = Intent(this, BookingActivity::class.java)
             startActivity(intent)
         }
 
-        val alertDialog = dialog.create()
-        alertDialog.dismiss()
 
-        dialog.setCancelable(true)
-        alertDialog.show()
+        mButtonClose.setOnClickListener {
+            //            LocalHelper(this).saveItems(data)
+            mAdapter.removeAll()
+            mAdapter.notifyDataSetChanged()
+            mAdapterSelected.notifyDataSetChanged()
+            alertDialog?.dismiss()
+            onInit()
+        }
+        alertDialog = dialog.create()
+        alertDialog?.dismiss()
+
+        alertDialog?.setCancelable(false)
+        alertDialog?.show()
+    }
+
+    override fun onRemoveItem(pos: Int) {
+        mAdapterSelected.removeItemAt(pos)
     }
 }

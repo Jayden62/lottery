@@ -7,8 +7,7 @@ import com.bumptech.glide.request.RequestOptions
 import lottery.com.R
 import lottery.com.base.list.BaseItem
 import kotlinx.android.synthetic.main.item_service.view.*
-import lottery.com.helper.DataHelper
-import lottery.com.helper.DateHelper
+import lottery.com.utils.DataHelper
 import lottery.com.model.TypeService
 
 class TypeServiceItem(var context: Context, var data: TypeService?, var callback: Callback) :

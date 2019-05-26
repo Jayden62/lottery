@@ -18,18 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
         <TextView
                 android:id="@+id/mTextViewName"
                 android:textSize="@dimen/normalSize"
                 android:maxLines="1"
                 android:layout_marginEnd="@dimen/smallMargin"
                 android:singleLine="true"
-                android:layout_width="0dp"
+                android:textAllCaps="true"
+                android:layout_width="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/mImageView"/>
+                android:layout_height="wrap_content"/>
 
+        <ImageView
+                android:visibility="gone"
+                android:src="@drawable/ic_check_black_24dp"
+                android:layout_marginStart="@dimen/smallMargin"
+                android:id="@+id/mImageViewCheck"
+                app:layout_constraintStart_toEndOf="@+id/mTextViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <ImageView
                 android:id="@+id/mImageView"
@@ -38,42 +45,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <CheckBox
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
-                android:id="@+id/mCheckBox"
-                android:layout_marginTop="@dimen/smallMargin"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="Chọn dịch vụ này"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-        />
-
-        <TextView
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/redColor"
-                android:layout_marginTop="@dimen/smallMargin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mCheckBox"
-                android:id="@+id/mTextViewPromotion"
-                android:layout_height="wrap_content"/>
-
-        <View
-                android:id="@+id/mViewLine"
-                android:visibility="invisible"
-                android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewPromotion"
-                android:background="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
         <TextView
                 android:id="@+id/mTextViewPriceLabel"
                 android:singleLine="true"
                 android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mViewLine"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
                 android:layout_width="wrap_content"
                 android:text="Giá tiền : "
                 android:visibility="gone"
@@ -85,7 +61,7 @@
                 android:id="@+id/mTextViewPrice"
                 app:layout_constraintStart_toEndOf="@+id/mTextViewPriceLabel"
                 android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mViewLine"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="0dp"
                 android:visibility="gone"

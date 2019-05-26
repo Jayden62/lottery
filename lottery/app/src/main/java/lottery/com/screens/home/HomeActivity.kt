@@ -8,12 +8,11 @@ import kotlinx.android.synthetic.main.activity_home.*
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.view.MenuItem
-import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.fragments.news.FragmentNews
 import lottery.com.screens.fragments.profile.FragmentProfile
 import lottery.com.screens.fragments.typeservice.FragmentTypeService
-import lottery.com.helper.Constants
+import lottery.com.utils.Constants
 
 class HomeActivity : AppCompatActivity() {
 

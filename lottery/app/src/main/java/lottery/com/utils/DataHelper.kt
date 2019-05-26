@@ -1,4 +1,4 @@
-package lottery.com.helper
+package lottery.com.utils
 
 object DataHelper {
 

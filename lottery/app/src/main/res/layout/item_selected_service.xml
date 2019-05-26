@@ -17,13 +17,24 @@
 
     <TextView
             android:layout_marginTop="@dimen/normalMargin"
+            android:layout_marginEnd="@dimen/normalMargin"
+            app:layout_constraintEnd_toStartOf="@+id/mImageViewRemove"
+            android:layout_marginStart="@dimen/normalMargin"
+            app:layout_constraintStart_toEndOf="@+id/mTextViewNumber"
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/mTextViewSelectedService"
-            android:layout_marginEnd="@dimen/normalMargin"
             android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"/>
 
+    <ImageView
+            android:clickable="true"
+            android:id="@+id/mImageViewRemove"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:src="@drawable/bg_deleted_selected_item_service"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <View
             android:background="@color/grayColor"

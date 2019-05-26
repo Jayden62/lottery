@@ -6,13 +6,13 @@
         android:layout_width="match_parent">
     <android.support.constraint.ConstraintLayout
             xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".screens.booking.BookingActivity">
         <android.support.v7.widget.RecyclerView
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/mRecyclerViewDay"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -30,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/normalMargin"
                 app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewDate"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"/>
 
 
@@ -41,7 +41,7 @@
                 android:background="@android:color/black"
                 android:layout_marginTop="@dimen/smallMargin"
                 app:layout_constraintTop_toBottomOf="@id/mTextView"
-                android:layout_width="20dp"
+                android:layout_width="60dp"
                 android:layout_height="1dp"/>
 
 
@@ -83,57 +83,28 @@
                 android:id="@+id/mButtonOne"
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/normalMargin"
-                android:layout_marginStart="@dimen/super_normalMargin"
-                android:text="8h - 11h"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:text="Chọn khung giờ"
                 android:clickable="true"
                 android:background="@drawable/bg_times_frame_selector"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mTextViewFrame"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"/>
 
-        <Button
-                android:textAllCaps="false"
-                android:id="@+id/mButtonTwo"
-                android:layout_marginEnd="@dimen/super_normalMargin"
-                android:background="@drawable/bg_times_frame_selector"
-                app:layout_constraintEnd_toEndOf="parent"
+        <TextView
+                android:id="@+id/mTextViewPicked"
+                android:layout_marginEnd="@dimen/normalMargin"
                 android:layout_marginTop="@dimen/normalMargin"
-                android:text="11h -  14h"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mTextViewFrame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-        <Button
-                android:id="@+id/mButtonThree"
-                android:textAllCaps="false"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:layout_marginStart="@dimen/super_normalMargin"
-                android:text="14h - 17h"
-                android:background="@drawable/bg_times_frame_selector"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mButtonOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-        <Button
-                android:textAllCaps="false"
-                android:id="@+id/mButtonFour"
-                android:layout_marginEnd="@dimen/super_normalMargin"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:text="17h -  20h"
-                android:background="@drawable/bg_times_frame_selector"
-                app:layout_constraintTop_toBottomOf="@+id/mButtonTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/mTextViewStart"
                 android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mButtonThree"
+                app:layout_constraintTop_toBottomOf="@+id/mButtonOne"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="@dimen/normalMargin"

@@ -16,15 +16,24 @@
 
     <Button
             android:id="@+id/mButtonBook"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normalMargin"
-            android:text="Tiến hành đặt lịch"
+            android:text="Xác nhận"
             android:textColor="@android:color/white"
             android:background="@drawable/bg_base_button_selector"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewSelectedService"/>
 
+    <Button
+            android:id="@+id/mButtonClose"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:text="Thoát"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_base_button_selector"
+            app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewSelectedService"/>
 
 </android.support.constraint.ConstraintLayout>
