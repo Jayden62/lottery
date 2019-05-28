@@ -4,7 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mConstrainLayout"
         android:layout_width="wrap_content"
-        android:padding="16dp"
+        android:padding="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content">

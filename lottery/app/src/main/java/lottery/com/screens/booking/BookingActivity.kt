@@ -200,57 +200,62 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener, DateItem.Call
         }
 
         val currentYear = year?.toInt()
-
-        when (value) {
-            "01", "03", "05", "07", "08", "10", "12" -> {
-                for (it in date?.toInt()!!..31) {
-                    if (it == date?.toInt()) {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
-                    } else {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
-                    }
-
-                }
-            }
-            "04", "06", "09", "11" -> {
-                for (it in date?.toInt()!!..30) {
-                    if (it == date?.toInt()) {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
-                    } else {
-                        mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
-
-                    }
-                }
-            }
-
-            "02" -> {
-                /**
-                 * Check february is 28 or 29
-                 */
-                when (currentYear!! % 400 == 0 || (currentYear % 100 != 0 && currentYear % 4 == 0)) {
-                    true -> {
-                        for (it in date?.toInt()!!..29) {
-                            if (it == date?.toInt()) {
-                                mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
-                            } else {
-                                mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
-
-                            }
-                        }
-                    }
-                    false -> {
-                        for (it in date?.toInt()!!..28) {
-                            if (it == date?.toInt()) {
-                                mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
-                            } else {
-                                mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
-
-                            }
-                        }
-                    }
-                }
-            }
+        val calCurrent = Calendar.getInstance()
+        mAdapterDate?.addItem(DateItem(this, calCurrent.get(Calendar.DAY_OF_MONTH).toString(), 1, this))
+        for (index in 1..6) {
+            calCurrent.add(Calendar.DATE, 1)
+            mAdapterDate?.addItem(DateItem(this, calCurrent.get(Calendar.DAY_OF_MONTH).toString(), 0, this))
         }
+//        when (value) {
+//            "01", "03", "05", "07", "08", "10", "12" -> {
+//                for (it in date?.toInt()!!..31) {
+//                    if (it == date?.toInt()) {
+//                        mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
+//                    } else {
+//                        mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
+//                    }
+//
+//                }
+//            }
+//            "04", "06", "09", "11" -> {
+//                for (it in date?.toInt()!!..30) {
+//                    if (it == date?.toInt()) {
+//                        mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
+//                    } else {
+//                        mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
+//
+//                    }
+//                }
+//            }
+//
+//            "02" -> {
+//                /**
+//                 * Check february is 28 or 29
+//                 */
+//                when (currentYear!! % 400 == 0 || (currentYear % 100 != 0 && currentYear % 4 == 0)) {
+//                    true -> {
+//                        for (it in date?.toInt()!!..29) {
+//                            if (it == date?.toInt()) {
+//                                mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
+//                            } else {
+//                                mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
+//
+//                            }
+//                        }
+//                    }
+//                    false -> {
+//                        for (it in date?.toInt()!!..28) {
+//                            if (it == date?.toInt()) {
+//                                mAdapterDate?.addItem(DateItem(this, it.toString(), 1, this))
+//                            } else {
+//                                mAdapterDate?.addItem(DateItem(this, it.toString(), 0, this))
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
