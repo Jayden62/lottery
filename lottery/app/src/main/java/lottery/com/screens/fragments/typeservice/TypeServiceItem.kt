@@ -23,7 +23,7 @@ class TypeServiceItem(var context: Context, var data: TypeService?, var callback
         view?.mConstrainLayout?.setOnClickListener(this)
 
         view?.mTextViewName?.text = DataHelper.initText(data?.name.toString())
-        view?.mImageView?.let {
+        view?.mImageViewOn?.let {
             Glide.with(mContext)
                 .load(data?.image)
                 .apply(RequestOptions.circleCropTransform())

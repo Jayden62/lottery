@@ -34,8 +34,6 @@ class FragmentNews : Fragment(), NewsItem.Callback {
 
     private fun onInit() {
 
-        val mProgressDialog = DialogUtils.showLoadingDialog(activity!!, activity!!.getString(R.string.loading_data))
-
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
         mRecyclerView?.adapter = mAdapter
         val data = DBHelper().getNews()
@@ -44,8 +42,6 @@ class FragmentNews : Fragment(), NewsItem.Callback {
                 mAdapter.addItem(NewsItem(activity!!, item, this))
             }
         }
-        Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
-
     }
 
     override fun onTapItem(data: News?) {

@@ -15,7 +15,7 @@
         android:padding="@dimen/normalPadding">
 
     <ImageView
-            android:id="@+id/mImageView"
+            android:id="@+id/mImageViewOn"
             android:layout_width="80dp"
             android:scaleType="fitXY"
             android:layout_height="80dp"/>
@@ -27,7 +27,7 @@
             android:singleLine="true"
             android:inputType="textMultiLine"
             android:layout_marginStart="@dimen/normalMargin"
-            app:layout_constraintStart_toEndOf="@+id/mImageView"
+            app:layout_constraintStart_toEndOf="@+id/mImageViewOn"
             android:layout_width="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"/>

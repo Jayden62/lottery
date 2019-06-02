@@ -17,8 +17,6 @@ import lottery.com.utils.DialogUtils
 import lottery.com.model.Service
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.os.CountDownTimer
-import android.support.v4.content.ContextCompat
 import android.text.style.UnderlineSpan
 import android.text.SpannableString
 
@@ -60,7 +58,7 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
     override fun onBindView(view: View?) {
 
         mConstrainLayout = view?.mConstrainLayout
-        mImageView = view?.mImageView
+        mImageView = view?.mImageViewOn
         mTextViewName = view?.mTextViewName
         mTextViewPrice = view?.mTextViewPrice
         mTextViewPriceLabel = view?.mTextViewPriceLabel
@@ -129,7 +127,7 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.mImageView, R.id.mTextViewName -> {
+            R.id.mImageViewOn, R.id.mTextViewName -> {
                 isRotated = when (isRotated) {
                     true -> {
                         rotatingAnimation(180f)

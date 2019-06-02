@@ -4,7 +4,7 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
     <ImageView
-            android:id="@+id/mImageView"
+            android:id="@+id/mImageViewOn"
             android:src="@drawable/ic_announcement_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
     <TextView
             android:id="@+id/mTextView"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/mImageView"
+            app:layout_constraintTop_toBottomOf="@+id/mImageViewOn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Hiện tại chưa có dữ liệu."

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:padding="@dimen/normalPadding">
+
+
+    <EditText
+            android:id="@+id/mEditTextPwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:background="@drawable/bg_rectangle_border_edit_text"
+            android:drawablePadding="@dimen/normalPadding"
+            android:hint="Pass word"
+            android:inputType="textPassword"
+            android:padding="@dimen/normalPadding"
+            android:textSize="@dimen/normalSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+            android:id="@+id/mImageViewOn"
+            android:src="@drawable/bg_view_pwd_selector"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_marginEnd="@dimen/smallMargin"
+            app:layout_constraintBottom_toBottomOf="@+id/mEditTextPwd"
+            app:layout_constraintTop_toTopOf="@+id/mEditTextPwd"
+            app:layout_constraintEnd_toEndOf="@+id/mEditTextPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:id="@+id/mImageViewOff"
+            android:src="@drawable/bg_unview_pwd_selector"
+            android:focusable="true"
+            android:clickable="true"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/smallMargin"
+            app:layout_constraintBottom_toBottomOf="@+id/mEditTextPwd"
+            app:layout_constraintTop_toTopOf="@+id/mEditTextPwd"
+            app:layout_constraintEnd_toEndOf="@+id/mEditTextPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/mButtonSend"
+            android:layout_width="wrap_content"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:text="Gửi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextPwd"/>
+
+    <Button
+            android:id="@+id/mButtonClose"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:text="Thoát"
+            android:layout_marginEnd="@dimen/normalMargin"
+            app:layout_constraintEnd_toStartOf="@+id/mButtonSend"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextPwd"/>
+
+
+</android.support.constraint.ConstraintLayout>

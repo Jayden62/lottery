@@ -33,7 +33,7 @@ class NewsItem(var context: Context, var value: News?, var callback: Callback) :
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.mTextViewTime, R.id.mImageViewName, R.id.mConstrainLayout -> {
+            R.id.mTextViewTime, R.id.mImageViewNews, R.id.mConstrainLayout -> {
                 callback.onTapItem(value)
             }
         }

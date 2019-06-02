@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"/>
 
         <ImageView
-                android:id="@+id/mImageView"
+                android:id="@+id/mImageViewOn"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/ic_keyboard_arrow_up_black_24dp"
                 android:layout_width="wrap_content"

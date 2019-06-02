@@ -301,4 +301,29 @@ class DBHelper {
         }
         return null
     }
+
+    fun getPassword(passWord: String?, phone: String?): User? {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            var data: User? = null
+            val query = "select * from account_dt where password_id = '$passWord' and cellphone = '$phone'"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val name = rs.getString("name_id")
+                val phone = rs.getString("cellphone")
+                val pwd = rs.getString("password_id")
+                val sex = rs.getString("sex")
+                val address = rs.getString("address")
+                val token = rs.getString("access_token")
+
+                data = User(name, phone, pwd, sex, address, token)
+            }
+            return data
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
 }
