@@ -38,5 +38,6 @@ object DialogUtils {
         mProgressDialog.setCancelable(false)
         mProgressDialog.show()
         return mProgressDialog
+
     }
 }

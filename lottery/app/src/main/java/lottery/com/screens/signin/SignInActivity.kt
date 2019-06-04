@@ -1,11 +1,9 @@
 package lottery.com.screens.signin
 
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -116,7 +114,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         val inflater = this.layoutInflater
         val view = inflater.inflate(R.layout.forgot_password_dialog, null)
         dialog.setView(view)
-        val mButtonClose = view.findViewById(R.id.mButtonClose) as Button
+        val mButtonClose = view.findViewById(R.id.mButtonBook) as Button
         val mButtonSend = view.findViewById(R.id.mButtonSend) as Button
         val mEditTextPhone = view.findViewById(R.id.mEditTextPhone) as EditText
         val alertDialog = dialog.create()

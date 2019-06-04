@@ -15,7 +15,7 @@ import android.content.Intent
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
-import lottery.com.local.LocalHelper
+import android.widget.ImageView
 import lottery.com.model.Service
 import lottery.com.screens.booking.BookingActivity
 import lottery.com.utils.DialogUtils
@@ -90,8 +90,9 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
         val view = inflater.inflate(R.layout.dialog_selected_service, null)
         dialog.setView(view)
 
+        val mButtonCons = view.findViewById(R.id.mButtonConsultan) as Button
         val mButtonBook = view.findViewById(R.id.mButtonBook) as Button
-        val mButtonClose = view.findViewById(R.id.mButtonClose) as Button
+        val mImageViewClose = view?.findViewById(R.id.mImageViewClose) as ImageView
         val mRecyclerViewSelectedService = view.findViewById(R.id.mRecyclerViewSelectedService) as RecyclerView
         mAdapterSelected = BaseAdapter()
         mRecyclerViewSelectedService.layoutManager = LinearLayoutManager(this)
@@ -116,8 +117,7 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
             startActivity(intent)
         }
 
-
-        mButtonClose.setOnClickListener {
+        mImageViewClose.setOnClickListener {
             //            LocalHelper(this).saveItems(data)
             mAdapter.removeAll()
             mAdapter.notifyDataSetChanged()

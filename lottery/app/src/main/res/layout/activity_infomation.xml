@@ -5,6 +5,157 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="20dp"
         tools:context=".screens.information.InformationActivity">
+
+    <ImageView
+            android:id="@+id/mImageViewBack"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/bg_arrow_back_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewTitle"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/selectedDateColor"
+            android:text="@string/personal_info"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+
+    <TextView
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewTitle"
+            android:id="@+id/mTextViewName"
+            android:text="Họ và tên :  "
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:id="@+id/mEditTextName"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:backgroundTint="@color/grayColor"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_marginEnd="@dimen/normalMargin"/>
+
+
+    <TextView
+            android:id="@+id/mTextViewPhone"
+            android:text="Số điện thoại : "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextName"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:id="@+id/mEditTextPhone"
+            android:enabled="false"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:backgroundTint="@color/grayColor"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewPhone"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_marginEnd="@dimen/normalMargin"/>
+
+    <TextView
+            android:id="@+id/mTextViewSex"
+            android:text="Giới tính :  "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextPhone"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_height="wrap_content"/>
+
+
+    <EditText
+            android:id="@+id/mEditTextSex"
+            android:enabled="false"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:backgroundTint="@color/grayColor"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewSex"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_marginEnd="@dimen/normalMargin"/>
+
+
+    <TextView
+            android:id="@+id/mTextViewAddress"
+            android:text="Địa chỉ :  "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextSex"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:id="@+id/mEditTextAddress"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:backgroundTint="@color/grayColor"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewAddress"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_marginEnd="@dimen/normalMargin"/>
+
+    <TextView
+            android:id="@+id/mTextViewChangePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/largeMargin"
+            android:clickable="true"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:drawableEnd="@drawable/bg_change_password_selector"
+            android:drawablePadding="@dimen/smallPadding"
+            android:text="Đổi mật khẩu"
+            android:textColor="@drawable/bg_forget_password_selector"
+            android:textSize="@dimen/mediumSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextAddress"
+            android:focusable="true"/>
+
+    <Button
+            android:id="@+id/mButtonUpdate"
+            android:text="Cập nhật"
+            android:layout_marginEnd="20dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_base_button_selector"
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEditTextAddress"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"/>
 
 </android.support.constraint.ConstraintLayout>

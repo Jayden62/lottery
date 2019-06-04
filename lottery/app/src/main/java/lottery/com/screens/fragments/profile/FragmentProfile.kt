@@ -9,7 +9,6 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import lottery.com.model.User
 import lottery.com.screens.information.InformationActivity
 import lottery.com.utils.Constants
 import lottery.com.utils.DialogUtils
-import java.util.*
 
 class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundButton.OnCheckedChangeListener {
 
@@ -89,25 +87,6 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
     }
 
     override fun onClick(v: View?) {
-//        when (v?.id) {
-//            R.id.mImageViewName -> {
-//                mEditTextName.isEnabled = true
-//                mButtonSave.isEnabled = true
-//            }
-//
-//            R.id.mImageViewAddress -> {
-//                mEditTextAddress.isEnabled = true
-//                mButtonSave.isEnabled = true
-//            }
-//
-//            R.id.mButtonSave -> {
-//                updateData()
-//            }
-//            R.id.mTextViewChangePassword -> {
-//                openDialogChangePassword()
-//            }
-//        }
-
         when (v?.id) {
             R.id.mButtonInfo -> {
                 getInfoDialog(phoneNumber)
@@ -120,7 +99,7 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
         val inflater = this.layoutInflater
         val view = inflater.inflate(R.layout.dialog_get_info, null)
         dialog.setView(view)
-        val mButtonClose = view.findViewById(R.id.mButtonClose) as Button
+        val mButtonClose = view.findViewById(R.id.mButtonBook) as Button
         val mButtonSend = view.findViewById(R.id.mButtonSend) as Button
         val mEditTextPwd = view.findViewById(R.id.mEditTextPwd) as EditText
         val mImageViewOn = view.findViewById(R.id.mImageViewOn) as ImageView
@@ -161,74 +140,4 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
         dialog.setCancelable(true)
         alertDialog.show()
     }
-
-    private fun updateData() {
-//        when (DBHelper().updateProfile(
-//            data?.phoneNumber.toString(),
-//            mEditTextName.text.toString(),
-//            mEditTextAddress.text.toString()
-//        )) {
-//            true -> {
-//                DialogUtils.showMessageDialog("Cập nhật thành công.", this!!.activity!!)
-//                mEditTextName.isEnabled = false
-//                mEditTextAddress.isEnabled = false
-//                mButtonSave.isEnabled = false
-//            }
-//            false -> {
-//                DialogUtils.showMessageDialog("Cập nhật thất bại, vui lòng thử lại.", this!!.activity!!)
-//            }
-//        }
-    }
-
-//    private fun openDialogChangePassword() {
-//        val dialog = AlertDialog.Builder(activity)
-//        val inflater = this.layoutInflater
-//        val view = inflater.inflate(R.layout.change_password_dialog, null)
-//        dialog.setView(view)
-//        val mButtonClose = view.findViewById(R.id.mButtonClose) as Button
-//        val mButtonSend = view.findViewById(R.id.mButtonSend) as Button
-//        val mEditTextOldPasword = view.findViewById(R.id.mEditTextOldPassword) as EditText
-//        val mEditTextNewPasword = view.findViewById(R.id.mEditTextNewPassword) as EditText
-//        val mEditTextConfirmPasword = view.findViewById(R.id.mEditTextConfirmPassword) as EditText
-//        val mTextViewMessage = view.findViewById(R.id.mTextViewMessage) as TextView
-//
-//        val alertDialog = dialog.create()
-//
-//        mEditTextOldPasword.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                mButtonSend.isEnabled = s.toString() != "" || s.toString().isNotEmpty()
-//            }
-//
-//            override fun afterTextChanged(s: Editable) {
-//
-//            }
-//        })
-//
-//        mButtonClose.setOnClickListener { alertDialog.dismiss() }
-//        mButtonSend.setOnClickListener {
-//            val password = mEditTextOldPasword.text.toString()
-//            val newPassword = mEditTextNewPasword.text.toString()
-//            val confirmPassword = mEditTextConfirmPasword.text.toString()
-//
-//            if (newPassword == confirmPassword) {
-//                when (DBHelper().updatePassword(data?.phoneNumber.toString(), password, newPassword)) {
-//                    true -> {
-//                        DialogUtils.showMessageDialog("Mật khẩu đã được cập nhật.", this.activity!!)
-//                    }
-//                    false -> {
-//                        DialogUtils.showMessageDialog("Mật khẩu cũ không chính xác !", this.activity!!)
-//                    }
-//                }
-//            } else {
-//                DialogUtils.showMessageDialog("Mật khẩu mới không trùng khớp.", this.activity!!)
-//            }
-//            alertDialog.dismiss()
-//        }
-//        dialog.setCancelable(true)
-//        alertDialog.show()
-//    }
 }

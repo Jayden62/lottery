@@ -7,7 +7,29 @@
         android:padding="20dp"
         android:layout_height="wrap_content">
 
+    <TextView
+            android:id="@+id/mTextViewCart"
+            android:text="Giỏ hàng"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/bg_close_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/mImageViewClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/smallMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewCart"
             android:id="@+id/mRecyclerViewSelectedService"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -15,22 +37,22 @@
             android:layout_height="wrap_content"/>
 
     <Button
-            android:id="@+id/mButtonBook"
+            android:id="@+id/mButtonConsultan"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normalMargin"
-            android:text="Xác nhận"
+            android:text="Tư vấn"
             android:textColor="@android:color/white"
             android:background="@drawable/bg_base_button_selector"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewSelectedService"/>
 
     <Button
-            android:id="@+id/mButtonClose"
+            android:id="@+id/mButtonBook"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normalMargin"
-            android:text="Thoát"
+            android:text="Đặt lịch"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@android:color/white"
             android:background="@drawable/bg_base_button_selector"

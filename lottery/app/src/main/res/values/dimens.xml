@@ -11,6 +11,7 @@
 
     <dimen name="smallestPadding">5dp</dimen>
     <dimen name="smallPadding">10dp</dimen>
+    <dimen name="mediumPadding">15dp</dimen>
     <dimen name="normalPadding">20dp</dimen>
     <dimen name="largePadding">30dp</dimen>
 
