@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
     <application
-            android:allowBackup="true"
+            android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -17,7 +17,7 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".screens.information.InformationActivity">
         </activity>
-        <activity android:name=".screens.booking.BookingActivity">
+        <activity android:name=".screens.book.BookActivity">
         </activity>
         <activity android:name=".screens.newsdetail.NewsDetailActivity">
         </activity>

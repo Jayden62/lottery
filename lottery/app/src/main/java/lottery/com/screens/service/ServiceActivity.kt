@@ -11,13 +11,16 @@ import lottery.com.database.DBHelper
 import lottery.com.utils.Constants
 import lottery.com.model.TypeService
 import android.app.AlertDialog
+import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.ImageView
 import lottery.com.model.Service
-import lottery.com.screens.booking.BookingActivity
+import lottery.com.room.respository.ServiceRepos
+import lottery.com.screens.book.BookActivity
 import lottery.com.utils.DialogUtils
 
 class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.Callback, SelectedItem.Callback {
@@ -26,11 +29,9 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 
     private var mAdapterSelected: BaseAdapter<Any> = BaseAdapter()
 
-    private var mSelectedData: MutableList<Service>? = mutableListOf()
-
     private var data: MutableList<Service>? = mutableListOf()
 
-    private var alertDialog: AlertDialog? = null
+    private var serviceRepos: ServiceRepos? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 
     private fun onInit() {
         val mProgressDialog = DialogUtils.showLoadingDialog(this, this.getString(R.string.loading_data))
+        serviceRepos = ServiceRepos(this)
         mAdapter = BaseAdapter()
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.adapter = mAdapter
@@ -65,11 +67,8 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.mFloatingButton -> {
-//                val data = LocalHelper(this).getItems ?: return
-                if (mSelectedData != null) {
-                    createServicesDialog(mSelectedData)
-                    mSelectedData = mutableListOf()
-                }
+                createServicesDialog()
+
             }
 
             R.id.mImageViewBack -> {
@@ -79,60 +78,79 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
     }
 
     override fun onServiceItemSelected(value: Service?) {
-        mSelectedData?.add(value!!)
+        serviceRepos?.onAddOrUpdateService(value)
     }
 
-    private fun createServicesDialog(data: MutableList<Service>?) {
+    private fun createServicesDialog() {
 
-        var counter = 0
         val dialog = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
         val view = inflater.inflate(R.layout.dialog_selected_service, null)
         dialog.setView(view)
-
-        val mButtonCons = view.findViewById(R.id.mButtonConsultan) as Button
+        val mButtonConsultant = view.findViewById(R.id.mButtonConsultant) as Button
         val mButtonBook = view.findViewById(R.id.mButtonBook) as Button
         val mImageViewClose = view?.findViewById(R.id.mImageViewClose) as ImageView
+        val alertDialog = dialog.create()
         val mRecyclerViewSelectedService = view.findViewById(R.id.mRecyclerViewSelectedService) as RecyclerView
         mAdapterSelected = BaseAdapter()
         mRecyclerViewSelectedService.layoutManager = LinearLayoutManager(this)
         mRecyclerViewSelectedService.adapter = mAdapterSelected
+        /* Room database */
+        serviceRepos?.getAllServices()?.observe(this, Observer { list ->
+            if (list.isNullOrEmpty()) {
+                mAdapterSelected.addItem(SelectedIemEmpty(this))
 
-        if (data?.size == 0 || data == null) {
-            mAdapterSelected.addItem(SelectedIemEmpty(this))
-        } else {
-            for ((index, value) in data.withIndex()) {
-                counter++
-                mAdapterSelected.addItem(SelectedItem(this, value.name, counter, this, index))
+            } else {
+                for ((index, value) in list.withIndex()) {
+                    mAdapterSelected.addItem(SelectedItem(this, value, this))
+                }
+            }
+
+        })
+        mButtonConsultant.setOnClickListener {
+            val mAlertDialog = AlertDialog.Builder(this).create()
+            mAlertDialog.setTitle(R.string.waiting_time)
+            mAlertDialog.show()
+
+//            object : CountDownTimer(60000, 1000) {
+//                override fun onTick(millisUntilFinished: Long) {
+//                    mAlertDialog.setMessage("00:" + millisUntilFinished / 1000)
+//                }
+//
+//                override fun onFinish() {
+//                    mAlertDialog.dismiss()
+//                }
+//            }.start()
+        }
+        mButtonBook.setOnClickListener {
+            if (mAdapterSelected.itemCount == 0) {
+                DialogUtils.showMessageDialog("Bạn phải chọn ít nhất 1 dịch vụ !", this)
+            } else {
+                val intent = Intent(this, BookActivity::class.java)
+                startActivity(intent)
             }
         }
 
-//        for ((index, value) in local!!.withIndex()) {
-//            counter++
-//            mAdapterSelected.addItem(SelectedItem(this, value.name, counter, this, index))
-//        }
-
-        mButtonBook.setOnClickListener {
-            val intent = Intent(this, BookingActivity::class.java)
-            startActivity(intent)
-        }
-
         mImageViewClose.setOnClickListener {
-            //            LocalHelper(this).saveItems(data)
             mAdapter.removeAll()
             mAdapter.notifyDataSetChanged()
             mAdapterSelected.notifyDataSetChanged()
             alertDialog?.dismiss()
             onInit()
         }
-        alertDialog = dialog.create()
         alertDialog?.dismiss()
 
         alertDialog?.setCancelable(false)
         alertDialog?.show()
     }
 
-    override fun onRemoveItem(pos: Int) {
-        mAdapterSelected.removeItemAt(pos)
+    override fun onRemoveItem(item: Service?) {
+        serviceRepos?.delete(item?.id!!)
+        val pos = item?.let { mAdapterSelected.getPosition(it) }
+        pos.let { it?.let { it -> mAdapterSelected.removeItemAt(it) } }
+
+        if (mAdapterSelected.itemCount == 0) {
+            mAdapterSelected.addItem(SelectedIemEmpty(this))
+        }
     }
 }

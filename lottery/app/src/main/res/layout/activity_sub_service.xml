@@ -47,22 +47,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <android.support.design.widget.FloatingActionButton
-            android:backgroundTint="@android:color/transparent"
-            android:id="@+id/mFloatingButton"
-            app:backgroundTint="@android:color/transparent"
-            app:fabSize="auto"
-            app:elevation="0dp"
-            android:scaleType="centerInside"
-            app:rippleColor="@android:color/transparent"
-            android:elevation="0dp"
-            android:layout_marginEnd="@dimen/normalMargin"
-            android:layout_marginBottom="@dimen/double_normalMargin"
-            android:src="@drawable/bg_selected_services_selector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:backgroundTint="@android:color/transparent"-->
+    <!--android:id="@+id/mFloatingButton"-->
+    <!--app:backgroundTint="@android:color/transparent"-->
+    <!--app:fabSize="auto"-->
+    <!--app:elevation="0dp"-->
+    <!--android:scaleType="centerInside"-->
+    <!--app:rippleColor="@android:color/transparent"-->
+    <!--android:elevation="0dp"-->
+    <!--android:layout_marginEnd="@dimen/normalMargin"-->
+    <!--android:layout_marginBottom="@dimen/double_normalMargin"-->
+    <!--android:src="@drawable/bg_selected_services_selector"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"/>-->
 
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/mFloatingButton"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            android:backgroundTint="#ccb894"
+            android:elevation="0dp"
+            android:scaleType="centerInside"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/bg_selected_services_selector"
+    />
 
 </android.support.constraint.ConstraintLayout>

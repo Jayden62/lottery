@@ -5,7 +5,7 @@
                                              android:layout_height="match_parent">
     <ImageView
             android:id="@+id/mImageViewOn"
-            android:src="@drawable/ic_announcement_black_24dp"
+            android:src="@drawable/ic_shopping_cart_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mImageViewOn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Hiện tại chưa có dữ liệu !"
+            android:text="Hiện tại bạn chưa có dịch vụ nào !"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

@@ -8,7 +8,7 @@
         app:cardCornerRadius="4dp"
         app:cardUseCompatPadding="true"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/activeCard"
         android:layout_marginTop="@dimen/normalMargin"
         app:contentPadding="@dimen/normalPadding"
         android:layout_height="wrap_content">

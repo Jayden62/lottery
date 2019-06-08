@@ -16,4 +16,5 @@
     <string name="loading_data">Đang tải dữ liệu, vui lòng chờ…</string>
     <string name="handling_data">Đang xử lí dữ liệu…</string>
     <string name="personal_info">Thông tin cá nhân</string>
+    <string name="waiting_time">Nhân viên sẽ liên hệ cho quý khách để tư vấn trong cuộc gọi, xin cám ơn.</string>
 </resources>

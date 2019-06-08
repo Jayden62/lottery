@@ -1,11 +1,11 @@
-package lottery.com.screens.booking
+package lottery.com.screens.book
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_booking.*
 import lottery.com.R
@@ -16,7 +16,7 @@ import android.view.animation.TranslateAnimation
 import lottery.com.common.RecyclerViewDisable
 import lottery.com.utils.DialogUtils
 
-class BookingActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callback {
+class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callback {
 
     private var mAdapterDay: BaseAdapter<Any>? = null
     private var mAdapterDate: BaseAdapter<Any>? = null
@@ -26,6 +26,8 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener, DateItem.Call
     private var date: String? = null
     private var month: String? = null
     private var year: String? = null
+
+    private val TAG = this.javaClass.simpleName
 
     private var daysOfWeek: MutableList<String> = mutableListOf("T2", "T3", "T4", "T5", "T6", "T7", "CN")
 
@@ -202,6 +204,7 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener, DateItem.Call
 
         val calCurrent = Calendar.getInstance()
         mAdapterDate?.addItem(DateItem(this, calCurrent.get(Calendar.DAY_OF_MONTH).toString(), 1, this))
+
         for (index in 1..6) {
             calCurrent.add(Calendar.DATE, 1)
             mAdapterDate?.addItem(DateItem(this, calCurrent.get(Calendar.DAY_OF_MONTH).toString(), 0, this))
@@ -213,7 +216,7 @@ class BookingActivity : AppCompatActivity(), View.OnClickListener, DateItem.Call
      * @param date
      */
     override fun onTapDateItem(date: String) {
-
+        Log.d(TAG, date)
     }
 
     override fun onClick(view: View?) {

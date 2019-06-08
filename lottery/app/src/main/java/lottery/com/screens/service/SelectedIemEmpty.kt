@@ -7,7 +7,7 @@ import lottery.com.base.list.BaseItem
 
 class SelectedIemEmpty(var context: Context) : BaseItem<Any>(context) {
 
-    override fun onInitLayout(): Int = R.layout.item_no_data
+    override fun onInitLayout(): Int = R.layout.item_cart_empty
     override fun onBindView(view: View?) {
 
     }

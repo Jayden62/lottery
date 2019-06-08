@@ -6,21 +6,15 @@
         android:layout_height="wrap_content">
 
 
-    <TextView
-            android:layout_marginTop="@dimen/normalMargin"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/mTextViewNumber"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
 
     <TextView
             android:layout_marginTop="@dimen/normalMargin"
             android:layout_marginEnd="@dimen/normalMargin"
             app:layout_constraintEnd_toStartOf="@+id/mImageViewRemove"
             android:layout_marginStart="@dimen/normalMargin"
-            app:layout_constraintStart_toEndOf="@+id/mTextViewNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="start"
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/mTextViewSelectedService"
             android:layout_width="0dp"
@@ -28,6 +22,7 @@
 
     <ImageView
             android:clickable="true"
+            android:focusable="true"
             android:id="@+id/mImageViewRemove"
             android:layout_marginTop="@dimen/normalMargin"
             android:src="@drawable/bg_deleted_selected_item_service"

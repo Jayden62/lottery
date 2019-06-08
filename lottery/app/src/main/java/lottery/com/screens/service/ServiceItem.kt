@@ -140,7 +140,7 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
                         mImageViewCheck?.visibility = View.VISIBLE
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mTextViewName?.setTextColor(context.getColor(R.color.selectedDateColor))
-                            mCardView?.setCardBackgroundColor(context.getColor(R.color.activeCard))
+//                            mCardView?.setCardBackgroundColor(context.getColor(R.color.activeCard))
                         }
 
                         mTextViewName?.isEnabled = false
@@ -158,7 +158,6 @@ class ServiceItem(var context: Context, var value: Service?, private var callbac
                         mTextViewDes?.visibility = View.GONE
                         mTextViewDesLabel?.visibility = View.GONE
                         mImageViewCheck?.visibility = View.GONE
-
 
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

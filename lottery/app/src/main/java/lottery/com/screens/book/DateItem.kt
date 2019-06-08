@@ -1,7 +1,6 @@
-package lottery.com.screens.booking
+package lottery.com.screens.book
 
 import android.content.Context
-import android.os.Build
 import android.view.View
 import android.widget.TextView
 import lottery.com.R
@@ -10,7 +9,7 @@ import kotlinx.android.synthetic.main.item_date.view.*
 
 
 class DateItem(var context: Context, var date: String, var isBold: Int, var callback: Callback) :
-    BaseItem<Any>(context), View.OnClickListener {
+    BaseItem<Any>(context, date), View.OnClickListener {
 
     interface Callback {
         fun onTapDateItem(date: String)
@@ -28,26 +27,26 @@ class DateItem(var context: Context, var date: String, var isBold: Int, var call
         view?.mConstrainLayout?.setOnClickListener(this)
 
         mTextViewDate = view?.mTextViewDate
+        mTextViewDate?.setOnClickListener(this)
         isClicked = !isClicked
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            when (isBold) {
-                1 -> {
-                    mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_selected_date_item)
-                }
-                0 -> {
-                    mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_unselected_date_item)
-                }
+        when (isBold) {
+            1 -> {
+                mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_selected_date_item)
+            }
+            0 -> {
+                mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_unselected_date_item)
             }
         }
 
     }
 
-
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.mTextViewDate, R.id.mConstrainLayout -> {
                 callback.onTapDateItem(date)
+                mTextViewDate?.background = context.getDrawable(R.drawable.bg_rouded_selected_date_item)
+
             }
         }
     }

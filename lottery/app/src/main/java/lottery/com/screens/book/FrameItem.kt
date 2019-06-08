@@ -1,4 +1,4 @@
-package lottery.com.screens.booking
+package lottery.com.screens.book
 
 import android.content.Context
 import android.view.View
