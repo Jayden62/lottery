@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
+import java.io.Serializable
 
 @Entity(tableName = "service")
 class Service(
@@ -21,7 +22,7 @@ class Service(
     var detail: String,
     @ColumnInfo(name = "type_id")
     var typeId: Int
-) : Parcelable {
+) : Parcelable, Serializable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),

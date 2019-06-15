@@ -13,6 +13,11 @@ object Constants {
 
     object Data {
         const val DATA = "DATA"
+        const val MODEL = "MODEL"
+        const val DATE = "DATE"
+        const val DAY = "DAY"
+        const val MY_MODEL = "MY MODEL"
+        const val USER = "USER"
     }
 
 

@@ -1,10 +1,12 @@
 package lottery.com.screens.book
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
@@ -13,15 +15,22 @@ import lottery.com.base.list.BaseAdapter
 import java.text.SimpleDateFormat
 import android.view.animation.TranslateAnimation
 import android.widget.AdapterView
+import android.widget.Toast
 import lottery.com.R
 import lottery.com.common.RecyclerViewDisable
 import lottery.com.database.DBHelper
 import lottery.com.model.MainTimeFrame
+import lottery.com.model.Service
+import lottery.com.screens.ConfirmActivity
+import lottery.com.utils.Constants
 import lottery.com.utils.DialogUtils
+import lottery.com.utils.PreferenceHelper
+import java.io.Serializable
 import java.time.LocalDate
 import java.util.*
 
-class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callback, DayItem.Callback {
+class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callback, DayItem.Callback,
+    TimeFrameActiveItem.Callback {
 
     private var mAdapterDay: BaseAdapter<Any>? = null
     private var mAdapterDate: BaseAdapter<Any>? = null
@@ -32,7 +41,17 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
     private var month: String? = null
     private var year: String? = null
 
+    private var isChecked: Boolean = false
+
+    private var strDate: String? = null
+
+    private var mData: MainTimeFrame? = null
+
+    private var mList: MutableList<MainTimeFrame>? = mutableListOf()
+
     private var item: MainTimeFrame? = null
+
+    private var dataPassed: MutableList<Service>? = mutableListOf()
 
     private val TAG = this.javaClass.simpleName
 
@@ -47,6 +66,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         date = getCurrentDate()
         month = getCurrentMoth()
         year = getCurrentYear()
+        dataPassed = intent.getParcelableArrayListExtra(Constants.Data.DATA)
         mButtonSubmit?.setOnClickListener(this)
         initData()
         initAnimation()
@@ -268,17 +288,16 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         mRecyclerViewFrame?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerViewFrame?.adapter = mAdapterFrame
 
-        var list: MutableList<MainTimeFrame>? = mutableListOf()
-        val strDate = getCurrentDateText()
+        strDate = getCurrentDateText()
         if (item?.id == null) {
-            list = DBHelper().getTimesFrameActive(14, strDate)
-            for (it in list!!) {
-                mAdapterFrame?.addItem(TimeFrameActiveItem(this, it.detail.toString(), true))
+            mList = DBHelper().getTimesFrameActive(14, strDate)
+            for (it in mList!!) {
+                mAdapterFrame?.addItem(TimeFrameActiveItem(this, it, true, this))
             }
         } else {
-            list = DBHelper().getTimesFrameActive(item?.id!!, strDate)
-            for (it in list!!) {
-                mAdapterFrame?.addItem(TimeFrameActiveItem(this, it.detail.toString(), true))
+            mList = DBHelper().getTimesFrameActive(item?.id!!, strDate)
+            for (it in mList!!) {
+                mAdapterFrame?.addItem(TimeFrameActiveItem(this, it, true, this))
             }
         }
     }
@@ -306,10 +325,30 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
 //        mTextViewDay.text = convertShortDayPicked(day)
     }
 
+    override fun onTapActive(data: MainTimeFrame?) {
+        if (!isChecked) {
+            mData = data
+            isChecked = false
+        } else {
+            mData = null
+            isChecked = true
+        }
+    }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.mButtonSubmit -> {
-                mAdapterFrame?.itemCount
+                if (mData == null) {
+                    DialogUtils.showToastMessage(this, "Vui lòng chọn khung giờ hoạt động !")
+                } else {
+                    val intent = Intent(this, ConfirmActivity::class.java)
+                    intent.putExtra(Constants.Data.DATA, dataPassed as Serializable)
+                    intent.putExtra(Constants.Data.MODEL, mData)
+                    intent.putExtra(Constants.Data.DATE, strDate)
+                    intent.putExtra(Constants.Data.DAY, mTextViewDay.text.toString())
+                    startActivity(intent)
+                }
+
             }
         }
     }

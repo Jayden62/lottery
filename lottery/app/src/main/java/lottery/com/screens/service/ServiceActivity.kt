@@ -13,8 +13,8 @@ import lottery.com.model.TypeService
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.ImageView
@@ -22,6 +22,7 @@ import lottery.com.model.Service
 import lottery.com.room.respository.ServiceRepos
 import lottery.com.screens.book.BookActivity
 import lottery.com.utils.DialogUtils
+import java.util.ArrayList
 
 class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.Callback, SelectedItem.Callback {
 
@@ -97,6 +98,7 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
         mRecyclerViewSelectedService.adapter = mAdapterSelected
         /* Room database */
         serviceRepos?.getAllServices()?.observe(this, Observer { list ->
+            data = list
             if (list.isNullOrEmpty()) {
                 mAdapterSelected.addItem(SelectedIemEmpty(this))
 
@@ -105,7 +107,6 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
                     mAdapterSelected.addItem(SelectedItem(this, value, this))
                 }
             }
-
         })
         mButtonConsultant.setOnClickListener {
             val mAlertDialog = AlertDialog.Builder(this).create()
@@ -123,10 +124,12 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 //            }.start()
         }
         mButtonBook.setOnClickListener {
-            if (mAdapterSelected.itemCount < 1) {
+
+            if (data.isNullOrEmpty()) {
                 DialogUtils.showMessageDialog("Bạn phải chọn ít nhất 1 dịch vụ !", this)
             } else {
                 val intent = Intent(this, BookActivity::class.java)
+                intent.putParcelableArrayListExtra(Constants.Data.DATA, data as ArrayList<out Parcelable>)
                 startActivity(intent)
             }
         }

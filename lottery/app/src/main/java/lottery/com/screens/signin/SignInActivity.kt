@@ -17,6 +17,7 @@ import lottery.com.screens.home.HomeActivity
 import lottery.com.screens.signup.SignUpActivity
 import lottery.com.utils.Constants
 import lottery.com.utils.DialogUtils
+import lottery.com.utils.PreferenceHelper
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
@@ -73,6 +74,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                             if (data != null) {
                                 val intent = Intent(this, HomeActivity::class.java)
                                 intent.putExtra(Constants.Data.DATA, data)
+                                PreferenceHelper.saveUser(this, data)
                                 startActivity(intent)
                                 finish()
                             } else {
@@ -80,6 +82,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                                 if (result != null) {
                                     val intent = Intent(this, HomeActivity::class.java)
                                     intent.putExtra(Constants.Data.DATA, result)
+                                    PreferenceHelper.saveUser(this, result)
                                     startActivity(intent)
                                     finish()
                                 }
