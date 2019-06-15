@@ -38,8 +38,8 @@
 
     <Button
             android:id="@+id/mButtonConsultant"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
             android:layout_marginTop="@dimen/normalMargin"
             android:text="Tư vấn"
             android:textColor="@android:color/white"
@@ -49,8 +49,8 @@
 
     <Button
             android:id="@+id/mButtonBook"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
             android:layout_marginTop="@dimen/normalMargin"
             android:text="Đặt lịch"
             app:layout_constraintEnd_toEndOf="parent"

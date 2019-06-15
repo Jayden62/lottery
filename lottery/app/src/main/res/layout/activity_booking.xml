@@ -26,11 +26,11 @@
         <TextView
                 android:layout_marginTop="@dimen/normalMargin"
                 android:id="@+id/mTextView"
-                android:text="Hôm nay"
+                android:text="Ngày đặt lịch : "
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/normalMargin"
                 app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewDate"
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
 
@@ -41,15 +41,13 @@
                 android:background="@android:color/black"
                 android:layout_marginTop="@dimen/smallMargin"
                 app:layout_constraintTop_toBottomOf="@id/mTextView"
-                android:layout_width="60dp"
+                android:layout_width="90dp"
                 android:layout_height="1dp"/>
 
-
         <TextView
-                android:id="@+id/mTextViewToday"
+                android:id="@+id/mTextViewBook"
                 android:textSize="16sp"
                 android:layout_marginTop="@dimen/smallMargin"
-                android:textStyle="bold"
                 android:layout_marginStart="@dimen/normalMargin"
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@+id/mViewLine"
@@ -69,28 +67,36 @@
         <TextView
                 android:id="@+id/mTextViewFrame"
                 android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewToday"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewBook"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="0dp"
                 android:layout_marginStart="@dimen/normalMargin"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:textColor="#f20"
-                android:text="1. Vui lòng chọn giờ hẹn : "
+                android:text="1. Khung giờ chính : "
                 android:layout_height="wrap_content"/>
 
-        <Button
-                android:id="@+id/mButtonOne"
-                android:textAllCaps="false"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:layout_marginStart="@dimen/normalMargin"
-                android:text="Chọn khung giờ"
-                android:clickable="true"
-                android:textColor="@drawable/bg_base_text_selector"
-                android:background="@drawable/bg_times_frame_selector"
-                app:layout_constraintStart_toStartOf="parent"
+
+        <Spinner
+                android:id="@+id/mSpinnerFrame"
                 app:layout_constraintTop_toBottomOf="@+id/mTextViewFrame"
-                android:layout_width="180dp"
+                android:layout_width="150dp"
+                android:spinnerMode="dropdown"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:background="@drawable/bg_main_tf_list"
+                android:clipToPadding="true"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_marginEnd="@dimen/smallMargin"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/mSpinnerFrame"
+                app:layout_constraintTop_toTopOf="@+id/mSpinnerFrame"
+                app:layout_constraintEnd_toEndOf="@+id/mSpinnerFrame"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <TextView
@@ -105,7 +111,7 @@
         <TextView
                 android:id="@+id/mTextViewStart"
                 android:layout_marginTop="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mButtonOne"
+                app:layout_constraintTop_toBottomOf="@+id/mSpinnerFrame"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="@dimen/normalMargin"
@@ -122,20 +128,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        <!--<Button-->
-        <!--android:id="@+id/mButtonSubmit"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Xác nhận"-->
-        <!--android:layout_marginBottom="@dimen/normalMargin"-->
-        <!--android:layout_marginEnd="@dimen/normalMargin"-->
-        <!--android:layout_marginStart="@dimen/normalMargin"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:background="@drawable/bg_base_button_selector"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--/>-->
+        <Button
+                android:id="@+id/mButtonSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận"
+                app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewFrame"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_marginBottom="@dimen/normalMargin"
+                android:layout_marginEnd="@dimen/normalMargin"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_base_button_selector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+        />
 
 
     </android.support.constraint.ConstraintLayout>

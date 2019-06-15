@@ -123,7 +123,7 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
 //            }.start()
         }
         mButtonBook.setOnClickListener {
-            if (mAdapterSelected.itemCount == 0) {
+            if (mAdapterSelected.itemCount < 1) {
                 DialogUtils.showMessageDialog("Bạn phải chọn ít nhất 1 dịch vụ !", this)
             } else {
                 val intent = Intent(this, BookActivity::class.java)

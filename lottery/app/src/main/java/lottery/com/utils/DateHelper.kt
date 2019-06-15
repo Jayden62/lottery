@@ -10,5 +10,4 @@ object DateHelper {
         return formatDate.format(date)
     }
 
-
 }

@@ -302,6 +302,55 @@ class DBHelper {
         return null
     }
 
+    fun getMainTimesFrame(): MutableList<MainTimeFrame>? {
+        try {
+            val list: MutableList<MainTimeFrame> = mutableListOf()
+            initPermission()
+            this.conn = createConnection()
+            Log.d(TAG, "Connected")
+            val query = "SELECT * FROM TIMEFRAME WHERE TIMEFRAME_ID BETWEEN 14 AND 16"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val id = rs.getInt("timeframe_id")
+                val detail = rs.getString("details_timeframe")
+                val state = rs.getInt("state")
+                val item = MainTimeFrame(id, detail, state)
+                list.add(item)
+            }
+            return list
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
+
+    fun getTimesFrameActive(timeId: Int, strDate: String?): MutableList<MainTimeFrame>? {
+        try {
+            val list: MutableList<MainTimeFrame> = mutableListOf()
+            initPermission()
+            this.conn = createConnection()
+            Log.d(TAG, "Connected")
+            val query = "SELECT A.* FROM TIMEFRAME A LEFT JOIN SCHEDULE B ON A.TIMEFRAME_ID = B.TIMEFRAME_ID \n" +
+                    "WHERE B.TIMEFRAME_ID IS NULL \n" +
+                    "AND STATE = $timeId \n" +
+                    "AND B.TIMEFRAME_ID NOT IN ( SELECT TIMEFRAME_ID FROM SCHEDULE WHERE SCH_DAY = '$strDate')"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val id = rs.getInt("timeframe_id")
+                val detail = rs.getString("details_timeframe")
+                val state = rs.getInt("state")
+                val item = MainTimeFrame(id, detail, state)
+                list.add(item)
+            }
+            return list
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
+
     fun getPassword(passWord: String?, phone: String?): User? {
         try {
             initPermission()

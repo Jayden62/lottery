@@ -6,13 +6,10 @@
         android:layout_height="wrap_content">
 
 
-
-
     <TextView
             android:layout_marginTop="@dimen/normalMargin"
             android:layout_marginEnd="@dimen/normalMargin"
             app:layout_constraintEnd_toStartOf="@+id/mImageViewRemove"
-            android:layout_marginStart="@dimen/normalMargin"
             app:layout_constraintStart_toStartOf="parent"
             android:gravity="start"
             app:layout_constraintTop_toTopOf="parent"
