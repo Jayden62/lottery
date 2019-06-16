@@ -6,7 +6,6 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
@@ -15,16 +14,14 @@ import lottery.com.base.list.BaseAdapter
 import java.text.SimpleDateFormat
 import android.view.animation.TranslateAnimation
 import android.widget.AdapterView
-import android.widget.Toast
 import lottery.com.R
 import lottery.com.common.RecyclerViewDisable
 import lottery.com.database.DBHelper
 import lottery.com.model.MainTimeFrame
 import lottery.com.model.Service
-import lottery.com.screens.ConfirmActivity
+import lottery.com.screens.confirm.ConfirmActivity
 import lottery.com.utils.Constants
 import lottery.com.utils.DialogUtils
-import lottery.com.utils.PreferenceHelper
 import java.io.Serializable
 import java.time.LocalDate
 import java.util.*

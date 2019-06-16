@@ -31,7 +31,7 @@
 
         <ImageView
                 android:visibility="gone"
-                android:src="@drawable/ic_check_black_24dp"
+                android:src="@drawable/ic_check_blue_24dp"
                 android:layout_marginStart="@dimen/smallMargin"
                 android:id="@+id/mImageViewCheck"
                 app:layout_constraintStart_toEndOf="@+id/mTextViewName"

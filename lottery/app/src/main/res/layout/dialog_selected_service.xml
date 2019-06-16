@@ -52,7 +52,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="@dimen/normalMargin"
-            android:text="Đặt lịch"
+            android:text="Tiếp"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@android:color/white"
             android:background="@drawable/bg_base_button_selector"

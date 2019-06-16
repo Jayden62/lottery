@@ -15,7 +15,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.ConfirmActivity">
+        <activity android:name=".screens.succeed.SucceedActivity">
+        </activity>
+        <activity android:name=".screens.fail.FailActivity">
+        </activity>
+        <activity android:name=".screens.signin.SignInActivity">
         </activity>
         <activity android:name=".screens.information.InformationActivity">
         </activity>
@@ -29,7 +33,7 @@
         </activity>
         <activity android:name=".screens.home.HomeActivity">
         </activity>
-        <activity android:name=".screens.signin.SignInActivity">
+        <activity android:name=".screens.confirm.ConfirmActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

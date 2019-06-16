@@ -5,6 +5,111 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.ConfirmActivity">
+        android:padding="@dimen/normalPadding"
+        tools:context=".screens.confirm.ConfirmActivity">
+
+    <TextView
+            android:id="@+id/mTextViewInfo"
+            android:text="Thông Tin Đặt Hẹn"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewNameLabel"
+            android:text="Tên khách hàng : "
+            android:layout_marginTop="@dimen/largeMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewName"
+            android:text="Le Nghia"
+            android:layout_marginTop="@dimen/largeMargin"
+            android:drawableEnd="@drawable/ic_check_blue_24dp"
+            android:drawablePadding="@dimen/normalPadding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    <TextView
+            android:id="@+id/mTextViewFrameLabel"
+            android:text="Khung giờ đặt hẹn : "
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewNameLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewFrame"
+            android:text="9h-10h"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:drawableEnd="@drawable/ic_check_blue_24dp"
+            android:drawablePadding="@dimen/normalPadding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewDateLabel"
+            android:text="Ngày đặt hẹn : "
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewFrameLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewDate"
+            android:text="Thứ 4, 26/07/2019"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:drawableEnd="@drawable/ic_check_blue_24dp"
+            android:drawablePadding="@dimen/normalPadding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewService"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/mButtonConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận"
+            android:layout_marginEnd="@dimen/normalMargin"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_base_button_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
 
 </android.support.constraint.ConstraintLayout>

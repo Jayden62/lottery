@@ -132,7 +132,7 @@
                 android:id="@+id/mButtonSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Xác nhận"
+                android:text="Tiến hành đặt lịch"
                 app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewFrame"
                 android:layout_marginTop="@dimen/normalMargin"
                 android:layout_marginBottom="@dimen/normalMargin"
