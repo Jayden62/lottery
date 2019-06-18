@@ -31,7 +31,6 @@
 
     <TextView
             android:id="@+id/mTextViewName"
-            android:text="Le Nghia"
             android:layout_marginTop="@dimen/largeMargin"
             android:drawableEnd="@drawable/ic_check_blue_24dp"
             android:drawablePadding="@dimen/normalPadding"
@@ -52,7 +51,6 @@
 
     <TextView
             android:id="@+id/mTextViewFrame"
-            android:text="9h-10h"
             android:layout_marginTop="@dimen/normalMargin"
             android:drawableEnd="@drawable/ic_check_blue_24dp"
             android:drawablePadding="@dimen/normalPadding"
@@ -72,7 +70,6 @@
 
     <TextView
             android:id="@+id/mTextViewDate"
-            android:text="Thứ 4, 26/07/2019"
             android:layout_marginTop="@dimen/normalMargin"
             android:drawableEnd="@drawable/ic_check_blue_24dp"
             android:drawablePadding="@dimen/normalPadding"
@@ -84,6 +81,7 @@
     <TextView
             android:id="@+id/mTextViewService"
             android:gravity="center"
+            android:textColor="@android:color/black"
             android:layout_marginTop="@dimen/normalMargin"
             app:layout_constraintTop_toBottomOf="@+id/mTextViewDate"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,8 +101,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Xác nhận"
-            android:layout_marginEnd="@dimen/normalMargin"
-            android:layout_marginStart="@dimen/normalMargin"
             android:textColor="@android:color/white"
             android:background="@drawable/bg_base_button_selector"
             app:layout_constraintEnd_toEndOf="parent"

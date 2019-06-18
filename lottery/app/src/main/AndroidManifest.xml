@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".screens.fail.FailActivity">
         </activity>
-        <activity android:name=".screens.signin.SignInActivity">
+        <activity android:name=".screens.confirm.ConfirmActivity">
         </activity>
         <activity android:name=".screens.information.InformationActivity">
         </activity>
@@ -33,7 +33,7 @@
         </activity>
         <activity android:name=".screens.home.HomeActivity">
         </activity>
-        <activity android:name=".screens.confirm.ConfirmActivity">
+        <activity android:name=".screens.signin.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

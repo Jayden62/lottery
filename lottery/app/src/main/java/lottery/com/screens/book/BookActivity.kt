@@ -54,7 +54,6 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
 
     private var daysOfWeek: MutableList<String> = mutableListOf("T2", "T3", "T4", "T5", "T6", "T7", "CN")
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking)
@@ -68,7 +67,8 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         initData()
         initAnimation()
         mTextViewDay.text = convertLongDay(day!!)
-        mTextViewBook.text = date + "-" + getCurrentMoth() + "-" + getCurrentYearTwo()
+        mTextViewBook.text = date + "-" + getCurrentMoth() + "-" + getCurrentYear()
+
         /**
          * Hide loading dialog
          */
@@ -103,13 +103,13 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
 
     private fun getCurrentDateText(): String {
         val date = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd-MMM-YYYY")
+        val dateFormat = SimpleDateFormat("dd-MMM-YY")
         return dateFormat.format(date)
     }
 
     private fun getDayPicked(strDay: String): String {
-        var dateFormat = SimpleDateFormat("MM-dd-yyyy")
-        var cvDate = dateFormat.parse(strDay)
+        val dateFormat = SimpleDateFormat("MM-dd-yyyy")
+        val cvDate = dateFormat.parse(strDay)
         val fmt = SimpleDateFormat("EEEE")
         return fmt.format(cvDate)
     }
@@ -305,7 +305,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
      */
     override fun onTapDateItem(date: String) {
         Log.d(TAG, date)
-        val result = date + "-" + getCurrentMoth() + "-" + getCurrentYearTwo()
+        val result = date + "-" + getCurrentMoth() + "-" + getCurrentYear()
         mTextViewBook.text = result
 //        mTextViewDay.text = convertShortDayPicked(getDayPicked(result))
 
@@ -326,9 +326,11 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         if (!isChecked) {
             mData = data
             isChecked = false
+
         } else {
             mData = null
             isChecked = true
+
         }
     }
 
@@ -345,7 +347,6 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
                     intent.putExtra(Constants.Data.DAY, mTextViewDay.text.toString())
                     startActivity(intent)
                 }
-
             }
         }
     }

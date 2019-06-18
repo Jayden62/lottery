@@ -3,12 +3,10 @@ package lottery.com.database
 import android.annotation.SuppressLint
 import android.os.StrictMode
 import android.util.Log
-import lottery.com.R
 import lottery.com.utils.Constants
 import lottery.com.utils.DataHelper
 import lottery.com.utils.DateHelper
 import lottery.com.model.*
-import lottery.com.utils.DialogUtils
 import java.lang.Exception
 import java.sql.*
 
@@ -55,7 +53,7 @@ class DBHelper {
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
-                item = rs?.getString("cellphone")
+                item = rs.getString("cellphone")
                 return if (item == user.phoneNumber) {
                     false
                 } else {
@@ -80,7 +78,7 @@ class DBHelper {
             val sqlQuery =
                 "SELECT * FROM ACCOUNT_DT WHERE CELLPHONE = '$phoneNumber'"
             val statement = conn?.createStatement()
-            var rs: ResultSet? = statement?.executeQuery(sqlQuery)
+            val rs: ResultSet? = statement?.executeQuery(sqlQuery)
             while (rs!!.next()) {
                 val name = rs.getString("name_id")
                 val phone = rs.getString("cellphone")
@@ -280,28 +278,6 @@ class DBHelper {
         return null
     }
 
-    fun getTimesFrame(): MutableList<TimeFrame>? {
-        try {
-            val frames: MutableList<TimeFrame> = mutableListOf()
-            initPermission()
-            this.conn = createConnection()
-            Log.d(TAG, "Connected")
-            val query = "select * from timeframe where timeframe_id between 14 and 17 "
-            val statement = conn?.createStatement()
-            val rs = statement?.executeQuery(query)
-            while (rs?.next()!!) {
-                val id = rs.getInt("timeframe_id")
-                val detail = rs.getString("details_timeframe")
-                val item = TimeFrame(id, detail)
-                frames.add(item)
-            }
-            return frames
-        } catch (e: Exception) {
-            Log.d(TAG, e.message)
-        }
-        return null
-    }
-
     fun getMainTimesFrame(): MutableList<MainTimeFrame>? {
         try {
             val list: MutableList<MainTimeFrame> = mutableListOf()
@@ -331,10 +307,10 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             Log.d(TAG, "Connected")
-            val query = "SELECT A.* FROM TIMEFRAME A LEFT JOIN SCHEDULE B ON A.TIMEFRAME_ID = B.TIMEFRAME_ID \n" +
-                    "WHERE B.TIMEFRAME_ID IS NULL \n" +
-                    "AND STATE = $timeId \n" +
-                    "AND B.TIMEFRAME_ID NOT IN ( SELECT TIMEFRAME_ID FROM SCHEDULE WHERE SCH_DAY = '$strDate')"
+            val query = "SELECT * FROM TIMEFRAME WHERE TIMEFRAME_ID IN \n" +
+                    "( SELECT TIMEFRAME_ID FROM TIMEFRAME WHERE STATE = $timeId\n" +
+                    "  MINUS\n" +
+                    "  SELECT TIMEFRAME_ID FROM SCHEDULE WHERE SCH_DAY = '$strDate') ORDER BY TIMEFRAME_ID ASC"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
@@ -374,5 +350,45 @@ class DBHelper {
             Log.d(TAG, e.message)
         }
         return null
+    }
+
+    fun getUserIdByphone(phone: String): Int {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            var id: Int = 0
+            val query = "select account_id from account_dt where cellphone = '$phone'"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                id = rs.getInt("account_id")
+            }
+            return id
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return -1
+    }
+
+    fun createSchedule(
+        userId: Int,
+        frameId: Int,
+        day: String,
+        date: String,
+        qrCode: String,
+        name: String
+    ): Boolean {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            val query =
+                "INSERT INTO SCHEDULE (account_id, TIMEFRAME_ID, SCH_DAYOFDATE, SCH_DAY, QRCODE, NAME_SER) VALUES ($userId,$frameId,'$day','$date','$qrCode', '$name')"
+            val statement = conn?.createStatement()
+            statement?.execute(query)
+            return true
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return false
     }
 }

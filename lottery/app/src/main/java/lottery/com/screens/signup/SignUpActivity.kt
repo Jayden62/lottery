@@ -89,8 +89,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                 )
 
                 if (validate()) {
-
-
                     when (DBHelper().registerAccount(data)) {
                         true -> {
                             clearData()
