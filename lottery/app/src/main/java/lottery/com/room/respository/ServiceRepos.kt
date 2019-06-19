@@ -89,4 +89,14 @@ class ServiceRepos() {
 
         }.execute()
     }
+
+    @SuppressLint("StaticFieldLeak")
+    fun deleteAll() {
+        object : AsyncTask<Void, Void, Void>() {
+            override fun doInBackground(vararg voids: Void): Void? {
+                dao?.deleteAll()
+                return null
+            }
+        }.execute()
+    }
 }

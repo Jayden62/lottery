@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import lottery.com.model.Service
+
 @Dao
 interface ServiceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -15,4 +16,7 @@ interface ServiceDao {
 
     @Query("DELETE FROM service where id=:id")
     fun delete(id: Int?)
+
+    @Query("DELETE FROM service ")
+    fun deleteAll()
 }

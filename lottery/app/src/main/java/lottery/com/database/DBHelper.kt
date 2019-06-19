@@ -9,6 +9,7 @@ import lottery.com.utils.DateHelper
 import lottery.com.model.*
 import java.lang.Exception
 import java.sql.*
+import kotlin.math.sqrt
 
 class DBHelper {
 
@@ -370,19 +371,18 @@ class DBHelper {
         return -1
     }
 
-    fun createSchedule(
+    fun createDate(
         userId: Int,
         frameId: Int,
         day: String,
         date: String,
-        qrCode: String,
-        name: String
+        qrCode: String
     ): Boolean {
         try {
             initPermission()
             this.conn = createConnection()
             val query =
-                "INSERT INTO SCHEDULE (account_id, TIMEFRAME_ID, SCH_DAYOFDATE, SCH_DAY, QRCODE, NAME_SER) VALUES ($userId,$frameId,'$day','$date','$qrCode', '$name')"
+                "INSERT INTO SCHEDULE (account_id, TIMEFRAME_ID, SCH_DAYOFDATE, SCH_DAY, QRCODE) VALUES ($userId,$frameId,'$day','$date','$qrCode')"
             val statement = conn?.createStatement()
             statement?.execute(query)
             return true
@@ -390,5 +390,36 @@ class DBHelper {
             Log.d(TAG, e.message)
         }
         return false
+    }
+
+    fun getScheduleIdByUserId(userId: Int, frameId: Int, date: String): Int? {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            var scheduleId: Int? = 0
+            val query =
+                "SELECT SCH_ID FROM SCHEDULE WHERE ACCOUNT_ID = '$userId' AND TIMEFRAME_ID = '$frameId' AND SCH_DAY = '$date'"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                scheduleId = rs.getInt("sch_id")
+            }
+            return scheduleId
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return -1
+    }
+
+    fun createSchedule(id: Int, serviceId: Int) {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            val query = "INSERT INTO DETAILS_SCH (SCH_ID, SERVICE_ID) VALUES ($id,$serviceId)"
+            val statement = conn?.createStatement()
+            statement?.execute(query)
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
     }
 }

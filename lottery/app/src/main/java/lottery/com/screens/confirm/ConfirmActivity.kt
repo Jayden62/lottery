@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_confirm.mRecyclerView
 import lottery.com.base.list.BaseAdapter
 import lottery.com.database.DBHelper
 import lottery.com.model.Service
+import lottery.com.room.respository.ServiceRepos
 import lottery.com.screens.fail.FailActivity
 import lottery.com.screens.succeed.SucceedActivity
 import lottery.com.utils.DialogUtils
@@ -37,11 +38,14 @@ class ConfirmActivity : AppCompatActivity() {
 
     private var mAdapter: BaseAdapter<Any> = BaseAdapter()
 
+    private var serviceRepos: ServiceRepos? = null
+
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm)
-
+        serviceRepos = ServiceRepos(this)
         user = PreferenceHelper.getUser(this)
         if (intent != null) {
             services = intent.getSerializableExtra(Constants.Data.DATA) as MutableList<Service>?
@@ -76,32 +80,32 @@ class ConfirmActivity : AppCompatActivity() {
             ) {
                 DialogUtils.showToastMessage(this, "Thông tin chưa đầy đủ, vui lòng thử lại !")
             } else {
-                /**
-                 * Insert to database
-                 */
-                var name: String? = null
-                for (item in services!!) {
-                    name = item.name
-                }
-
                 var userId: Int = 0
                 if (DBHelper().getUserIdByphone(user?.phoneNumber!!) != 0) {
                     userId = DBHelper().getUserIdByphone(user?.phoneNumber!!)
                 }
 
-                when (DBHelper().createSchedule(
+                when (DBHelper().createDate(
                     userId,
                     mainTimeFrame?.id!!,
                     day!!,
                     strDate!!,
-                    UUID.randomUUID().toString(), name!!
+                    UUID.randomUUID().toString()
                 )) {
                     true -> {
-                        startActivity(Intent(this, SucceedActivity::class.java))
+                        val result = DBHelper().getScheduleIdByUserId(userId, mainTimeFrame?.id!!, strDate!!)
+                        if (result != null) {
+                            for (item in services!!) {
+                                DBHelper().createSchedule(result, item.id)
+                            }
+                            startActivity(Intent(this, SucceedActivity::class.java))
+                            services?.clear()
+                            serviceRepos?.deleteAll()
+                        } else {
+                            startActivity(Intent(this, FailActivity::class.java))
+                        }
                     }
-                    false -> {
-                        startActivity(Intent(this, FailActivity::class.java))
-                    }
+
                 }
             }
         }
