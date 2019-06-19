@@ -63,10 +63,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
             DialogUtils.showMessageDialog("Vui lòng nhập mật khẩu.", this)
             return false
         }
-        if (mEditTextPassword.text.length < 6) {
-            DialogUtils.showMessageDialog("Mật khẩu ít nhất 6 kí tự.", this)
-            return false
-        }
+//        if (mEditTextPassword.text.length < 6) {
+//            DialogUtils.showMessageDialog("Mật khẩu ít nhất 6 kí tự.", this)
+//            return false
+//        }
         if (mEditTextAddress.text.isEmpty() || mEditTextAddress.text == null) {
             DialogUtils.showMessageDialog("Vui lòng nhập địa chỉ.", this)
             return false
@@ -79,7 +79,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
             R.id.mButtonRegister -> {
                 val mProgressDialog = DialogUtils.showLoadingDialog(this, this.getString(R.string.handling_data))
 
-                val data = User(
+                val user = User(
                     mEditTextName.text.toString(),
                     mEditTextPhone.text.toString(),
                     mEditTextPassword.text.toString(),
@@ -89,21 +89,22 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                 )
 
                 if (validate()) {
-                    when (DBHelper().registerAccount(data)) {
+                    when (DBHelper().registerAccount(user)) {
                         true -> {
                             clearData()
                             Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
                             val intent = Intent(this, SignInActivity::class.java)
-                            intent.putExtra(Constants.Data.DATA, data)
+                            intent.putExtra(Constants.Data.DATA, user)
                             startActivity(intent)
                         }
                         false -> {
                             DialogUtils.showMessageDialog("Số điện thoại đã tồn tại !", this)
+                            mProgressDialog.dismiss()
                         }
                     }
-
+                } else {
+                    mProgressDialog.dismiss()
                 }
-
             }
         }
 
@@ -115,7 +116,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
         mEditTextPassword.setText("")
         mEditTextAddress.setText("")
     }
-
 
     override fun afterTextChanged(s: Editable?) {
     }

@@ -43,27 +43,44 @@ class DBHelper {
         }
     }
 
-    fun registerAccount(user: User): Boolean {
+    private fun checkPhoneNumber(): MutableList<String>? {
         try {
             initPermission()
             this.conn = createConnection()
-            Log.d(TAG, "Connected")
-            val sqlQuery =
-                "INSERT INTO ACCOUNT_DT(NAME_ID, CELLPHONE, PASSWORD_ID, SEX, ADDRESS,ACCESS_TOKEN) VALUES ('${user.name}','${user.phoneNumber}','${user.passWord}','${user.sex}','${user.address}','${user.accessToken}')"
+            val list: MutableList<String>? = mutableListOf()
+            var mPhone: String? = null
             val query = "select cellphone from account_dt"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
-                item = rs.getString("cellphone")
-                return if (item == user.phoneNumber) {
-                    false
-                } else {
-                    val pmtm = conn?.prepareStatement(sqlQuery)
-                    pmtm?.execute()
-                    true
-                }
+                mPhone = rs.getString("cellphone")
+                list?.add(mPhone)
             }
-            conn?.close()
+            return list
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
+
+    fun registerAccount(user: User): Boolean {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            val listPhone = checkPhoneNumber()
+            val statement = conn?.createStatement()
+            val query =
+                "INSERT INTO ACCOUNT_DT(NAME_ID, CELLPHONE, PASSWORD_ID, SEX, ADDRESS,ACCESS_TOKEN) VALUES ('${user.name}','${user.phoneNumber}','${user.passWord}','${user.sex}','${user.address}','${user.accessToken}')"
+
+            if (!listPhone.isNullOrEmpty()) {
+                for (phone in listPhone) {
+                    if (phone == user.phoneNumber) {
+                        return false
+                    }
+                }
+                statement?.execute(query)
+                return true
+            }
         } catch (e: Exception) {
             Log.d(TAG, e.message)
         }
