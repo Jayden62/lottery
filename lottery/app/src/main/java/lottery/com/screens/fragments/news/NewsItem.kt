@@ -21,7 +21,7 @@ class NewsItem(var context: Context, var value: News?, var callback: Callback) :
     override fun onBindView(view: View?) {
         view?.mImageViewNews?.let {
             Glide.with(mContext)
-                .load(value?.image)
+                .load(mContext.getDrawable(R.drawable.photo_news))
                 .into(it)
         }
         view?.mTextViewTitle?.text = value?.name

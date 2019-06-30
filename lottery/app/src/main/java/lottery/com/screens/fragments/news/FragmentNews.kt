@@ -3,7 +3,6 @@ package lottery.com.screens.fragments.news
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -17,7 +16,6 @@ import lottery.com.database.DBHelper
 import lottery.com.utils.Constants
 import lottery.com.model.News
 import lottery.com.screens.newsdetail.NewsDetailActivity
-import lottery.com.utils.DialogUtils
 
 class FragmentNews : Fragment(), NewsItem.Callback {
 

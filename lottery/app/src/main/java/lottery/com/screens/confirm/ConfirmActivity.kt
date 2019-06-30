@@ -81,8 +81,8 @@ class ConfirmActivity : AppCompatActivity() {
                 DialogUtils.showToastMessage(this, "Thông tin chưa đầy đủ, vui lòng thử lại !")
             } else {
                 var userId: Int = 0
-                if (DBHelper().getUserIdByphone(user?.phoneNumber!!) != 0) {
-                    userId = DBHelper().getUserIdByphone(user?.phoneNumber!!)
+                if (DBHelper().getUserIdByPhone(user?.phoneNumber!!) != 0) {
+                    userId = DBHelper().getUserIdByPhone(user?.phoneNumber!!)
                 }
 
                 when (DBHelper().createDate(

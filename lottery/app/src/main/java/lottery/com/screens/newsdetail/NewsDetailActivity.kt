@@ -19,7 +19,7 @@ class NewsDetailActivity : AppCompatActivity() {
         val value = intent.getParcelableExtra(Constants.Data.DATA) as News
         mImageViewNews?.let {
             Glide.with(this)
-                .load(value.image)
+                .load(this.getDrawable(R.drawable.photo_news))
                 .into(it)
         }
         mTextViewTitle.text = value.name

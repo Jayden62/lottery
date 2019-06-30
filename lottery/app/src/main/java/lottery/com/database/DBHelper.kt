@@ -49,7 +49,7 @@ class DBHelper {
             this.conn = createConnection()
             val list: MutableList<String>? = mutableListOf()
             var mPhone: String? = null
-            val query = "select cellphone from account_dt"
+            val query = "select cellphone from user_dt"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
@@ -70,16 +70,17 @@ class DBHelper {
             val listPhone = checkPhoneNumber()
             val statement = conn?.createStatement()
             val query =
-                "INSERT INTO ACCOUNT_DT(NAME_ID, CELLPHONE, PASSWORD_ID, SEX, ADDRESS,ACCESS_TOKEN) VALUES ('${user.name}','${user.phoneNumber}','${user.passWord}','${user.sex}','${user.address}','${user.accessToken}')"
+                "INSERT INTO USER_DT(name_user, CELLPHONE, PASSWORD_user, SEX, ADDRESS,ACCESS_TOKEN) VALUES ('${user.name}','${user.phoneNumber}','${user.passWord}','${user.sex}','${user.address}','${user.accessToken}')"
 
             if (!listPhone.isNullOrEmpty()) {
                 for (phone in listPhone) {
-                    if (phone == user.phoneNumber) {
-                        return false
+                    return if (phone == user.phoneNumber) {
+                        false
+                    } else {
+                        statement?.execute(query)
+                        true
                     }
                 }
-                statement?.execute(query)
-                return true
             }
         } catch (e: Exception) {
             Log.d(TAG, e.message)
@@ -94,13 +95,13 @@ class DBHelper {
             var data: User? = null
             Log.d(TAG, "Connected")
             val sqlQuery =
-                "SELECT * FROM ACCOUNT_DT WHERE CELLPHONE = '$phoneNumber'"
+                "SELECT * FROM user_DT WHERE CELLPHONE = '$phoneNumber'"
             val statement = conn?.createStatement()
             val rs: ResultSet? = statement?.executeQuery(sqlQuery)
             while (rs!!.next()) {
-                val name = rs.getString("name_id")
+                val name = rs.getString("name_user")
                 val phone = rs.getString("cellphone")
-                val pwd = rs.getString("password_id")
+                val pwd = rs.getString("password_user")
                 val sex = rs.getString("sex")
                 val address = rs.getString("address")
                 val token = rs.getString("access_token")
@@ -120,11 +121,11 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             Log.d(TAG, "Connected")
-            val query = "select password_id from account_dt where cellphone = '$phoneNumber'"
+            val query = "select password_user from user_dt where cellphone = '$phoneNumber'"
             val statement = conn?.createStatement()
             var rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
-                item = DataHelper.initText(rs.getString("password_id"))
+                item = DataHelper.initText(rs.getString("password_user"))
             }
             return item!!
         } catch (e: Exception) {
@@ -141,12 +142,12 @@ class DBHelper {
             this.conn = createConnection()
             Log.d(TAG, "Connected")
             val query =
-                "select cellphone, password_id from account_dt where cellphone = '$phoneNumber' and password_id = '$passWord'"
+                "select cellphone, password_user from user_dt where cellphone = '$phoneNumber' and password_user = '$passWord'"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
                 phone = rs.getString("cellphone")
-                password = rs.getString("password_id")
+                password = rs.getString("password_user")
             }
 
             if (phone.equals(phoneNumber) && password.equals(passWord)) {
@@ -164,9 +165,9 @@ class DBHelper {
             this.conn = createConnection()
             Log.d(TAG, "Connected")
             val query =
-                "update account_dt\n" +
-                        "set password_id = '$newPassword'\n" +
-                        "where cellphone = '$phone' and password_id = '$password'"
+                "update user_dt\n" +
+                        "set password_user = '$newPassword'\n" +
+                        "where cellphone = '$phone' and password_user = '$password'"
             val statement = conn?.createStatement()
             statement?.executeQuery(query)
             return true
@@ -182,8 +183,8 @@ class DBHelper {
             this.conn = createConnection()
             Log.d(TAG, "Connected")
             val query =
-                "update account_dt\n" +
-                        "set name_id= '$name', address = '$address'\n" +
+                "update user_dt\n" +
+                        "set name_user= '$name', address = '$address'\n" +
                         "where cellphone = '$phone'"
             val statement = conn?.createStatement()
             statement?.executeQuery(query)
@@ -350,13 +351,13 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             var data: User? = null
-            val query = "select * from account_dt where password_id = '$passWord' and cellphone = '$phone'"
+            val query = "select * from user_dt where password_user = '$passWord' and cellphone = '$phone'"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
-                val name = rs.getString("name_id")
+                val name = rs.getString("name_user")
                 val phone = rs.getString("cellphone")
-                val pwd = rs.getString("password_id")
+                val pwd = rs.getString("password_user")
                 val sex = rs.getString("sex")
                 val address = rs.getString("address")
                 val token = rs.getString("access_token")
@@ -370,16 +371,16 @@ class DBHelper {
         return null
     }
 
-    fun getUserIdByphone(phone: String): Int {
+    fun getUserIdByPhone(phone: String): Int {
         try {
             initPermission()
             this.conn = createConnection()
             var id: Int = 0
-            val query = "select account_id from account_dt where cellphone = '$phone'"
+            val query = "select name_id from account_dt where cellphone = '$phone'"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
-                id = rs.getInt("account_id")
+                id = rs.getInt("name_id")
             }
             return id
         } catch (e: Exception) {
@@ -399,7 +400,7 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             val query =
-                "INSERT INTO SCHEDULE (account_id, TIMEFRAME_ID, SCH_DAYOFDATE, SCH_DAY, QRCODE) VALUES ($userId,$frameId,'$day','$date','$qrCode')"
+                "INSERT INTO SCHEDULE (name_id, TIMEFRAME_ID, SCH_DAYOFDATE, SCH_DAY, QRCODE) VALUES ($userId,$frameId,'$day','$date','$qrCode')"
             val statement = conn?.createStatement()
             statement?.execute(query)
             return true

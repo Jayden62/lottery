@@ -36,7 +36,6 @@
                 android:drawableLeft="@drawable/ic_person_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
                 android:hint="Họ và tên"
-                android:cursorVisible="false"
                 android:padding="@dimen/mediumPadding"
                 android:textSize="@dimen/normalSize"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normalMargin"
-                android:cursorVisible="false"
                 android:background="@drawable/bg_rectangle_border_edit_text"
                 android:drawableLeft="@drawable/ic_local_phone_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
@@ -63,7 +61,6 @@
 
         <EditText
                 android:id="@+id/mEditTextPassword"
-                android:cursorVisible="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normalMargin"
@@ -85,7 +82,6 @@
                 android:background="@drawable/bg_rectangle_border_edit_text"
                 android:drawableLeft="@drawable/ic_home_black_24dp"
                 android:drawablePadding="@dimen/normalPadding"
-                android:cursorVisible="false"
                 android:hint="Địa chỉ hiện tại"
                 android:padding="@dimen/mediumPadding"
                 android:textSize="@dimen/normalSize"
