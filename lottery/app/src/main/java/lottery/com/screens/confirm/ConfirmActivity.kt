@@ -80,33 +80,34 @@ class ConfirmActivity : AppCompatActivity() {
             ) {
                 DialogUtils.showToastMessage(this, "Thông tin chưa đầy đủ, vui lòng thử lại !")
             } else {
-                var userId: Int = 0
-                if (DBHelper().getUserIdByPhone(user?.phoneNumber!!) != 0) {
-                    userId = DBHelper().getUserIdByPhone(user?.phoneNumber!!)
-                }
-
-                when (DBHelper().createDate(
-                    userId,
-                    mainTimeFrame?.id!!,
-                    day!!,
-                    strDate!!,
-                    UUID.randomUUID().toString()
-                )) {
-                    true -> {
-                        val result = DBHelper().getScheduleIdByUserId(userId, mainTimeFrame?.id!!, strDate!!)
-                        if (result != null) {
-                            for (item in services!!) {
-                                DBHelper().createSchedule(result, item.id)
-                            }
-                            startActivity(Intent(this, SucceedActivity::class.java))
-                            services?.clear()
-                            serviceRepos?.deleteAll()
-                        } else {
-                            startActivity(Intent(this, FailActivity::class.java))
-                        }
-                    }
-
-                }
+//                var userId: Int = 0
+//                if (DBHelper().getUserIdByPhone(user?.phoneNumber!!) != 0) {
+//                    userId = DBHelper().getUserIdByPhone(user?.phoneNumber!!)
+//                }
+//
+//                when (DBHelper().createDate(
+//                    userId,
+//                    mainTimeFrame?.id!!,
+//                    day!!,
+//                    strDate!!,
+//                    UUID.randomUUID().toString()
+//                )) {
+//                    true -> {
+//                        val result = DBHelper().getScheduleIdByUserId(userId, mainTimeFrame?.id!!, strDate!!)
+//                        if (result != null) {
+//                            for (item in services!!) {
+//                                DBHelper().createSchedule(result, item.id)
+//                            }
+//                            startActivity(Intent(this, SucceedActivity::class.java))
+//                            services?.clear()
+//                            serviceRepos?.deleteAll()
+//                        } else {
+//                            startActivity(Intent(this, FailActivity::class.java))
+//                        }
+//                    }
+//
+//                }
+                startActivity(Intent(this, SucceedActivity::class.java))
             }
         }
 
