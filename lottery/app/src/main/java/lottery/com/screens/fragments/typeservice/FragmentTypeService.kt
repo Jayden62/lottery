@@ -34,7 +34,6 @@ class FragmentTypeService : Fragment(), TypeServiceItem.Callback {
     }
 
     private fun onInit() {
-        val mProgressDialog = DialogUtils.showLoadingDialog(activity!!, activity!!.getString(R.string.loading_data))
         mAdapter = BaseAdapter()
         mRecyclerView?.layoutManager = LinearLayoutManager(context)
         mRecyclerView?.adapter = mAdapter
@@ -45,8 +44,6 @@ class FragmentTypeService : Fragment(), TypeServiceItem.Callback {
                 mAdapter.addItem(TypeServiceItem(activity!!, it, this))
             }
         }
-
-        Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
 
     }
 

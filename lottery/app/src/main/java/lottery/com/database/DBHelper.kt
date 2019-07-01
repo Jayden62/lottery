@@ -63,29 +63,44 @@ class DBHelper {
         return null
     }
 
-    fun registerAccount(user: User): Boolean {
+    /**
+     * Hàm này để kiểm tra user có trong database.
+     */
+    fun checkUserId(phone: String?, user: User): Boolean {
         try {
             initPermission()
             this.conn = createConnection()
-            val listPhone = checkPhoneNumber()
+            var userId = 0
+            val query = "select user_id from user_dt where cellphone = '$phone'"
             val statement = conn?.createStatement()
-            val query =
-                "INSERT INTO USER_DT(name_user, CELLPHONE, PASSWORD_user, SEX, ADDRESS,ACCESS_TOKEN) VALUES ('${user.name}','${user.phoneNumber}','${user.passWord}','${user.sex}','${user.address}','${user.accessToken}')"
-
-            if (!listPhone.isNullOrEmpty()) {
-                for (phone in listPhone) {
-                    return if (phone == user.phoneNumber) {
-                        false
-                    } else {
-                        statement?.execute(query)
-                        true
-                    }
-                }
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                userId = rs.getInt("user_id")
             }
+            return if (userId != 0) {
+                false
+            } else {
+                registerAccount(user)
+                true
+            }
+
         } catch (e: Exception) {
             Log.d(TAG, e.message)
         }
         return false
+    }
+
+    private fun registerAccount(user: User) {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            val statement = conn?.createStatement()
+            val query =
+                "INSERT INTO USER_DT(name_user, CELLPHONE, PASSWORD_user, SEX, ADDRESS,ACCESS_TOKEN) VALUES ('${user.name}','${user.phoneNumber}','${user.passWord}','${user.sex}','${user.address}','${user.accessToken}')"
+            statement?.execute(query)
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
     }
 
     fun getUserByPhone(phoneNumber: String): User? {
@@ -327,9 +342,13 @@ class DBHelper {
             this.conn = createConnection()
             Log.d(TAG, "Connected")
             val query = "SELECT * FROM TIMEFRAME WHERE TIMEFRAME_ID IN \n" +
-                    "( SELECT TIMEFRAME_ID FROM TIMEFRAME WHERE STATE = $timeId\n" +
+                    "(\n" +
+                    "  SELECT TIMEFRAME_ID FROM TIMEFRAME WHERE STATE IN (SELECT TIMEFRAME_ID FROM STAFF_SCH WHERE TIMEFRAME_ID = $timeId \n" +
+                    "  AND DMY_ID = (SELECT DMY_ID FROM DMY WHERE DMY_DATE = '$strDate'))\n" +
                     "  MINUS\n" +
-                    "  SELECT TIMEFRAME_ID FROM SCHEDULE WHERE SCH_DAY = '$strDate') ORDER BY TIMEFRAME_ID ASC"
+                    "  SELECT TIMEFRAME_ID FROM STAFF_SCH A, SCHEDULE B WHERE A.STAFF_ID = B.STAFF_ID AND SCH_DATE = '$strDate' \n" +
+                    ")\n" +
+                    "ORDER BY TIMEFRAME_ID ASC"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
@@ -376,11 +395,11 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             var id: Int = 0
-            val query = "select name_id from account_dt where cellphone = '$phone'"
+            val query = "select user_id from user_dt where cellphone = '$phone'"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
-                id = rs.getInt("name_id")
+                id = rs.getInt("user_id")
             }
             return id
         } catch (e: Exception) {
@@ -391,7 +410,7 @@ class DBHelper {
 
     fun createDate(
         userId: Int,
-        frameId: Int,
+        staffId: Int,
         day: String,
         date: String,
         qrCode: String
@@ -400,7 +419,7 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             val query =
-                "INSERT INTO SCHEDULE (name_id, TIMEFRAME_ID, SCH_DAYOFDATE, SCH_DAY, QRCODE) VALUES ($userId,$frameId,'$day','$date','$qrCode')"
+                "INSERT INTO SCHEDULE (user_id, staff_id, SCH_DATE, SCH_DAY, QRCODE) VALUES ($userId,$staffId,'$day','$date','$qrCode')"
             val statement = conn?.createStatement()
             statement?.execute(query)
             return true
@@ -410,19 +429,38 @@ class DBHelper {
         return false
     }
 
-    fun getScheduleIdByUserId(userId: Int, frameId: Int, date: String): Int? {
+    fun getScheduleIdByUserId(userId: Int, date: String): Int? {
         try {
             initPermission()
             this.conn = createConnection()
             var scheduleId: Int? = 0
             val query =
-                "SELECT SCH_ID FROM SCHEDULE WHERE ACCOUNT_ID = '$userId' AND TIMEFRAME_ID = '$frameId' AND SCH_DAY = '$date'"
+                "SELECT SCH_ID FROM SCHEDULE WHERE user_ID = '$userId'  AND SCH_DAY = '$date'"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {
                 scheduleId = rs.getInt("sch_id")
             }
             return scheduleId
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return -1
+    }
+
+    fun getStaffId(frameId: Int, strDate: String): Int {
+        try {
+            initPermission()
+            this.conn = createConnection()
+            var id: Int? = 0
+            val query = "select staff_id from staff_sch where timeframe_id = $frameId" +
+                    "and dmy_id = (select dmy_id from dmy where dmy_date = '$strDate')"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs!!.next()) {
+                id = rs.getInt("staff_id")
+            }
+            return id!!
         } catch (e: Exception) {
             Log.d(TAG, e.message)
         }

@@ -1,16 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:tools="http://schemas.android.com/tools"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
+                                             android:padding="@dimen/normalPadding"
                                              tools:context=".screens.fragments.news.FragmentNews">
 
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRecyclerView"
-            android:padding="@dimen/normalPadding"
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/mTextViewName"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"/>
 
+    <TextView
+            android:layout_marginTop="@dimen/normalMargin"
+            android:id="@+id/mTextViewContent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="start"
+            android:maxLines="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:textStyle="bold"
+            android:id="@+id/mTextViewStartDate"
+            android:text="Ngày bắt đầu : "
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewContent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:textColor="@android:color/black"
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewContent"
+            android:id="@+id/mTextViewStartValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:textStyle="bold"
+            android:id="@+id/mTextViewEndDate"
+            android:text="Ngày kết thúc : "
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewStartDate"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:textColor="@android:color/black"
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewStartValue"
+            android:id="@+id/mTextViewEndValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <android.support.v4.view.ViewPager
+            android:layout_marginTop="@dimen/super_normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewEndDate"
+            android:id="@+id/mViewPager"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"/>
 
 </android.support.constraint.ConstraintLayout>

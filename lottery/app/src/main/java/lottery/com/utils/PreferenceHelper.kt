@@ -34,4 +34,16 @@ object PreferenceHelper {
         return obj
     }
 
+    fun saveMainFrame(context: Context, frameId: Int) {
+        val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val prefsEditor = mPrefs.edit()
+        prefsEditor.putInt(Constants.Data.MAINFRAME, frameId)
+        prefsEditor.apply()
+    }
+
+    fun getMainFrame(context: Context): Int {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getInt(Constants.Data.MAINFRAME, 0)
+    }
+
 }

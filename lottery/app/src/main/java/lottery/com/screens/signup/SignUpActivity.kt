@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.RadioGroup
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import lottery.com.R
 import lottery.com.database.DBHelper
 import lottery.com.model.User
@@ -89,7 +90,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                 )
 
                 if (validate()) {
-                    when (DBHelper().registerAccount(user)) {
+                    val result = DBHelper().checkUserId(mEditTextPhone.text.toString(), user)
+                    when (result) {
                         true -> {
                             clearData()
                             Handler().postDelayed({ mProgressDialog.dismiss() }, 1500)
@@ -102,6 +104,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, R
                             mProgressDialog.dismiss()
                         }
                     }
+
                 } else {
                     mProgressDialog.dismiss()
                 }

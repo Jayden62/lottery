@@ -22,6 +22,7 @@ import lottery.com.model.Service
 import lottery.com.screens.confirm.ConfirmActivity
 import lottery.com.utils.Constants
 import lottery.com.utils.DialogUtils
+import lottery.com.utils.PreferenceHelper
 import java.io.Serializable
 import java.time.LocalDate
 import java.util.*
@@ -38,7 +39,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
     private var month: String? = null
     private var year: String? = null
 
-    private var isChecked: Boolean = false
+    private var isPicked: Boolean = false
 
     private var strDate: String? = null
 
@@ -51,6 +52,8 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
     private var dataPassed: MutableList<Service>? = mutableListOf()
 
     private val TAG = this.javaClass.simpleName
+
+    private var count = 0
 
     private var daysOfWeek: MutableList<String> = mutableListOf("T2", "T3", "T4", "T5", "T6", "T7", "CN")
 
@@ -155,13 +158,13 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
      */
     private fun convertLongDay(day: String): String {
         return when (day) {
-            "Mon" -> "Thứ 2"
-            "Tue" -> "Thứ 3"
-            "Wed" -> "Thứ 4"
-            "Thu" -> "Thứ 5"
-            "Fri" -> "Thứ 6"
-            "Sat" -> "Thứ 7"
-            "Sun" -> "Chủ nhật"
+            "Mon" -> "MonDay"
+            "Tue" -> "TuesDay"
+            "Wed" -> "Wednesday"
+            "Thu" -> "Thursday"
+            "Fri" -> "Friday"
+            "Sat" -> "Saturday"
+            "Sun" -> "Sunday"
             else -> day
         }
     }
@@ -215,7 +218,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("MM")
         val value = dateFormat.format(currentDate)
-
+        isPicked = true
         /**
          * Init adapter for days
          */
@@ -293,10 +296,13 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
             }
         } else {
             mList = DBHelper().getTimesFrameActive(item?.id!!, strDate)
+
             for (it in mList!!) {
                 mAdapterFrame?.addItem(TimeFrameActiveItem(this, it, true, this))
             }
         }
+
+        item?.id?.let { PreferenceHelper.saveMainFrame(this, it) }
     }
 
     /**
@@ -307,7 +313,6 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         Log.d(TAG, date)
         val result = date + "-" + getCurrentMoth() + "-" + getCurrentYear()
         mTextViewBook.text = result
-//        mTextViewDay.text = convertShortDayPicked(getDayPicked(result))
 
         val localDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate.of(getCurrentYear().toInt(), getCurrentMoth().toInt(), date.toInt()).dayOfWeek
@@ -319,18 +324,15 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
 
     override fun onTapDayItem(day: String) {
         Log.d(TAG, day)
-//        mTextViewDay.text = convertShortDayPicked(day)
     }
 
     override fun onTapActive(data: MainTimeFrame?) {
-        if (!isChecked) {
+        if (isPicked) {
             mData = data
-            isChecked = false
-
+            isPicked = false
         } else {
+            isPicked = true
             mData = null
-            isChecked = true
-
         }
     }
 
@@ -338,7 +340,10 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         when (view?.id) {
             R.id.mButtonSubmit -> {
                 if (mData == null) {
-                    DialogUtils.showToastMessage(this, "Vui lòng chọn khung giờ hoạt động !")
+                    DialogUtils.showToastMessage(
+                        this,
+                        "Khung giờ hoạt động chỉ được chọn duy nhất và không được trống !"
+                    )
                 } else {
                     val intent = Intent(this, ConfirmActivity::class.java)
                     intent.putExtra(Constants.Data.DATA, dataPassed as Serializable)
@@ -346,9 +351,9 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
                     intent.putExtra(Constants.Data.DATE, strDate)
                     intent.putExtra(Constants.Data.DAY, mTextViewDay.text.toString())
                     startActivity(intent)
+                    finish()
                 }
             }
         }
     }
-
 }

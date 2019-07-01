@@ -112,25 +112,16 @@ class ServiceActivity : AppCompatActivity(), View.OnClickListener, ServiceItem.C
             val mAlertDialog = AlertDialog.Builder(this).create()
             mAlertDialog.setTitle(R.string.waiting_time)
             mAlertDialog.show()
-
-//            object : CountDownTimer(60000, 1000) {
-//                override fun onTick(millisUntilFinished: Long) {
-//                    mAlertDialog.setMessage("00:" + millisUntilFinished / 1000)
-//                }
-//
-//                override fun onFinish() {
-//                    mAlertDialog.dismiss()
-//                }
-//            }.start()
         }
         mButtonBook.setOnClickListener {
 
-            if (data.isNullOrEmpty()) {
-                DialogUtils.showMessageDialog("Bạn phải chọn ít nhất 1 dịch vụ !", this)
+            if (data?.size == 0) {
+                DialogUtils.showToastMessage(this, "Bạn phải chọn ít nhất 1 dịch vụ !")
             } else {
                 val intent = Intent(this, BookActivity::class.java)
                 intent.putParcelableArrayListExtra(Constants.Data.DATA, data as ArrayList<out Parcelable>)
                 startActivity(intent)
+                alertDialog?.dismiss()
             }
         }
 
