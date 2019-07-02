@@ -89,6 +89,7 @@ class ConfirmActivity : AppCompatActivity() {
                 when (DBHelper().createDate(
                     userId,
                     staffId,
+                    mainTimeFrame?.id!!,
                     strDate!!,
                     day!!,
                     UUID.randomUUID().toString()
@@ -104,6 +105,7 @@ class ConfirmActivity : AppCompatActivity() {
                             serviceRepos?.deleteAll()
                             startActivity(Intent(this, SucceedActivity::class.java))
                         }
+
                     }
                     false -> {
                         startActivity(Intent(this, FailActivity::class.java))

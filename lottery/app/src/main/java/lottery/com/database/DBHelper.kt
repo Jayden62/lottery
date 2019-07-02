@@ -344,9 +344,9 @@ class DBHelper {
             val query = "SELECT * FROM TIMEFRAME WHERE TIMEFRAME_ID IN \n" +
                     "(\n" +
                     "  SELECT TIMEFRAME_ID FROM TIMEFRAME WHERE STATE IN (SELECT TIMEFRAME_ID FROM STAFF_SCH WHERE TIMEFRAME_ID = $timeId \n" +
-                    "  AND DMY_ID = (SELECT DMY_ID FROM DMY WHERE DMY_DATE = '$strDate'))\n" +
+                    "  AND DMY_ID = (select * from(SELECT DMY_ID FROM DMY WHERE DMY_DATE like ('%$strDate') order by dmy_id asc)where rownum =1))\n" +
                     "  MINUS\n" +
-                    "  SELECT TIMEFRAME_ID FROM STAFF_SCH A, SCHEDULE B WHERE A.STAFF_ID = B.STAFF_ID AND SCH_DATE = '$strDate' \n" +
+                    "  SELECT TIMEFRAME_ID FROM SCHEDULE WHERE SCH_DATE like ('%$strDate')\n" +
                     ")\n" +
                     "ORDER BY TIMEFRAME_ID ASC"
             val statement = conn?.createStatement()
@@ -411,6 +411,7 @@ class DBHelper {
     fun createDate(
         userId: Int,
         staffId: Int,
+        timeId: Int,
         day: String,
         date: String,
         qrCode: String
@@ -419,7 +420,7 @@ class DBHelper {
             initPermission()
             this.conn = createConnection()
             val query =
-                "INSERT INTO SCHEDULE (user_id, staff_id, SCH_DATE, SCH_DAY, QRCODE) VALUES ($userId,$staffId,'$day','$date','$qrCode')"
+                "INSERT INTO SCHEDULE (user_id, staff_id,timeframe_id, SCH_DATE, SCH_DAY, QRCODE) VALUES ($userId,$staffId,$timeId,'$day','$date','$qrCode')"
             val statement = conn?.createStatement()
             statement?.execute(query)
             return true
@@ -435,7 +436,7 @@ class DBHelper {
             this.conn = createConnection()
             var scheduleId: Int? = 0
             val query =
-                "SELECT SCH_ID FROM SCHEDULE WHERE user_ID = '$userId'  AND SCH_DAY = '$date'"
+                "SELECT SCH_ID FROM SCHEDULE WHERE user_ID = '$userId'  AND SCH_DATE = '$date'"
             val statement = conn?.createStatement()
             val rs = statement?.executeQuery(query)
             while (rs?.next()!!) {

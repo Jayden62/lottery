@@ -110,6 +110,12 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         return dateFormat.format(date)
     }
 
+    private fun getCurrentText(): String {
+        val date = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("MMM-YY")
+        return dateFormat.format(date)
+    }
+
     private fun getDayPicked(strDay: String): String {
         val dateFormat = SimpleDateFormat("MM-dd-yyyy")
         val cvDate = dateFormat.parse(strDay)
@@ -272,31 +278,32 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
                 } else {
                     mSpinnerFrame?.selectedItem as MainTimeFrame?
                 }
-                initTimesActive()
+
+                initTimesActive(strDate)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-        initTimesActive()
+        strDate = getCurrentDateText()
+        initTimesActive(strDate)
     }
 
-    private fun initTimesActive() {
+    private fun initTimesActive(date: String?) {
         /**
          * Init adapter for times frame active
          */
+        mAdapterFrame?.removeAll()
         mAdapterFrame = BaseAdapter()
         mRecyclerViewFrame?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerViewFrame?.adapter = mAdapterFrame
 
-        strDate = getCurrentDateText()
         if (item?.id == null) {
-            mList = DBHelper().getTimesFrameActive(14, strDate)
+            mList = DBHelper().getTimesFrameActive(14, date)
             for (it in mList!!) {
                 mAdapterFrame?.addItem(TimeFrameActiveItem(this, it, true, this))
             }
         } else {
-            mList = DBHelper().getTimesFrameActive(item?.id!!, strDate)
-
+            mList = DBHelper().getTimesFrameActive(item?.id!!, date)
             for (it in mList!!) {
                 mAdapterFrame?.addItem(TimeFrameActiveItem(this, it, true, this))
             }
@@ -320,6 +327,9 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
             Log.d(TAG, "")
         }
         mTextViewDay.text = localDate.toString()
+        val newDate = date + "-" + getCurrentText()
+        initTimesActive(newDate)
+        DialogUtils.showToastMessage(this, "Bạn đã chọn ngày $date")
     }
 
     override fun onTapDayItem(day: String) {
