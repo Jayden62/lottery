@@ -479,4 +479,29 @@ class DBHelper {
             Log.d(TAG, e.message)
         }
     }
+
+    fun getBooked(userId: Int): MutableList<Booked>? {
+        try {
+            val list: MutableList<Booked> = mutableListOf()
+            initPermission()
+            this.conn = createConnection()
+            Log.d(TAG, "Connected")
+            val query =
+                "SELECT DETAILS_TIMEFRAME, SCH_DATE, SERVICE_NAME FROM SCHEDULE A, TIMEFRAME B, SERVICE C, DETAILS_SCH D WHERE A.TIMEFRAME_ID = B.TIMEFRAME_ID \n" +
+                        "AND A.SCH_ID = D.SCH_ID AND C.SERVICE_ID = D.SERVICE_ID AND USER_ID = $userId"
+            val statement = conn?.createStatement()
+            val rs = statement?.executeQuery(query)
+            while (rs?.next()!!) {
+                val detailsTimeFrame = rs.getString("DETAILS_TIMEFRAME")
+                val schDate = rs.getString("SCH_DATE")
+                val serviceNName = rs.getString("SERVICE_NAME")
+                val item = Booked(detailsTimeFrame, schDate, serviceNName)
+                list.add(item)
+            }
+            return list
+        } catch (e: Exception) {
+            Log.d(TAG, e.message)
+        }
+        return null
+    }
 }

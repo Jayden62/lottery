@@ -36,7 +36,7 @@ class ConfirmActivity : AppCompatActivity() {
 
     private var mainTimeFrame: MainTimeFrame? = null
 
-    private var mAdapter: BaseAdapter<Any> = BaseAdapter()
+    private var mAdapter: BaseAdapter<Any>? = null
 
     private var serviceRepos: ServiceRepos? = null
 
@@ -67,10 +67,10 @@ class ConfirmActivity : AppCompatActivity() {
 
 
         if (services.isNullOrEmpty()) {
-            mAdapter.addItem(ConfirmSelectedEmptyItem(this))
+            mAdapter?.addItem(ConfirmSelectedEmptyItem(this))
         } else {
             for (it in services!!) {
-                mAdapter.addItem(ConfirmSelectedItem(this, it))
+                mAdapter?.addItem(ConfirmSelectedItem(this, it))
             }
         }
 

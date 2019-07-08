@@ -137,16 +137,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/normalMargin"/>
 
+        <TextView
+                android:text="Lịch sử đặt hẹn"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:gravity="start"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewReminder"
+                android:id="@+id/mTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
 
         <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="@dimen/normalMargin"
                 android:layout_marginEnd="@dimen/normalMargin"
                 android:id="@+id/mRecyclerView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="@dimen/normalMargin"
-                app:layout_constraintTop_toBottomOf="@+id/mTextViewReminder"
-                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/mTextViewTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mConstrainLayout"
+        android:layout_width="match_parent"
+        android:elevation="4dp"
+        android:layout_marginTop="@dimen/normalMargin"
+        android:background="@drawable/bg_item_selector"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normalPadding">
+
+    <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/mTextViewDateLabel"
+            android:text="Ngày đặt hẹn : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/mTextViewDate"
+            android:layout_marginStart="@dimen/normalMargin"
+            app:layout_constraintStart_toEndOf="@+id/mTextViewDateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewDateLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/mTextViewTimeLabel"
+            android:text="Giờ đặt hẹn : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewDateLabel"
+            android:id="@+id/mTextViewTime"
+            android:layout_marginStart="@dimen/normalMargin"
+            app:layout_constraintStart_toEndOf="@+id/mTextViewTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewTime"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/mTextViewServiceLabel"
+            android:text="Dịch vụ đã đặt : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_marginTop="@dimen/normalMargin"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewTime"
+            android:id="@+id/mTextViewService"
+            android:layout_marginStart="@dimen/normalMargin"
+            app:layout_constraintStart_toEndOf="@+id/mTextViewTimeLabel"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"/>
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+

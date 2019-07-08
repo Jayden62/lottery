@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
@@ -13,11 +15,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_confirm.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import lottery.com.R
+import lottery.com.base.list.BaseAdapter
 import lottery.com.database.DBHelper
 import lottery.com.model.User
 import lottery.com.screens.information.InformationActivity
+import lottery.com.screens.service.ServiceEmptyItem
 import lottery.com.utils.Constants
 import lottery.com.utils.DialogUtils
 
@@ -31,7 +36,11 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
     private var mTextViewPhone: TextView? = null
     private var mButtonInfo: Button? = null
 
+    private var mRecyclerView: RecyclerView? = null
+
     private var phoneNumber: String? = null
+
+    private var mAdapter: BaseAdapter<Any>? = null
 
     private val TAG = "FragmentProfile"
 
@@ -46,7 +55,7 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
         mTextViewReminder = view.mTextViewReminder
         mTextViewPhone = view.mTextViewPhone
         mButtonInfo = view.mButtonInfo
-
+        mRecyclerView = view.mRecyclerView
         mSwitchReminder?.setOnCheckedChangeListener(this)
         mButtonInfo?.setOnClickListener(this)
         data = arguments?.getParcelable(Constants.Data.DATA) as? User
@@ -58,6 +67,26 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
 //            view.mEditTextSex.setText(data?.sex)
 //            view.mEditTextAddress.setText(data?.address)
 //        }
+
+        initData()
+    }
+
+    private fun initData() {
+        mAdapter = BaseAdapter()
+        mRecyclerView?.layoutManager = LinearLayoutManager(activity)
+        mRecyclerView?.adapter = mAdapter
+
+        val userId = DBHelper().getUserIdByPhone(phoneNumber!!)
+        if (userId != 0) {
+            val list = DBHelper().getBooked(userId)
+            if (list != null) {
+                for (data in list) {
+                    mAdapter?.addItem(BookedItem(activity!!, data))
+                }
+            } else {
+                mAdapter?.addItem(ServiceEmptyItem(activity!!))
+            }
+        }
 
     }
 
@@ -119,6 +148,7 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
                     val intent = Intent(activity, InformationActivity::class.java)
                     intent.putExtra(Constants.Data.DATA, data)
                     startActivity(intent)
+                    alertDialog.dismiss()
                 } else {
                     DialogUtils.showMessageDialog("Sai mật khẩu !", activity!!)
                 }
