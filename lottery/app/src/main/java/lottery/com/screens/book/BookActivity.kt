@@ -80,7 +80,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
     }
 
     /**
-     * Make animation for step 1 and 2
+     * Create animation for step 1 and 2
      */
     private fun initAnimation() {
         val animation = TranslateAnimation(
@@ -96,7 +96,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
     }
 
     /**
-     * Get current month
+     * Get current month with format MM
      */
     private fun getCurrentMoth(): String {
         val date = Calendar.getInstance().time
@@ -104,12 +104,18 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         return dateFormat.format(date)
     }
 
+    /**
+     * Get current with format MMM (24-Jun-2019)
+     */
     private fun getCurrentDateText(): String {
         val date = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd-MMM-YY")
         return dateFormat.format(date)
     }
 
+    /**
+     * Get current month and year with for MMM-YY (Jun-19)
+     */
     private fun getCurrentText(): String {
         val date = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("MMM-YY")
@@ -220,6 +226,9 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         }
     }
 
+    /**
+     * Init data
+     */
     private fun initData() {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("MM")
@@ -313,8 +322,7 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
     }
 
     /**
-     * Query date to load times frame.
-     * @param date
+     * Tap date on screen.
      */
     override fun onTapDateItem(date: String) {
         Log.d(TAG, date)
@@ -332,10 +340,14 @@ class BookActivity : AppCompatActivity(), View.OnClickListener, DateItem.Callbac
         DialogUtils.showToastMessage(this, "Bạn đã chọn ngày $date")
     }
 
+
     override fun onTapDayItem(day: String) {
         Log.d(TAG, day)
     }
 
+    /**
+     * Tap timeActive in dropdown list
+     */
     override fun onTapActive(data: MainTimeFrame?) {
         if (isPicked) {
             mData = data
