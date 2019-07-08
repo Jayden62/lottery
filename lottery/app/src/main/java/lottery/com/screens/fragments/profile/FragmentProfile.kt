@@ -84,10 +84,10 @@ class FragmentProfile : Fragment(), View.OnClickListener, TextWatcher, CompoundB
                     mAdapter?.addItem(BookedItem(activity!!, data))
                 }
             } else {
-                mAdapter?.addItem(ServiceEmptyItem(activity!!))
             }
+        }else{
+            mAdapter?.addItem(ServiceEmptyItem(activity!!))
         }
-
     }
 
     @SuppressLint("ResourceAsColor")
